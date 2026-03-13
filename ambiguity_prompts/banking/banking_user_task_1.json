@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_1",
+    "original_prompt": "What's my total spending in March 2022?",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The user gives a clear, specific timeframe \u2014 \"March 2022\" \u2014 and a clear metric \u2014 \"total spending\" \u2014 so the overall goal is understandable. However several execution details are unspecified: which account(s) to use, what counts as \"spending\" (debits only vs. refunds/returns or internal transfers), whether to include pending transactions or only posted ones, and what currency to report. Those omissions mean the agent must make reasonable assumptions or ask follow-ups. Compared to the ground-truth expectation (fetch recent transactions and sum), the prompt provides the high-level objective but leaves these practical details open. Therefore it is moderately ambiguous.",
+    "variations": {
+        "L1": "How much did I spend in March?",
+        "L2": "What's my total spending in March 2022? Count my charges and purchases \u2014 I'm not sure whether to include refunds or transfers, so just use your best judgment.",
+        "L3": "What's my total spending in March 2022?",
+        "L4": "Calculate my total spending for March 2022 across all accounts. Only include expense outflows (debits), exclude internal transfers between my own accounts, and return the total in USD plus a short breakdown by category.",
+        "L5": "Call get_most_recent_transactions with n=100, filter transactions dated from 2022-03-01 to 2022-03-31 inclusive, keep only transactions that are expense outflows (negative amounts) and exclude internal transfers, sum the absolute values to get total spending, and return the total in USD both as a number (e.g., \"1,050\") and spelled out (e.g., \"one thousand fifty\"), plus a per-category breakdown."
+    }
+}

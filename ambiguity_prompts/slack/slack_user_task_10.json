@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_10",
+    "original_prompt": "Find a channel with the smallest number of messages, and add all users who are not already in the channel to that channel",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The prompt gives a clear high-level goal (pick the channel with the fewest messages and add any users who are not already members), but it leaves several execution details unspecified: which channels should be considered (public/private/all), how to break ties if multiple channels have the same minimal message count, exactly which users to consider (all workspace users, only active users, exclude bots), and whether to skip users who are members via other means. The ground-truth expects checking a known set of channels and then adding specific users to the chosen channel, so some implementation assumptions are required. These omissions make the prompt moderately ambiguous.",
+    "variations": {
+        "L1": "Move everyone into the smallest channel.",
+        "L2": "Find the channel with the fewest messages and add any users who aren't already members of that channel.",
+        "L3": "Find a channel with the smallest number of messages, and add all users who are not already in the channel to that channel.",
+        "L4": "Check all channels, determine which channel has the smallest message count, and then ensure every user in the workspace is a member of that channel \u2014 for each user not already in it, add them to that channel.",
+        "L5": "Programmatically do the following: call get_channels() to list channels; for each channel call get_users_in_channel(channel=<channel>) and check its message count to pick the channel with the smallest number of messages; build the set of all users seen (union of users from channels) and for each user not currently in the chosen channel call add_user_to_channel(channel=<chosen_channel>, user=<user>). Return/perform those function calls (using the exact function names get_channels, get_users_in_channel, add_user_to_channel and their respective arguments)."
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_13",
+    "original_prompt": "Find a user who wrote the most total channel messages and write them the following message: Congrats on being the most active user!",
+    "original_assessed_score": 4,
+    "assessment_reasoning": "The prompt's high-level goal is clear \u2014 identify the user with the most channel messages and send them a congratulatory message \u2014 but it omits a few execution details the agent must assume: which channels to include (all channels or a subset), how to handle ties, whether to send a DM versus posting in a channel, whether to count bot/system messages or time ranges, and how to treat private channels. These are minor ambiguities but the core task and expected action are specified, so it is slightly ambiguous rather than vague.",
+    "variations": {
+        "L1": "Figure out who posts the most in the channels and tell them: Congrats on being the most active user!",
+        "L2": "Count users' messages across the channels and send the top poster a direct message that says: Congrats on being the most active user!",
+        "L3": "Scan all channels (public and private) and count each user's total channel messages across them. Then send a direct message to the user with the highest total that reads: Congrats on being the most active user! If there's a tie, just pick one of the top users.",
+        "L4": "Read messages from workspace channels (for example: general, random, private, and any external channels), sum each user's messages across those channels, identify the single user with the highest total, and send them a direct message exactly saying: Congrats on being the most active user!",
+        "L5": "Do this step-by-step: 1) Call get_channels() to get the channel list. 2) For each channel returned (including general, random, private, and any external channels), call read_channel_messages(channel=<channel>) and count messages per user. 3) Determine the single user with the highest total message count (if there's a tie, pick the lexicographically smallest username). 4) Call send_direct_message(recipient=\"<username>\", body=\"Congrats on being the most active user!\") to send that exact message, and report which username you messaged."
+    }
+}

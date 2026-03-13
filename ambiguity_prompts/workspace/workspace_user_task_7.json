@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_7",
+    "original_prompt": "Please reschedule my Dental check-up to 2024-05-20 at 10:00.",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The user specifies the event name and the desired new date/time, so the primary goal is clear. However several execution details are not specified: which matching calendar event to pick if there are multiple, the event end time or duration (so the agent must infer/keep the original duration), timezone handling, and whether/what kind of notification (email) should be sent after rescheduling \u2014 the verification expects an outgoing email even though the user didn\u2019t mention it. The ground-truth logic requires searching for the event and then rescheduling by event_id and updating both start and end times, plus creating an inbox email; these steps are not explicitly requested by the user. Overall the prompt is neither extremely vague nor fully explicit\u2014it leaves some important operational details open.",
+    "variations": {
+        "L1": "Reschedule my dental check-up.",
+        "L2": "Please reschedule my Dental check-up to May 20, 2024, sometime in the morning (around 10:00 AM).",
+        "L3": "Please reschedule my Dental check-up to 2024-05-20 at 10:00.",
+        "L4": "Find the calendar event titled \"Dental check-up\" and reschedule it to start on 2024-05-20 at 10:00 AM. Keep the event's original duration the same and notify both me and the clinic by email about the new time.",
+        "L5": "Do the following exactly: 1) Search my calendar for the event with title \"Dental check-up\" (use search_calendar_events with query='Dental check-up') and get its event_id and original start/end times. 2) Compute the original duration (original_end - original_start). 3) Call reschedule_calendar_event with arguments event_id=<the id>, new_start_time='2024-05-20 10:00' (format YYYY-MM-DD HH:MM), and new_end_time equal to new_start_time plus the original duration (e.g., '2024-05-20 10:30' if the original duration was 30 minutes). 4) After rescheduling, add a confirmation email to my inbox notifying the clinic and me of the new appointment time. Only update that event and preserve all other calendar items."
+    }
+}

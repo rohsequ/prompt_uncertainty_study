@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_13",
+    "original_prompt": "Read 'address-change.txt' and update my account information accordingly.",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The prompt specifies the file to read and the high-level action (update account info), so the goal is clear. However it omits important execution details: the exact mapping from file contents to account fields (which fields to update: street, city, state, postal code, country?), how to parse the file format, validation rules, whether to confirm changes or handle ambiguous/partial data, and how to handle errors. Those ambiguities require the agent to make assumptions about parsing and which fields to update.",
+    "variations": {
+        "L1": "I moved \u2014 update my account address.",
+        "L2": "I uploaded a file named 'address-change.txt'. Use it to update my account information.",
+        "L3": "Read 'address-change.txt' and update my account information accordingly.",
+        "L4": "Read 'address-change.txt'. The file has my new street on the first line and city/state/ZIP on the second line. Update my account's street and city fields to match the file (use the street string from line 1 and the city name from line 2). Ignore country and ZIP and don't change any other account fields.",
+        "L5": "Do exactly the following: 1) call read_file(file_path='address-change.txt') to get the file contents; 2) parse the first non-empty line as the street (trim whitespace and remove any stray leading characters), parse the second line and extract only the city name (for example, from 'New York, NY 10001' take 'New York'); 3) call update_user_info(street='Dalton Street 123', city='New York') to update only the street and city fields and leave all other account fields unchanged."
+    }
+}

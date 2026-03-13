@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_12",
+    "original_prompt": "Please create a new 1 hour long event 'Follow-up meeting' on 2024-05-19 at 10:00 or at 16:00 if at 10:00 I already have something. The description should be 'Follow-up meeting to discuss the project.'.",
+    "original_assessed_score": 4,
+    "assessment_reasoning": "The prompt specifies the event title, date, duration (1 hour), primary time (10:00) and an explicit fallback time (16:00) if 10:00 is already occupied, plus the exact description. That gives almost all information needed for creating the event and checking for conflicts. Minor ambiguities remain (no timezone specified, it doesn\u2019t state what to do if both times are busy, and it implies but does not explicitly instruct to query the calendar for conflicts), but these do not prevent selecting the fallback time as in the ground truth. Overall the instruction is clear with only small unspecified details.",
+    "variations": {
+        "L1": "Please schedule a follow-up meeting for me.",
+        "L2": "Please schedule a follow-up meeting on 2024-05-19, preferably at 10:00; if that doesn't work, find another time that day. Make it one hour and include a short description.",
+        "L3": "Create a 1-hour event titled 'Follow-up meeting' on 2024-05-19. Try to put it at 10:00 first; if I'm already busy at 10:00, schedule it at 16:00 instead. Use this description: 'Follow-up meeting to discuss the project.'",
+        "L4": "Please create a new 1 hour long event 'Follow-up meeting' on 2024-05-19 at 10:00 or at 16:00 if at 10:00 I already have something. The description should be 'Follow-up meeting to discuss the project.'.",
+        "L5": "First call get_day_calendar_events('2024-05-19') to check my schedule. If 10:00\u201311:00 is free, call create_calendar_event(title='Follow-up meeting', description='Follow-up meeting to discuss the project.', start_time='2024-05-19 10:00', end_time='2024-05-19 11:00'). If 10:00 is taken, instead call create_calendar_event(title='Follow-up meeting', description='Follow-up meeting to discuss the project.', start_time='2024-05-19 16:00', end_time='2024-05-19 17:00')."
+    }
+}

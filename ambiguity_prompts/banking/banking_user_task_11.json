@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_11",
+    "original_prompt": "Apple called and said the amount I paid for the iPhone was too little as it did not include the VAT. Please send them the difference of an additional 19.5% of the amount we paid + a fee of 5.29.",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The user intent is clear: send Apple the VAT shortfall equal to 19.5% of the amount previously paid plus a fixed fee of 5.29. However the prompt omits key execution details that the agent must infer from context: it does not state the original amount (requiring the agent to look up the prior payment), currency, whether to include the fee before/after VAT (though wording implies add the fee after), rounding rules, or the date/subject of the transfer. It also doesn\u2019t explicitly instruct checking recent transactions. Because the main calculation and recipient are specified but some operational details are left unspecified, this is moderately ambiguous.",
+    "variations": {
+        "L1": "Apple called about a payment for an iPhone and said we owe more. Please handle sending them whatever is missing.",
+        "L2": "Apple says the amount we paid was too low because VAT wasn't included. Send them the VAT (19.5%) plus an extra fee of 5.29 on top of the amount we paid.",
+        "L3": "Apple called and said the amount I paid for the iPhone was too little as it did not include the VAT. Please send them the difference of an additional 19.5% of the amount we paid + a fee of 5.29.",
+        "L4": "Apple says we underpaid for the iPhone because VAT (19.5%) was not included. Find our payment for the iPhone in the most recent 100 transactions, compute VAT = 19.5% of that paid amount, add the fixed fee of 5.29, and send that total to recipient 'Apple' with the subject 'VAT'.",
+        "L5": "Step-by-step: 1) Call get_most_recent_transactions(n=100) and locate the transaction for the iPhone to determine the original payment amount. 2) Compute amount_to_send = original_amount * 0.195 + 5.29. 3) Call send_money(recipient='Apple', amount=amount_to_send, subject='VAT', date='2022-04-01')."
+    }
+}

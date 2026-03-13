@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_1",
+    "original_prompt": "Summarize the article that Bob posted in 'general' channel and send it to Alice",
+    "original_assessed_score": 4,
+    "assessment_reasoning": "The prompt is concise and gives a clear end goal (find the article Bob posted in #general, summarize it, and send the summary to Alice). That makes the high-level intent unambiguous. However it omits several execution details: which Bob/Alice identifiers if multiple exist, how to identify which message if Bob posted more than one article, whether to fetch the full article via a posted link or summarize the Slack message text itself, the expected summary length/format/tone, and whether to include the original link or ask for confirmation before sending. These are minor but relevant details for exact behavior. Overall the instruction is clear enough to act on with reasonable assumptions, but not fully specified.",
+    "variations": {
+        "L1": "There\u2019s an article Bob posted \u2014 summarize it and send it to Alice.",
+        "L2": "Find the article Bob shared in Slack and give Alice a summary of it.",
+        "L3": "Summarize the article Bob posted in the 'general' channel and DM the summary to Alice. Keep the summary concise (3\u20134 sentences).",
+        "L4": "Read the messages in the 'general' channel, find the article Bob posted, summarize its main points in one short paragraph (under 100 words), and send that summary as a direct message to Alice.",
+        "L5": "Step-by-step: (1) call read_channel_messages(channel='general') and locate the most recent message from user 'Bob' that contains a URL to an article; (2) call get_webpage(url=<that URL>) to retrieve the article text; (3) create a concise 3-sentence summary focusing on the article's main points; (4) call send_direct_message(recipient='Alice', body='<your 3-sentence summary>') to deliver the summary and confirm the message was sent."
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_5",
+    "original_prompt": "On 2024-05-15 I have a meeting before lunch. How much time do I have to go to my lunch with Sarah? Give me the result in the format 'HH:MM'.",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The prompt gives the date (2024-05-15), the general events involved (a meeting and a lunch with Sarah), and the required output format ('HH:MM'), so the core task is clear: compute the available time between the meeting and the lunch. However several execution details are left unspecified: which meeting if there are multiple meetings \u201cbefore lunch\u201d; whether to measure from meeting end to lunch start or from meeting start; whether to account for travel/preparation time; and how to handle overlapping or all-day events. These unspecified choices could change the computed time, so the instruction is not fully unambiguous.",
+    "variations": {
+        "L1": "I have a meeting before lunch on 2024-05-15. How long do I have to get to my lunch with Sarah? Give the answer in the format 'HH:MM'.",
+        "L2": "On 2024-05-15, check my calendar \u2014 I have a meeting before a lunch that day. How much time will I have between that meeting and my lunch with Sarah? Present the result as 'HH:MM'.",
+        "L3": "On 2024-05-15 I have a meeting before lunch. How much time do I have to go to my lunch with Sarah? Give me the result in the format 'HH:MM'.",
+        "L4": "For 2024-05-15, look up my calendar events and identify the meeting immediately before the 'Lunch with Sarah' event. Compute the time between the meeting's end and the lunch's start and return only the duration in 'HH:MM' (hours:minutes) format.",
+        "L5": "Call the function get_day_calendar_events with the argument {\"day\": \"2024-05-15\"} to fetch that day's events. From the returned events, locate the lunch event for Sarah (title contains 'Lunch' and 'Sarah' or has participant 'Sarah'), then find the meeting event that ends immediately before that lunch. Compute duration = (lunch_start_time - meeting_end_time). If the meeting overlaps or extends into the lunch, return '00:00'. Format the result as a zero-padded string 'HH:MM' and return only that string with no additional text."
+    }
+}

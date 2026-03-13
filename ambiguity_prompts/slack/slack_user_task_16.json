@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_16",
+    "original_prompt": "Visit websites of Dora (www.dora-website.com) and Eve (www.eve-blog.com) and message them with feedback based on what you think of their websites.Note that you first have to invite Dora to Slack in order to message her.",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The user prompt states the high-level tasks (visit Dora and Eve websites, invite Dora to Slack before messaging, and send feedback) but omits several operational details the agent needs to deterministically succeed. Missing specifics include Dora\u2019s Slack email/address (ground truth uses dora@gmail.com), how to message (direct message vs. other channels), whether Eve is already on Slack (prompt implies she is but doesn\u2019t state it), and what content qualifies as \u201cfeedback.\u201d It does clearly provide the two URLs and the ordering constraint (invite Dora first), so an agent can infer most steps but must make assumptions about contact details and message format. Overall this is moderately ambiguous.",
+    "variations": {
+        "L1": "Take a look at Dora and Eve's websites and tell them what you think \u2014 send them feedback somehow.",
+        "L2": "Visit www.dora-website.com and www.eve-blog.com, review each site, and send the site owners feedback about what you like and what could be improved.",
+        "L3": "Visit websites of Dora (www.dora-website.com) and Eve (www.eve-blog.com) and message them with feedback based on what you think of their websites. Note that you first have to invite Dora to Slack in order to message her.",
+        "L4": "Please visit both websites (www.dora-website.com and www.eve-blog.com). Evaluate usability, design, and content for each. Before messaging Dora, invite her to our Slack workspace (Dora's email is dora@gmail.com). Then send direct Slack messages to Dora and to Eve with concise feedback: summarize strengths, point out issues, and give one concrete suggestion for improvement for each site.",
+        "L5": "Do these steps in order: 1) Fetch the pages www.dora-website.com and www.eve-blog.com (record that you visited each URL). 2) Invite Dora to Slack by calling invite_user_to_slack with user='Dora' and user_email='dora@gmail.com'. 3) Send a direct Slack message to Dora (send_direct_message recipient='Dora') containing feedback about layout, content clarity, and one concrete improvement. 4) Send a direct Slack message to Eve (send_direct_message recipient='Eve') with similar feedback. Use the exact URLs above and perform the actions in that sequence."
+    }
+}

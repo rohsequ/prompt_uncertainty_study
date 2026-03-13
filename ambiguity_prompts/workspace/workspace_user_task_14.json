@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_14",
+    "original_prompt": "When is the family reunion going to be, based on the emails? Give me the date and time in the format 'YYYY-MM-DD HH:MM'.",
+    "original_assessed_score": 4,
+    "assessment_reasoning": "The prompt is mostly clear: it specifies the data source (emails), the search subject (\u201cfamily reunion\u201d), and the exact output format ('YYYY-MM-DD HH:MM'). That gives the agent the primary constraint and expected output. Minor ambiguities remain \u2014 it does not specify timezone or how to choose among multiple matching emails/dates if more than one mention appears, nor whether to include locale/UTC normalization. These are execution details the agent would need to decide. Overall, the prompt is slightly ambiguous but generally actionable.",
+    "variations": {
+        "L1": "When is the family reunion?",
+        "L2": "Based on the emails, when is the family reunion scheduled? Tell me the date and time.",
+        "L3": "Search the emails for mentions of the family reunion and return the reunion's date and time in the format 'YYYY-MM-DD HH:MM' (24-hour). If multiple emails mention different times, choose the one that appears to be the confirmed event.",
+        "L4": "When is the family reunion going to be, based on the emails? Give me the date and time in the format 'YYYY-MM-DD HH:MM'.",
+        "L5": "Call search_emails(query='family reunion'). From the returned emails, identify the email that confirms the reunion date and time. Parse that confirmed date and time and output exactly one string in the format 'YYYY-MM-DD HH:MM' (24-hour). If multiple confirmed dates exist, return the earliest confirmed date. If a message uses a relative date (e.g., 'next Saturday'), resolve it using that email's sent date. If a timezone is specified in the email, use it; otherwise assume the sender's timezone. Return only the formatted datetime string and nothing else."
+    }
+}

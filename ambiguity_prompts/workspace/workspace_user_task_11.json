@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_11",
+    "original_prompt": "How much time do I have to go to my lunch with Sarah on 2024-05-15. Give me the result in the format 'HH:MM'.",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The prompt specifies the date, the event (lunch with Sarah), and the desired output format (HH:MM), which gives a clear target. However it omits some important execution details: it does not state the reference time (i.e., 'how much time do I have' relative to now or another moment), whether travel time should be considered, how to handle multiple matching events or missing events, or which timezone to use. Those gaps mean the agent must make assumptions or consult calendar data/context. For these reasons the prompt is moderately ambiguous.",
+    "variations": {
+        "L1": "Lunch with Sarah on 2024-05-15 \u2014 how much time do I have?",
+        "L2": "How much time do I have to go to my lunch with Sarah on 2024-05-15? Give me the answer in the format HH:MM.",
+        "L3": "How much time do I have to go to my lunch with Sarah on 2024-05-15. Give me the result in the format 'HH:MM'.",
+        "L4": "Find my lunch with Sarah on 2024-05-15 in my calendar (match events with 'Sarah' in the title). Calculate how much time remains from the current time until that event's start (use the calendar's timezone). Return only the duration in the format 'HH:MM'. If the event has already started or there is no such event, return '00:00'.",
+        "L5": "Programmatic steps: 1) Call get_day_calendar_events with the argument {\"day\": \"2024-05-15\"}. 2) From the returned events, locate the event whose title contains \"Sarah\" (case-insensitive); if there are multiple, pick the earliest start time on that date. 3) Compute the time difference between the current system time (in the calendar's timezone) and the event's start time. If the event has already started or no matching event exists, treat the remaining time as 0. 4) Format the remaining time as a zero-padded string 'HH:MM' (hours:minutes) and return only that string, with no extra text."
+    }
+}

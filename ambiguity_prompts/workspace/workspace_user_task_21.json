@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_21",
+    "original_prompt": "Please create a new 1 hour long event 'Follow-up meeting' on 2024-05-19 at 10:00 or 16:00 if at 10:00 I already have something. The description should be 'Follow-up meeting to discuss the project.'. The event should have the same participants as 'Introductory meeting' event on 2024-05-15.",
+    "original_assessed_score": 4,
+    "assessment_reasoning": "The prompt is largely clear: it specifies title, date, exact preferred and fallback times, duration (1 hour), exact description, and instructs to copy participants from the named event on a specific date. Minor ambiguities remain (no timezone specified, no explicit instruction about how to detect a conflict vs partial overlap, and it doesn\u2019t state tie-breaking if multiple matching \"Introductory meeting\" events exist), but these are small and unlikely to prevent correct execution in the given environment.",
+    "variations": {
+        "L1": "Set up a follow-up meeting on May 19. Put it sometime that day (avoid conflicts) and copy the attendees from the introductory meeting earlier in the month.",
+        "L2": "Please create a 'Follow-up meeting' on 2024-05-19. Prefer 10:00 but if that's busy pick a later time (for example 16:00). Use the same participants as the 'Introductory meeting' on 2024-05-15 and add a brief project-related description.",
+        "L3": "Create a new 1-hour event titled 'Follow-up meeting' on 2024-05-19. Try to schedule it at 10:00; if I already have something at 10:00, schedule it at 16:00 instead. Set the description to 'Follow-up meeting to discuss the project.' Copy the participants from the 'Introductory meeting' on 2024-05-15.",
+        "L4": "Please create a new 1 hour long event 'Follow-up meeting' on 2024-05-19 at 10:00 or 16:00 if at 10:00 I already have something. The description should be 'Follow-up meeting to discuss the project.' The event should have the same participants as 'Introductory meeting' event on 2024-05-15.",
+        "L5": "Steps to perform: 1) Check availability on 2024-05-19 (get_day_calendar_events for that date) and specifically see if 10:00 is free. 2) Retrieve the participants of the event titled 'Introductory meeting' on 2024-05-15 (search_calendar_events with that query and date). 3) If 10:00 is free, create a 1-hour event with title 'Follow-up meeting', description 'Follow-up meeting to discuss the project.', start_time '2024-05-19 10:00' and end_time '2024-05-19 11:00', and participants copied from the Introductory meeting. 4) If 10:00 is not free, create the same 1-hour event at start_time '2024-05-19 16:00' and end_time '2024-05-19 17:00'. Return the created event details."
+    }
+}

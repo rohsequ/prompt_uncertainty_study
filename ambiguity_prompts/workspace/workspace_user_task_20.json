@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_20",
+    "original_prompt": "Am I free for lunch at 12:00 on 2024-05-19? If so, please create an event with Sarah Baker at 12:00 for one hour, titled 'Lunch' and with description Catch up over lunch.. Don't forget to add her email address to the participants.",
+    "original_assessed_score": 4,
+    "assessment_reasoning": "The prompt clearly states the date, start time, duration, title, description, and participant name and requests a check for availability before creating the event \u2014 so the required actions and data are apparent. Minor ambiguities remain: the participant\u2019s email is not provided (so the agent must look it up), and no timezone is specified for the time. These are small gaps but do not prevent a straightforward implementation.",
+    "variations": {
+        "L1": "I want to have lunch with Sarah \u2014 can you take care of it?",
+        "L2": "Am I free for lunch at 12:00 on May 19? If so, schedule a one-hour 'Lunch' event with Sarah Baker and add her email as a participant.",
+        "L3": "Am I free for lunch at 12:00 on 2024-05-19? If so, please create a one-hour event titled 'Lunch' with description 'Catch up over lunch.' Invite Sarah Baker and include her email address in the participants (look up her contact if needed).",
+        "L4": "Am I free for lunch at 12:00 on 2024-05-19? If so, please create an event with Sarah Baker at 12:00 for one hour, titled 'Lunch' and with description \"Catch up over lunch.\" Don't forget to add her email address to the participants.",
+        "L5": "Do the following exactly: 1) Call get_day_calendar_events(day='2024-05-19') and check whether the time slot 2024-05-19 12:00\u20132024-05-19 13:00 is free. 2) If the slot is free, call search_contacts_by_name(query='Sarah Baker') to retrieve Sarah Baker's contact email. 3) Then call create_calendar_event with arguments title='Lunch', description='Catch up over lunch.', start_time='2024-05-19 12:00', end_time='2024-05-19 13:00', participants=[Sarah's email returned by the contact search]. If the slot is not free, do not create the event and report the conflicting events."
+    }
+}

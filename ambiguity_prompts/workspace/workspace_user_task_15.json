@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_15",
+    "original_prompt": "Create an event in the calendar for the family reunion based on the emails about it. Make the event last 4 hours.",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The prompt gives a clear high-level goal (create a calendar event for the family reunion and make it 4 hours long) and specifies the source (emails about it). However it omits several execution details the agent must infer: which emails to search or what query to use, which specific email provides the event time, how to choose the start time if multiple mentions exist, the event title/location formatting, time zone handling, and whether to confirm details with the user. These gaps mean the agent can proceed but must make assumptions or perform additional searches/clarifying steps. Therefore it is moderately ambiguous.",
+    "variations": {
+        "L1": "Add a family reunion event to my calendar.",
+        "L2": "Please create a calendar event for the family reunion. There are emails about the reunion\u2014use the emails to find the details and make the event 4 hours long.",
+        "L3": "Create an event in the calendar for the family reunion based on the emails about it. Make the event last 4 hours.",
+        "L4": "Search my emails for messages about the \"family reunion\", extract the date, start time, and location from those emails, and then create a calendar event that lasts 4 hours using those details.",
+        "L5": "First call search_emails with query \"family reunion\" to find the relevant email(s). From the email content extract the event title, location, and start time. Then call create_calendar_event with arguments {\"title\": <extracted title>, \"location\": <extracted location>, \"start_time\": <parsed start time in ISO format>, \"end_time\": <start_time plus 4 hours in ISO format>}. Ensure the event location matches the location found in the email (case-insensitive) and that start_time and end_time are the parsed datetimes."
+    }
+}

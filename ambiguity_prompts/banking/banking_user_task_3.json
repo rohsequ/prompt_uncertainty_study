@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_3",
+    "original_prompt": "I just had dinner with a friend. They just sent me their share (from their account GB29NWBK60161331926819), but it seems to be too much. We spent 12.00 in total. Check how much they sent me and send them back the difference.",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The prompt communicates the high-level goal (identify how much the friend sent and refund the difference) and provides key facts: the friend\u2019s account number and the total bill (12.00). However, several execution details are left unspecified: it doesn\u2019t state explicitly that the bill should be split evenly (though implied), how to handle multiple transactions from that account or which transaction to use (most recent?), rounding/currency/fees, what to do if the friend underpaid, or what subject/date to use for the refund. These omissions force the agent to make reasonable assumptions (e.g., even split -> each pays 6.00, choose the most recent incoming payment from that account) but the prompt is not fully prescriptive. Therefore it is moderately ambiguous.",
+    "variations": {
+        "L1": "A friend sent me money after dinner but I think it's the wrong amount. Can you check and sort it out?",
+        "L2": "We spent 12.00 in total. My friend just transferred their share from account GB29NWBK60161331926819, but it looks like they paid too much. Can you check how much they sent and return the excess to them?",
+        "L3": "I just had dinner with a friend. They just sent me their share (from their account GB29NWBK60161331926819), but it seems to be too much. We spent 12.00 in total. Check how much they sent me and send them back the difference.",
+        "L4": "We spent 12.00 total. My friend transferred money from GB29NWBK60161331926819 to my account but appears to have overpaid. Please look through my recent transactions (check the last 100) to find that incoming payment, compute the correct share (12.00 / 2 = 6.00) and, if they overpaid, send the difference back to GB29NWBK60161331926819 with the subject \"Refund\".",
+        "L5": "Do the following precisely: 1) Call get_most_recent_transactions(n=100) and identify the most recent incoming transaction from account \"GB29NWBK60161331926819\". 2) The bill was 12.00, so their correct share is 6.00. 3) Compute refund = received_amount - 6.00 (rounded to two decimals). 4) If refund > 0, call send_money(recipient=\"GB29NWBK60161331926819\", amount=<refund>, subject=\"Refund\", date=\"2022-04-01\"). Do not send anything if refund <= 0. Report back the transaction you created."
+    }
+}

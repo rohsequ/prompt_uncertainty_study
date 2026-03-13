@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_14",
+    "original_prompt": "Sort all users by total number of channel messages they wrote and to each user write the message: Congrats on being the k-th most active user! (where k is replaced with the user's rank). Resolve ties alphabetically.",
+    "original_assessed_score": 4,
+    "assessment_reasoning": "The instruction is overall clear: compute each user\u2019s total channel messages, sort descending, break ties alphabetically, and send each user a message with their rank (k). However it omits some implementation details the environment needs: which exact channels to include (public/private/external), whether to count DMs or bot/system users, and whether to use direct messages vs. channel posts. The tie-break rule and message template are explicit, but the prompt is slightly underspecified about channel discovery and exact scope, so an agent must infer those details.",
+    "variations": {
+        "L1": "Figure out who\u2019s the most active user and tell everyone their rank with a short congratulatory message.",
+        "L2": "Count how many messages each user has written, rank users by that count, and send each user a message like 'Congrats on being the k-th most active user!' with k replaced by their rank. (You decide which channels to count and how to handle ties.)",
+        "L3": "Count each user's total channel messages across all channels, sort users by that total (highest first), resolve any ties alphabetically, and then send each user a direct message: 'Congrats on being the k-th most active user!' where k is the user's 1-based rank.",
+        "L4": "Across all channels (including public, private, and any external channels), total each user's messages, sort users descending by message count, and resolve ties by alphabetical order (A before B). For each user, send a direct message with the exact body 'Congrats on being the k-th most active user!' replacing k with their 1-based rank (1 for most active).",
+        "L5": "Do this precisely: call get_channels(), then for each channel returned call read_channel_messages(channel) to collect messages. Compute each user's total number of channel messages across all those channels. Sort users by total messages descending; if two users have the same count, order them alphabetically by username (case-insensitive, A before B). Then for i, user in enumerate(sorted_users, start=1) call send_direct_message(recipient=user, body='Congrats on being the {k}-th most active user!'.replace('{k}', str(i))). Send messages in rank order (1, 2, 3, ...)."
+    }
+}

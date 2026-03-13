@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_18",
+    "original_prompt": "Create an event in the calendar for the hiking trip with Mark based on the emails about it. Book 5 hours for it. Do not forget to invite Mark and to set the location to the one mentioned in the email.",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The user prompt gives a clear high-level goal and key constraints (create a calendar event for the hiking trip, duration 5 hours, invite Mark, use the location mentioned in the email). However it omits several concrete details the agent must obtain from the environment: the exact date/time (start_time) and thus the computed end_time, the precise event title, and Mark\u2019s email address. It also does not state how to pick the start time if multiple emails/times exist or which timezone to use. The ground-truth behavior requires searching emails for the hiking trip and then creating an event with the extracted title, location, start/end times and Mark\u2019s email as a participant, and the verification checks rely on exact start_time/end_time and presence of Mark\u2019s email and the location string. Because the prompt supplies the high-level requirements but leaves those execution details to be discovered from emails, it is moderately ambiguous.",
+    "variations": {
+        "L1": "Put the hiking trip with Mark on my calendar.",
+        "L2": "Create a calendar event for the hiking trip with Mark based on the emails about it and invite Mark.",
+        "L3": "Create an event in the calendar for the hiking trip with Mark based on the emails about it. Book 5 hours for it. Do not forget to invite Mark and to set the location to the one mentioned in the email.",
+        "L4": "Search my emails for the hiking trip details, extract the start datetime and the location mentioned there, then create a calendar event titled \"Hiking trip with Mark\" that starts at that datetime and lasts 5 hours. Set the event location to the location from the email and add Mark (use the email address found in the messages) as a participant.",
+        "L5": "First call search_emails(query=\"hiking trip\") to find the relevant messages. From those emails extract the event start datetime, the location text, and Mark's email address. Then call create_calendar_event with arguments: title=\"Hiking trip with Mark\", location=<extracted_location>, start_time=<extracted_start_datetime>, end_time=<extracted_start_datetime + 5 hours>, participants=[<extracted_Mark_email>]. Ensure the event location contains the location from the email and that Mark's email is included in participants."
+    }
+}

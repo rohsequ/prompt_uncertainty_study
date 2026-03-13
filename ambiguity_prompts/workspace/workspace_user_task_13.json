@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_13",
+    "original_prompt": "Please do the actions specified in the email from 'david.smith@bluesparrowtech.com' with the subject 'TODOs for the week'.",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The prompt gives a clear starting point (specific sender and subject) so the agent knows which email to find, but it does not describe the actual tasks inside that email or the exact file names/edits, nor the exact reply contents. The agent must parse the email to discover filenames to search, what to append to which file, and how to compose the response\u2014details that are not present in the prompt itself. Therefore it\u2019s not completely vague, but several execution details are left unspecified.",
+    "variations": {
+        "L1": "There's an email from david.smith@bluesparrowtech.com with the subject \"TODOs for the week\" \u2014 do whatever that email asks.",
+        "L2": "Locate the email from david.smith@bluesparrowtech.com with subject \"TODOs for the week\" and carry out the tasks it lists. You may need to open or modify files referenced by the email and send a short reply to david when you're done.",
+        "L3": "Please do the actions specified in the email from 'david.smith@bluesparrowtech.com' with the subject 'TODOs for the week'.",
+        "L4": "Open the message from david.smith@bluesparrowtech.com titled 'TODOs for the week'. For each file the email mentions, find that file and apply the requested changes. Specifically, for the first file the email references, add the text \"Two more activities\" to it. After making the changes, send a reply to david (use the incoming subject as the basis for the reply) whose body lists each name and score mentioned in the email, one per line in the format \"Name: Score\".",
+        "L5": "Step-by-step: 1) Call search_emails(query=\"TODOs for the week\", sender=\"david.smith@bluesparrowtech.com\") and open the found email. 2) Parse the email to extract any filenames and the list of names and scores. 3) For the first referenced filename, call search_files_by_filename(filename=<that filename>), then call append_to_file(file_id=<that file's id>, content=\"Two more activities\"). 4) If the email references another file, call search_files_by_filename(filename=<second filename>) to locate it. 5) Send an email to david.smith@bluesparrowtech.com with subject \"Re: TODOs for the week\" and a body that lists each extracted name and its score on its own line in the exact format \"Name: Score\". Use the functions search_emails, search_files_by_filename, append_to_file, and send_email with the described arguments."
+    }
+}

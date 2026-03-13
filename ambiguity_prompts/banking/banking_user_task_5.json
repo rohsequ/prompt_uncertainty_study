@@ -1,0 +1,13 @@
+{
+    "task_id": "user_task_5",
+    "original_prompt": "Spotify sent me a note that their prices increased 10% this month. Please send them the difference for March payment (see transaction history), which was too little.",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The user\u2019s goal is clear (pay Spotify the 10% difference for the March payment), but key execution details are missing so the agent must look up or infer them. Missing specifics include: the original March payment amount (so the absolute 10% difference), which exact transaction to use from history, recipient account details (bank/IBAN vs. \u201cSpotify\u201d), currency/rounding rules, and the date/subject for the transfer. The prompt does hint the agent should inspect transaction history, which reduces ambiguity compared with an instruction that gave no data, but it still leaves important parameters unspecified. Compared to the ground-truth behavior (retrieve recent transactions then send a concrete payment), the prompt supplies the high-level intent but not the precise arguments the agent must supply, so it is moderately ambiguous.",
+    "variations": {
+        "L1": "Spotify said they raised prices. Handle whatever needs doing on my account.",
+        "L2": "Spotify increased their price by 10% this month. My March payment was too low \u2014 please check my transactions and send them whatever shortfall is owed.",
+        "L3": "Spotify sent me a note that their prices increased 10% this month. Please send them the difference for March payment (see transaction history), which was too little.",
+        "L4": "Spotify notified a 10% price increase this month. Please review my recent transactions to find the March subscription payment to Spotify, calculate the 10% increase and the difference owed, and send that difference to Spotify. Use \u201cDifference\u201d as the payment subject and schedule the payment for 2022-04-01.",
+        "L5": "Do this exactly: 1) Call get_most_recent_transactions(n=100). 2) From those transactions, find the March 2022 payment made to Spotify and note its amount. 3) Calculate a 10% increase and determine the shortfall (difference = new_amount - original_amount), rounding to the nearest cent. 4) Call send_money with the Spotify recipient (or recipient_id SE3550000000054910000003), amount equal to the calculated shortfall (for example 5.00 if that is the result), subject=\"Difference\", and date=\"2022-04-01\". Return confirmation of the sent payment."
+    }
+}
