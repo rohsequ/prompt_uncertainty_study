@@ -1,0 +1,475 @@
+{
+    "tools": [
+        {
+            "name": "search_emails",
+            "description": "Searches email subjects and bodies for a query. Optionally filters by a specific sender.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "The keyword to search for in email subjects and bodies"
+                    },
+                    "sender": {
+                        "type": "string",
+                        "description": "The email address of the sender to filter by (optional)",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "query"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "A string representation of the emails matching the query"
+            }
+        },
+        {
+            "name": "send_email",
+            "description": "Sends an email to a list of recipients",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "recipients": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "A list of email addresses to send the email to"
+                    },
+                    "subject": {
+                        "type": "string",
+                        "description": "The subject of the email"
+                    },
+                    "body": {
+                        "type": "string",
+                        "description": "The body content of the email"
+                    }
+                },
+                "required": [
+                    "recipients",
+                    "subject",
+                    "body"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Confirmation that the email was sent"
+            }
+        },
+        {
+            "name": "delete_email",
+            "description": "Deletes a specific email by its ID",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "email_id": {
+                        "type": "string",
+                        "description": "The unique identifier of the email to delete"
+                    }
+                },
+                "required": [
+                    "email_id"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Confirmation that the email was deleted"
+            }
+        },
+        {
+            "name": "get_sent_emails",
+            "description": "Retrieves a list of emails sent by the user",
+            "parameters": {
+                "type": "object",
+                "properties": {}
+            },
+            "returns": {
+                "type": "string",
+                "description": "A list of sent emails"
+            }
+        },
+        {
+            "name": "get_received_emails",
+            "description": "Retrieves a list of emails received by the user",
+            "parameters": {
+                "type": "object",
+                "properties": {}
+            },
+            "returns": {
+                "type": "string",
+                "description": "A list of received emails"
+            }
+        },
+        {
+            "name": "get_unread_emails",
+            "description": "Retrieves a list of unread emails and marks them as read",
+            "parameters": {
+                "type": "object",
+                "properties": {}
+            },
+            "returns": {
+                "type": "string",
+                "description": "A list of unread emails"
+            }
+        },
+        {
+            "name": "get_draft_emails",
+            "description": "Retrieves a list of draft emails",
+            "parameters": {
+                "type": "object",
+                "properties": {}
+            },
+            "returns": {
+                "type": "string",
+                "description": "A list of draft emails"
+            }
+        },
+        {
+            "name": "search_contacts_by_name",
+            "description": "Searches for a contact by their name",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "The name to search for in contacts"
+                    }
+                },
+                "required": [
+                    "query"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "The contact details found"
+            }
+        },
+        {
+            "name": "search_contacts_by_email",
+            "description": "Searches for a contact by their email address",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "The email address to search for in contacts"
+                    }
+                },
+                "required": [
+                    "query"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "The contact details found"
+            }
+        },
+        {
+            "name": "get_current_day",
+            "description": "Gets the current simulation date",
+            "parameters": {
+                "type": "object",
+                "properties": {}
+            },
+            "returns": {
+                "type": "string",
+                "description": "The current date in YYYY-MM-DD format"
+            }
+        },
+        {
+            "name": "search_calendar_events",
+            "description": "Searches calendar events by query and optional date",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "The text to search for in event titles or descriptions"
+                    },
+                    "date": {
+                        "type": "string",
+                        "description": "The specific date to filter events by (YYYY-MM-DD)",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "query"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "A list of matching calendar events"
+            }
+        },
+        {
+            "name": "get_day_calendar_events",
+            "description": "Retrieves all calendar events for a specific day",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "day": {
+                        "type": "string",
+                        "description": "The day to retrieve events for (YYYY-MM-DD)"
+                    }
+                },
+                "required": [
+                    "day"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "A list of events on that day"
+            }
+        },
+        {
+            "name": "create_calendar_event",
+            "description": "Creates a new calendar event",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the event"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The description of the event"
+                    },
+                    "start_time": {
+                        "type": "string",
+                        "description": "The start time (YYYY-MM-DD HH:MM:SS)"
+                    },
+                    "end_time": {
+                        "type": "string",
+                        "description": "The end time (YYYY-MM-DD HH:MM:SS)"
+                    },
+                    "location": {
+                        "type": "string",
+                        "description": "The location of the event (optional)",
+                        "nullable": true
+                    },
+                    "participants": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "A list of email addresses to invite (optional)",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "title",
+                    "description",
+                    "start_time",
+                    "end_time"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Confirmation of the created event"
+            }
+        },
+        {
+            "name": "cancel_calendar_event",
+            "description": "Cancels (deletes) a calendar event",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "event_id": {
+                        "type": "string",
+                        "description": "The ID of the event to cancel"
+                    }
+                },
+                "required": [
+                    "event_id"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Confirmation that the event was cancelled"
+            }
+        },
+        {
+            "name": "reschedule_calendar_event",
+            "description": "Reschedules an existing calendar event to new times",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "event_id": {
+                        "type": "string",
+                        "description": "The ID of the event to reschedule"
+                    },
+                    "new_start_time": {
+                        "type": "string",
+                        "description": "The new start time (YYYY-MM-DD HH:MM:SS)"
+                    },
+                    "new_end_time": {
+                        "type": "string",
+                        "description": "The new end time (YYYY-MM-DD HH:MM:SS)"
+                    }
+                },
+                "required": [
+                    "event_id",
+                    "new_start_time",
+                    "new_end_time"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Confirmation that the event was rescheduled"
+            }
+        },
+        {
+            "name": "add_calendar_event_participants",
+            "description": "Adds participants to an existing calendar event",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "event_id": {
+                        "type": "string",
+                        "description": "The ID of the event"
+                    },
+                    "participants": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "A list of email addresses to add"
+                    }
+                },
+                "required": [
+                    "event_id",
+                    "participants"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Confirmation that participants were added"
+            }
+        },
+        {
+            "name": "list_files",
+            "description": "Lists all files in the cloud drive",
+            "parameters": {
+                "type": "object",
+                "properties": {}
+            },
+            "returns": {
+                "type": "string",
+                "description": "A list of all files"
+            }
+        },
+        {
+            "name": "search_files_by_filename",
+            "description": "Searches for files by their filename",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "filename": {
+                        "type": "string",
+                        "description": "The filename query to search for"
+                    }
+                },
+                "required": [
+                    "filename"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "A list of matching files"
+            }
+        },
+        {
+            "name": "create_file",
+            "description": "Creates a new file in the cloud drive",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "filename": {
+                        "type": "string",
+                        "description": "The name of the file to create"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "The content to write to the file"
+                    }
+                },
+                "required": [
+                    "filename",
+                    "content"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Confirmation that the file was created"
+            }
+        },
+        {
+            "name": "delete_file",
+            "description": "Deletes a file from the cloud drive",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "file_id": {
+                        "type": "string",
+                        "description": "The ID of the file to delete"
+                    }
+                },
+                "required": [
+                    "file_id"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Confirmation that the file was deleted"
+            }
+        },
+        {
+            "name": "get_file_by_id",
+            "description": "Retrieves the content of a file by its ID",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "file_id": {
+                        "type": "string",
+                        "description": "The ID of the file to read"
+                    }
+                },
+                "required": [
+                    "file_id"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "The content of the file"
+            }
+        },
+        {
+            "name": "append_to_file",
+            "description": "Appends content to the end of an existing file",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "file_id": {
+                        "type": "string",
+                        "description": "The ID of the file to append to"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "The content to append"
+                    }
+                },
+                "required": [
+                    "file_id",
+                    "content"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Confirmation that the content was appended"
+            }
+        }
+    ]
+}

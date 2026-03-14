@@ -1,0 +1,755 @@
+{
+  "tools": [
+    {
+      "name": "get_user_information",
+      "description": "Get the user information (first name, last name, ID number, email, phone number, address, passport number, bank account number, credit card number) used for bookings.",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "returns": {
+        "type": "object",
+        "description": "A dictionary of user fields keyed by display name (e.g., 'Phone Number').",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "get_all_hotels_in_city",
+      "description": "Get all hotels in the given city.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string",
+            "description": "The city to get hotels from."
+          }
+        },
+        "required": [
+          "city"
+        ]
+      },
+      "returns": {
+        "type": "string",
+        "description": "A formatted string listing hotel names."
+      }
+    },
+    {
+      "name": "get_hotels_prices",
+      "description": "Get price ranges for the given hotels (min/max nightly price).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "hotel_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Hotel names to fetch price ranges for."
+          }
+        },
+        "required": [
+          "hotel_names"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from hotel name to a human-readable price range string.",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "get_hotels_address",
+      "description": "Get the address of the given hotel.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "hotel_name": {
+            "type": "string",
+            "description": "The hotel name to get the address for."
+          }
+        },
+        "required": [
+          "hotel_name"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from hotel name to address (usually a single entry).",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "get_rating_reviews_for_hotels",
+      "description": "Get the rating and reviews for the given hotels.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "hotel_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Hotel names to fetch rating and reviews for."
+          }
+        },
+        "required": [
+          "hotel_names"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from hotel name to a formatted string containing rating and reviews.",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "get_all_restaurants_in_city",
+      "description": "Get all restaurants in the given city.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string",
+            "description": "The city to get restaurants from."
+          }
+        },
+        "required": [
+          "city"
+        ]
+      },
+      "returns": {
+        "type": "string",
+        "description": "A formatted string listing restaurant names."
+      }
+    },
+    {
+      "name": "get_restaurants_address",
+      "description": "Get the addresses of the given restaurants.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "restaurant_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Restaurant names to fetch addresses for."
+          }
+        },
+        "required": [
+          "restaurant_names"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from restaurant name to address.",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "get_rating_reviews_for_restaurants",
+      "description": "Get the rating and reviews for the given restaurants.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "restaurant_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Restaurant names to fetch rating and reviews for."
+          }
+        },
+        "required": [
+          "restaurant_names"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from restaurant name to a formatted string containing rating and reviews.",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "get_cuisine_type_for_restaurants",
+      "description": "Get the cuisine type for the given restaurants (e.g., Italian, Chinese, Indian, Japanese).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "restaurant_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Restaurant names to fetch cuisine types for."
+          }
+        },
+        "required": [
+          "restaurant_names"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from restaurant name to cuisine type.",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "get_dietary_restrictions_for_all_restaurants",
+      "description": "Get dietary restrictions for the given restaurants (e.g., Vegetarian, Vegan, Gluten-free, Dairy-free).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "restaurant_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Restaurant names to fetch dietary restrictions for."
+          }
+        },
+        "required": [
+          "restaurant_names"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from restaurant name to dietary restrictions string.",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "get_contact_information_for_restaurants",
+      "description": "Get contact information for the given restaurants.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "restaurant_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Restaurant names to fetch contact info for."
+          }
+        },
+        "required": [
+          "restaurant_names"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from restaurant name to contact information.",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "get_price_for_restaurants",
+      "description": "Get the price per person for the given restaurants.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "restaurant_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Restaurant names to fetch per-person prices for."
+          }
+        },
+        "required": [
+          "restaurant_names"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from restaurant name to price per person.",
+        "additionalProperties": {
+          "type": "number"
+        }
+      }
+    },
+    {
+      "name": "check_restaurant_opening_hours",
+      "description": "Get the operating hours for the given restaurants (to check if a restaurant is open).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "restaurant_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Restaurant names to fetch operating hours for."
+          }
+        },
+        "required": [
+          "restaurant_names"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from restaurant name to operating hours string.",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "get_all_car_rental_companies_in_city",
+      "description": "Get all car rental companies in the given city.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string",
+            "description": "The city to get car rental companies from."
+          }
+        },
+        "required": [
+          "city"
+        ]
+      },
+      "returns": {
+        "type": "string",
+        "description": "A formatted string listing car rental company names."
+      }
+    },
+    {
+      "name": "get_car_types_available",
+      "description": "Get the car types available for the given car rental companies (e.g., Sedan, SUV, Convertible, Truck).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "company_name": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Car rental company names to query."
+          }
+        },
+        "required": [
+          "company_name"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from company name to list of available car types.",
+        "additionalProperties": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "get_rating_reviews_for_car_rental",
+      "description": "Get the rating and reviews for the given car rental companies.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "company_name": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Car rental company names to fetch rating/reviews for."
+          }
+        },
+        "required": [
+          "company_name"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from company name to a formatted string containing rating and reviews.",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "get_car_rental_address",
+      "description": "Get addresses for the given car rental companies.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "company_name": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Car rental company names to fetch addresses for."
+          }
+        },
+        "required": [
+          "company_name"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from company name to address.",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "get_car_fuel_options",
+      "description": "Get fuel options for the given car rental companies (e.g., Regular, Premium, Electric).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "company_name": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Car rental company names to fetch fuel options for."
+          }
+        },
+        "required": [
+          "company_name"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from company name to list of fuel options.",
+        "additionalProperties": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "get_car_price_per_day",
+      "description": "Get the price per day for the given car rental companies.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "company_name": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Car rental company names to fetch daily prices for."
+          }
+        },
+        "required": [
+          "company_name"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "Mapping from company name to price per day.",
+        "additionalProperties": {
+          "type": "number"
+        }
+      }
+    },
+    {
+      "name": "reserve_hotel",
+      "description": "Makes a reservation for a hotel with the provided details.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "hotel": {
+            "type": "string",
+            "description": "Hotel name (must only be the name of the hotel)."
+          },
+          "start_day": {
+            "type": "string",
+            "description": "Check-in day in ISO format 'YYYY-MM-DD'."
+          },
+          "end_day": {
+            "type": "string",
+            "description": "Check-out day in ISO format 'YYYY-MM-DD'."
+          }
+        },
+        "required": [
+          "hotel",
+          "start_day",
+          "end_day"
+        ]
+      },
+      "returns": {
+        "type": "string",
+        "description": "A confirmation message for the hotel reservation."
+      }
+    },
+    {
+      "name": "reserve_restaurant",
+      "description": "Makes a reservation for a restaurant with the provided details; end time is set to two hours after start time.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "restaurant": {
+            "type": "string",
+            "description": "Restaurant name (must only be the name of the restaurant)."
+          },
+          "start_time": {
+            "type": "string",
+            "description": "Reservation start time in ISO format 'YYYY-MM-DD HH:MM'."
+          }
+        },
+        "required": [
+          "restaurant",
+          "start_time"
+        ]
+      },
+      "returns": {
+        "type": "string",
+        "description": "A confirmation message for the restaurant reservation."
+      }
+    },
+    {
+      "name": "reserve_car_rental",
+      "description": "Makes a reservation for a car rental with the provided details.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "company": {
+            "type": "string",
+            "description": "Car rental company name (must only be the name of the company)."
+          },
+          "start_time": {
+            "type": "string",
+            "description": "Reservation start time in ISO format 'YYYY-MM-DD HH:MM'."
+          },
+          "end_time": {
+            "type": "string",
+            "description": "Reservation end time in ISO format 'YYYY-MM-DD HH:MM' (optional / nullable).",
+            "nullable": true
+          }
+        },
+        "required": [
+          "company",
+          "start_time"
+        ]
+      },
+      "returns": {
+        "type": "string",
+        "description": "A confirmation message for the car rental reservation."
+      }
+    },
+    {
+      "name": "get_flight_information",
+      "description": "Get flight information from the departure city to the arrival city.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "departure_city": {
+            "type": "string",
+            "description": "The city to depart from."
+          },
+          "arrival_city": {
+            "type": "string",
+            "description": "The city to arrive at."
+          }
+        },
+        "required": [
+          "departure_city",
+          "arrival_city"
+        ]
+      },
+      "returns": {
+        "type": "string",
+        "description": "A formatted string listing matching flights with airline, flight number, times, price, and contact info."
+      }
+    },
+    {
+      "name": "create_calendar_event",
+      "description": "Creates a new calendar event and adds it to the calendar. Sends an email to participants.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "The title of the event."
+          },
+          "start_time": {
+            "type": "string",
+            "description": "The start time of the event. Must be in format YYYY-MM-DD HH:MM."
+          },
+          "end_time": {
+            "type": "string",
+            "description": "The end time of the event. Must be in format YYYY-MM-DD HH:MM."
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the event."
+          },
+          "participants": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The list of participants' email addresses."
+          },
+          "location": {
+            "type": "string",
+            "description": "The location of the event."
+          }
+        },
+        "required": [
+          "title",
+          "start_time",
+          "end_time",
+          "description",
+          "participants"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "The created calendar event object."
+      }
+    },
+    {
+      "name": "search_calendar_events",
+      "description": "Searches calendar events that match the given query. If provided, filters by date.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The query string to search for in event titles and descriptions."
+          },
+          "date": {
+            "type": "string",
+            "description": "The date for which to search events. Must be in format YYYY-MM-DD.",
+            "nullable": true
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "returns": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        },
+        "description": "List of matching calendar events."
+      }
+    },
+    {
+      "name": "get_day_calendar_events",
+      "description": "Returns the appointments for the given day.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string",
+            "description": "The day for which to return the appointments. Must be in format YYYY-MM-DD."
+          }
+        },
+        "required": [
+          "day"
+        ]
+      },
+      "returns": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        },
+        "description": "List of calendar events for the day."
+      }
+    },
+    {
+      "name": "cancel_calendar_event",
+      "description": "Cancels the event with the given event_id.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "description": "The ID of the event to cancel."
+          }
+        },
+        "required": [
+          "event_id"
+        ]
+      },
+      "returns": {
+        "type": "string",
+        "description": "Confirmation message."
+      }
+    },
+    {
+      "name": "send_email",
+      "description": "Sends an email with the given body to the given recipients.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "recipients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The list of email addresses of the recipients."
+          },
+          "subject": {
+            "type": "string",
+            "description": "The subject of the email."
+          },
+          "body": {
+            "type": "string",
+            "description": "The body of the email."
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "List of attachments."
+          },
+          "cc": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of CC email addresses."
+          },
+          "bcc": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of BCC email addresses."
+          }
+        },
+        "required": [
+          "recipients",
+          "subject",
+          "body"
+        ]
+      },
+      "returns": {
+        "type": "object",
+        "description": "The sent email object."
+      }
+    }
+  ]
+}
