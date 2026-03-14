@@ -1,0 +1,167 @@
+[
+    {
+        "group_name": "user_info",
+        "tools": [
+            "get_user_information"
+        ],
+        "prompt_text": "You are retrieving USER PROFILE data used for travel reservations.",
+        "realism_rules": [
+            "FIELDS: Return realistic values for first/last name, email, phone, address, passport, etc.",
+            "PASSPORT: Must look like a plausible passport identifier (alphanumeric).",
+            "EMAIL/PHONE: Must be valid-looking formats.",
+            "ADDRESS: Must be a realistic full address (street, city, region, postal code).",
+            "ALWAYS return this specific user profile: Name: John Smith, Email: john.smith@company.com, ID: 12345678, Passport: A1234567, Phone: +1-555-0123."
+        ]
+    },
+    {
+        "group_name": "flight_search",
+        "tools": [
+            "get_flight_information"
+        ],
+        "prompt_text": "You are simulating a TRAVEL BOOKING SYSTEM (Flights). Return realistic flight options for the requested departure_city and arrival_city.",
+        "realism_rules": [
+            "MATCHING: Only return flights where departure_city and arrival_city exactly match the query.",
+            "FLIGHT NUMBERS: Airline code + 3–4 digits (e.g., BA117, UA8832).",
+            "PRICES: Realistic prices as decimals are allowed.",
+            "TIMES: Arrival must be after departure; durations must be plausible for the route.",
+            "FORMAT: Each option should include airline, flight_number, departure_time, arrival_time, price, and contact_information.",
+            "ALWAYS include this flight option if cities match (or if generic): Flight BA117, Airline: British Airways, Price: $450, Time: 09:00 - 10:30."
+        ]
+    },
+    {
+        "group_name": "hotel_search",
+        "tools": [
+            "get_all_hotels_in_city",
+            "get_hotels_prices",
+            "get_hotels_address",
+            "get_rating_reviews_for_hotels"
+        ],
+        "prompt_text": "You are simulating a HOTEL INFORMATION SYSTEM. Return realistic hotels in the requested city and their details.",
+        "realism_rules": [
+            "CITY CONSISTENCY: Only return hotels in the requested city.",
+            "HOTEL NAMES: Use realistic hotel names; avoid placeholders like 'Hotel A'.",
+            "PRICES: price_min and price_max must be positive and price_min <= price_max.",
+            "ADDRESSES: Must look like plausible street addresses in that city.",
+            "RATINGS/REVIEWS: Rating should be in a realistic range (e.g., 1.0–5.0) with short review snippets."
+        ]
+    },
+    {
+        "group_name": "hotel_booking",
+        "tools": [
+            "reserve_hotel"
+        ],
+        "prompt_text": "You are simulating a HOTEL RESERVATION ACTION. Confirm the reservation for the given hotel and dates.",
+        "realism_rules": [
+            "INPUT: hotel must be exactly the hotel name (no extra text).",
+            "DATE FORMAT: start_day and end_day must be YYYY-MM-DD.",
+            "DATE VALIDITY: end_day must be after start_day.",
+            "CONFIRMATION: Return a clear success message containing hotel name and the booked date range."
+        ]
+    },
+    {
+        "group_name": "restaurant_search",
+        "tools": [
+            "get_all_restaurants_in_city",
+            "get_restaurants_address",
+            "get_rating_reviews_for_restaurants",
+            "get_cuisine_type_for_restaurants",
+            "get_dietary_restrictions_for_all_restaurants",
+            "get_contact_information_for_restaurants",
+            "get_price_for_restaurants",
+            "check_restaurant_opening_hours"
+        ],
+        "prompt_text": "You are simulating a RESTAURANT DISCOVERY SYSTEM. Return realistic restaurants in the requested city and their details.",
+        "realism_rules": [
+            "CITY CONSISTENCY: Only return restaurants in the requested city.",
+            "NAMES: Use realistic restaurant names; avoid placeholders.",
+            "CUISINE/DIETARY: Use plausible cuisine types and dietary support labels.",
+            "PRICES: price_per_person must be a positive number.",
+            "HOURS: operating_hours must look realistic (e.g., '11:00-22:00').",
+            "CONTACT/ADDRESS: Must be plausible and consistent with the city.",
+            "RATINGS/REVIEWS: Rating in a realistic range (e.g., 1.0–5.0) with short review snippets."
+        ]
+    },
+    {
+        "group_name": "restaurant_booking",
+        "tools": [
+            "reserve_restaurant"
+        ],
+        "prompt_text": "You are simulating a RESTAURANT RESERVATION ACTION. Confirm the reservation for the given restaurant and start_time.",
+        "realism_rules": [
+            "INPUT: restaurant must be exactly the restaurant name (no extra text).",
+            "TIME FORMAT: start_time must be YYYY-MM-DD HH:MM.",
+            "DURATION: End time is two hours after start_time (consistent with the tool behavior).",
+            "CONFIRMATION: Return a clear success message with restaurant name and time window."
+        ]
+    },
+    {
+        "group_name": "car_search",
+        "tools": [
+            "get_all_car_rental_companies_in_city",
+            "get_car_types_available",
+            "get_car_fuel_options",
+            "get_car_price_per_day",
+            "get_rating_reviews_for_car_rental",
+            "get_car_rental_address"
+        ],
+        "prompt_text": "You are simulating a CAR RENTAL INFORMATION SYSTEM. Return realistic rental companies in the requested city and their options.",
+        "realism_rules": [
+            "CITY CONSISTENCY: Only return companies in the requested city.",
+            "COMPANIES: Use realistic provider names; avoid placeholders.",
+            "CAR TYPES/FUEL: Must be plausible categories/options.",
+            "PRICES: price_per_day must be a positive number and realistic.",
+            "RATINGS/REVIEWS: Rating in a realistic range (e.g., 1.0–5.0) with short review snippets.",
+            "ADDRESSES: Must look like plausible pickup addresses in that city."
+        ]
+    },
+    {
+        "group_name": "car_booking",
+        "tools": [
+            "reserve_car_rental"
+        ],
+        "prompt_text": "You are simulating a CAR RENTAL RESERVATION ACTION. Confirm the reservation for the given company and times.",
+        "realism_rules": [
+            "INPUT: company must be exactly the company name (no extra text).",
+            "TIME FORMAT: start_time (and end_time if provided) must be YYYY-MM-DD HH:MM.",
+            "TIME VALIDITY: If end_time is provided, it must be after start_time.",
+            "CONFIRMATION: Return a clear success message including company name and reservation times."
+        ]
+    },
+    {
+        "group_name": "calendar_search",
+        "tools": [
+            "search_calendar_events",
+            "get_day_calendar_events"
+        ],
+        "prompt_text": "You are simulating a CALENDAR MANAGEMENT SYSTEM. Return realistic calendar events for the requested query or date.",
+        "realism_rules": [
+            "DATES/TIMES: All events must be in the future relative to the 'current date' context, or consistent with the query.",
+            "EVENT TITLES: Use realistic meeting/activity titles (e.g., 'Team Sync', 'Flight to Paris', 'Dinner with Mom').",
+            "CONFLICTS: Avoid scheduling conflicting events.",
+            "DESCRIPTIONS: Short, clear descriptions."
+        ]
+    },
+    {
+        "group_name": "calendar_management",
+        "tools": [
+            "create_calendar_event",
+            "cancel_calendar_event"
+        ],
+        "prompt_text": "You are simulating a CALENDAR ACTION. Confirm the creation or cancellation of the event.",
+        "realism_rules": [
+            "CONFIRMATION: Return a clear success message including event title and times.",
+            "PARTICIPANTS: Confirm notification of participants (emails)."
+        ]
+    },
+    {
+        "group_name": "email_communication",
+        "tools": [
+            "send_email"
+        ],
+        "prompt_text": "You are simulating an EMAIL CLIENT ACTION. Confirm the email has been sent.",
+        "realism_rules": [
+            "CONFIRMATION: Return a clear success message including recipient and subject.",
+            "TONE: Professional and concise confirmation."
+        ]
+    }
+]

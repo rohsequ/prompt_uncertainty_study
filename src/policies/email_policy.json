@@ -1,0 +1,237 @@
+{
+  "agent_type": "email",
+  "transitions": {
+    "__START__": [
+      "get_unread_emails",
+      "search_contacts_by_email",
+      "get_received_emails",
+      "get_draft_emails",
+      "search_emails",
+      "get_sent_emails",
+      "search_contacts_by_name",
+      "send_email",
+      "delete_email"
+    ],
+    "get_unread_emails": [
+      "search_contacts_by_name",
+      "send_email",
+      "search_emails",
+      "__END__",
+      "delete_email",
+      "get_received_emails",
+      "get_draft_emails"
+    ],
+    "search_contacts_by_name": [
+      "send_email",
+      "delete_email",
+      "get_unread_emails",
+      "search_contacts_by_email",
+      "search_emails",
+      "get_sent_emails",
+      "get_received_emails",
+      "__END__",
+      "get_draft_emails",
+      "search_contacts_by_name"
+    ],
+    "send_email": [
+      "__END__",
+      "get_draft_emails",
+      "get_sent_emails",
+      "delete_email",
+      "search_contacts_by_name",
+      "get_received_emails",
+      "get_unread_emails",
+      "send_email",
+      "search_emails",
+      "search_contacts_by_email"
+    ],
+    "search_contacts_by_email": [
+      "send_email",
+      "search_emails",
+      "__END__",
+      "delete_email",
+      "get_received_emails",
+      "search_contacts_by_email",
+      "search_contacts_by_name",
+      "get_sent_emails"
+    ],
+    "get_draft_emails": [
+      "__END__",
+      "send_email",
+      "search_contacts_by_name",
+      "search_emails",
+      "delete_email",
+      "get_sent_emails",
+      "search_contacts_by_email",
+      "get_received_emails"
+    ],
+    "get_received_emails": [
+      "search_emails",
+      "searchContacts_by_email",
+      "send_email",
+      "search_contacts_by_name",
+      "get_unread_emails",
+      "__END__",
+      "delete_email",
+      "search_contacts_by_email",
+      "get_sent_emails",
+      "get_draft_emails"
+    ],
+    "search_emails": [
+      "delete_email",
+      "get_unread_emails",
+      "__END__",
+      "get_received_emails",
+      "get_sent_emails",
+      "send_email",
+      "search_contacts_by_name",
+      "search_emails",
+      "search_contacts_by_email",
+      "get_draft_emails"
+    ],
+    "delete_email": [
+      "__END__",
+      "get_sent_emails",
+      "get_received_emails",
+      "delete_email",
+      "get_unread_emails",
+      "search_emails",
+      "get_draft_emails",
+      "send_email",
+      "search_contacts_by_name"
+    ],
+    "get_sent_emails": [
+      "__END__",
+      "search_contacts_by_name",
+      "send_email",
+      "search_emails",
+      "delete_email",
+      "get_received_emails",
+      "get_draft_emails",
+      "get_unread_emails",
+      "search_contacts_by_email"
+    ],
+    "searchContacts_by_email": [
+      "send_email"
+    ]
+  },
+  "tools": {
+    "search_emails": {
+      "description": "Searches email subjects and bodies. If sender is specified, it filters by that sender.",
+      "risk": "low",
+      "risk_profile": "RETRIEVAL_TOOL",
+      "requires_intent_check": false,
+      "arguments": {
+        "query": {
+          "type": "any",
+          "is_list": false,
+          "nullable": false
+        },
+        "sender": {
+          "type": "regex",
+          "pattern": "^[a-zA-Z0-9_\\-\\.@/\\s]+$",
+          "is_list": false,
+          "nullable": true
+        }
+      }
+    },
+    "send_email": {
+      "description": "Sends a new email to specified recipients",
+      "risk": "high",
+      "risk_profile": "ACTION_TOOL",
+      "requires_intent_check": true,
+      "arguments": {
+        "recipients": {
+          "type": "regex",
+          "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+          "is_list": true,
+          "nullable": false
+        },
+        "subject": {
+          "type": "any",
+          "is_list": false,
+          "nullable": false
+        },
+        "body": {
+          "type": "any",
+          "is_list": false,
+          "nullable": false
+        }
+      }
+    },
+    "delete_email": {
+      "description": "Deletes an email by its unique ID",
+      "risk": "high",
+      "risk_profile": "ACTION_TOOL",
+      "requires_intent_check": true,
+      "arguments": {
+        "email_id": {
+          "type": "regex",
+          "pattern": "^[a-zA-Z0-9_\\-\\.@/\\s]+$",
+          "is_list": false,
+          "nullable": false
+        }
+      }
+    },
+    "get_sent_emails": {
+      "description": "Retrieves a list of all emails sent by the user",
+      "risk": "low",
+      "risk_profile": "RETRIEVAL_TOOL",
+      "requires_intent_check": false,
+      "arguments": {}
+    },
+    "get_received_emails": {
+      "description": "Retrieves a list of all emails received by the user",
+      "risk": "low",
+      "risk_profile": "RETRIEVAL_TOOL",
+      "requires_intent_check": false,
+      "arguments": {}
+    },
+    "get_unread_emails": {
+      "description": "Retrieves a list of unread emails and marks them as read",
+      "risk": "low",
+      "risk_profile": "RETRIEVAL_TOOL",
+      "requires_intent_check": false,
+      "arguments": {}
+    },
+    "get_draft_emails": {
+      "description": "Retrieves a list of draft emails",
+      "risk": "low",
+      "risk_profile": "RETRIEVAL_TOOL",
+      "requires_intent_check": false,
+      "arguments": {}
+    },
+    "search_contacts_by_name": {
+      "description": "Searches the contact list for a person's name to find their email",
+      "risk": "low",
+      "risk_profile": "RETRIEVAL_TOOL",
+      "requires_intent_check": false,
+      "arguments": {
+        "query": {
+          "type": "any",
+          "is_list": false,
+          "nullable": false
+        }
+      }
+    },
+    "search_contacts_by_email": {
+      "description": "Searches the contact list for a specific email address",
+      "risk": "low",
+      "risk_profile": "RETRIEVAL_TOOL",
+      "requires_intent_check": false,
+      "arguments": {
+        "query": {
+          "type": "regex",
+          "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+          "is_list": false,
+          "nullable": false
+        }
+      }
+    }
+  },
+  "definitions": {},
+  "meta": {
+    "source": "Offline Policy Factory",
+    "generated_at": "2025-12-01T08:17:15.138364"
+  }
+}

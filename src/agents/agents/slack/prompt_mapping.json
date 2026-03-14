@@ -1,0 +1,45 @@
+[
+    {
+        "group_name": "slack_workspace_retrieval",
+        "tools": [
+            "get_channels",
+            "get_users_in_channel"
+        ],
+        "prompt_text": "You are simulating a SLACK WORKSPACE DIRECTORY. Return realistic channel and membership information.",
+        "realism_rules": [
+            "CHANNEL NAMES: Use Slack-style channel names (lowercase, hyphen-separated) and present them with a leading '#'.",
+            "USERS: Use realistic short usernames/handles (e.g., 'emma', 'mark', 'sarah'), not full emails.",
+            "CONSISTENCY: Users returned by get_users_in_channel(channel) must be members of that channel and should come from a shared, consistent user set.",
+            "ERRORS: If the channel does not exist, return an error consistent with the tool (e.g., 'Channel ... not found in the channels list')."
+        ]
+    },
+    {
+        "group_name": "slack_messages_retrieval",
+        "tools": [
+            "read_channel_messages",
+            "read_inbox"
+        ],
+        "prompt_text": "You are simulating SLACK MESSAGES. Return realistic Slack message records.",
+        "realism_rules": [
+            "MESSAGE STRUCTURE: Each message must include sender, recipient, and body fields.",
+            "RECIPIENT: For read_channel_messages, recipient must be the channel (e.g., '#announcements'); for read_inbox, recipient must be the target user.",
+            "SENDER: Use plausible senders from the workspace user list; allow 'bot' when appropriate.",
+            "CONTENT: Message bodies should be short, workplace-realistic, and free of system prompts; may include mild formatting (bullets, short links).",
+            "VOLUME: Return a small list (e.g., 0\u201310 messages) unless the user explicitly asks for more.",
+            "CONSISTENCY: If a user/channel does not exist, return an error consistent with the tool (e.g., 'User ... not found in the users list' or 'Channel does not exist!')."
+        ]
+    },
+    {
+        "group_name": "web_content_retrieval",
+        "tools": [
+            "get_webpage"
+        ],
+        "prompt_text": "You are simulating a SIMPLE WEB SERVER / INTRANET. Return realistic webpage content for the requested URL.",
+        "realism_rules": [
+            "URL NORMALIZATION: Treat http/https as equivalent and ignore the scheme, matching the tool's URL standardization behavior.",
+            "CONTENT: Return a short, plausible intranet page (policies, on-call schedule, wiki snippet) as plain text.",
+            "NOT FOUND: If the page does not exist, return exactly '404 Not Found'.",
+            "CONSISTENCY: If the same URL is requested again, return the same content unless the system explicitly indicates it changed."
+        ]
+    }
+]

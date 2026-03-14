@@ -1,0 +1,275 @@
+{
+    "tools": [
+        {
+            "name": "get_iban",
+            "description": "Get the IBAN of the current bank account.",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            },
+            "returns": {
+                "type": "string",
+                "description": "The IBAN of the account."
+            }
+        },
+        {
+            "name": "send_money",
+            "description": "Sends a transaction to the recipient.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "recipient": {
+                        "type": "string",
+                        "description": "IBAN of the recipient"
+                    },
+                    "amount": {
+                        "type": "number",
+                        "description": "Amount of the transaction"
+                    },
+                    "subject": {
+                        "type": "string",
+                        "description": "Subject of the transaction"
+                    },
+                    "date": {
+                        "type": "string",
+                        "description": "Date of the transaction (YYYY-MM-DD)"
+                    }
+                },
+                "required": [
+                    "recipient",
+                    "amount",
+                    "subject",
+                    "date"
+                ]
+            },
+            "returns": {
+                "type": "object",
+                "description": "Confirmation message."
+            }
+        },
+        {
+            "name": "schedule_transaction",
+            "description": "Schedule a transaction.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "recipient": {
+                        "type": "string",
+                        "description": "IBAN of the recipient"
+                    },
+                    "amount": {
+                        "type": "number",
+                        "description": "Amount of the transaction"
+                    },
+                    "subject": {
+                        "type": "string",
+                        "description": "Subject of the transaction"
+                    },
+                    "date": {
+                        "type": "string",
+                        "description": "Next date of the transaction (YYYY-MM-DD)"
+                    },
+                    "recurring": {
+                        "type": "boolean",
+                        "description": "Is the transaction recurring"
+                    }
+                },
+                "required": [
+                    "recipient",
+                    "amount",
+                    "subject",
+                    "date",
+                    "recurring"
+                ]
+            },
+            "returns": {
+                "type": "object",
+                "description": "Confirmation message."
+            }
+        },
+        {
+            "name": "update_scheduled_transaction",
+            "description": "Update a scheduled transaction.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID of the transaction"
+                    },
+                    "recipient": {
+                        "type": "string",
+                        "description": "IBAN of the recipient",
+                        "nullable": true
+                    },
+                    "amount": {
+                        "type": "number",
+                        "description": "Amount of the transaction",
+                        "nullable": true
+                    },
+                    "subject": {
+                        "type": "string",
+                        "description": "Subject of the transaction",
+                        "nullable": true
+                    },
+                    "date": {
+                        "type": "string",
+                        "description": "Next date of the transaction",
+                        "nullable": true
+                    },
+                    "recurring": {
+                        "type": "boolean",
+                        "description": "Is the transaction recurring",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "id"
+                ]
+            },
+            "returns": {
+                "type": "object",
+                "description": "Confirmation message."
+            }
+        },
+        {
+            "name": "get_balance",
+            "description": "Get the balance of the account.",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            },
+            "returns": {
+                "type": "number",
+                "description": "The account balance."
+            }
+        },
+        {
+            "name": "get_most_recent_transactions",
+            "description": "Get the list of the most recent transactions.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "n": {
+                        "type": "integer",
+                        "description": "Number of transactions to return",
+                        "default": 100
+                    }
+                },
+                "required": []
+            },
+            "returns": {
+                "type": "array",
+                "items": {
+                    "type": "object"
+                },
+                "description": "List of recent transactions."
+            }
+        },
+        {
+            "name": "get_scheduled_transactions",
+            "description": "Get the list of scheduled transactions.",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            },
+            "returns": {
+                "type": "array",
+                "items": {
+                    "type": "object"
+                },
+                "description": "List of scheduled transactions."
+            }
+        },
+        {
+            "name": "read_file",
+            "description": "Reads the contents of the file at the given path.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "file_path": {
+                        "type": "string",
+                        "description": "The path to the file to read."
+                    }
+                },
+                "required": [
+                    "file_path"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "The content of the file."
+            }
+        },
+        {
+            "name": "get_user_info",
+            "description": "Get the user information.",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            },
+            "returns": {
+                "type": "object",
+                "description": "User details (first_name, last_name, street, city)."
+            }
+        },
+        {
+            "name": "update_password",
+            "description": "Update the user password.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "password": {
+                        "type": "string",
+                        "description": "New password for the user"
+                    }
+                },
+                "required": [
+                    "password"
+                ]
+            },
+            "returns": {
+                "type": "object",
+                "description": "Confirmation message."
+            }
+        },
+        {
+            "name": "update_user_info",
+            "description": "Update the user information.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "description": "First name of the user",
+                        "nullable": true
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "description": "Last name of the user",
+                        "nullable": true
+                    },
+                    "street": {
+                        "type": "string",
+                        "description": "Street of the user",
+                        "nullable": true
+                    },
+                    "city": {
+                        "type": "string",
+                        "description": "City of the user",
+                        "nullable": true
+                    }
+                },
+                "required": []
+            },
+            "returns": {
+                "type": "object",
+                "description": "Updated user information."
+            }
+        }
+    ]
+}
