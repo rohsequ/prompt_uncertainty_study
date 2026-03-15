@@ -55,7 +55,9 @@ class AgentRegistry:
     information from the directory structure.
     """
 
-    def __init__(self, agents_dir: str = "agents", base_dir: Optional[Path] = None):
+    def __init__(
+        self, agents_dir: str = "definitions", base_dir: Optional[Path] = None
+    ):
         self.base_dir = base_dir or Path(__file__).parent
         self.agents_dir = self.base_dir / agents_dir
 
@@ -67,7 +69,7 @@ class AgentRegistry:
         self._load_agents()
 
     def _load_agents(self):
-        """Load all agent data from the consolidated agents directory."""
+        """Load all agent data from the active definitions directory."""
         if not self.agents_dir.exists():
             print(f"⚠️  Agents directory not found: {self.agents_dir}")
             return
@@ -244,7 +246,7 @@ class AgentRegistry:
         if agent_type in self._tool_specs_cache:
             return self._tool_specs_cache[agent_type]
 
-        # Load from consolidated structure
+        # Load from the active definitions directory
         tool_spec_file = self.agents_dir / agent_type / "tools.json"
         if not tool_spec_file.exists():
             return []
@@ -267,7 +269,7 @@ class AgentRegistry:
         if agent_type in self._system_prompts_cache:
             return self._system_prompts_cache[agent_type]
 
-        # Load from consolidated structure
+        # Load from the active definitions directory
         system_prompt_file = self.agents_dir / agent_type / "system_prompt.txt"
         if not system_prompt_file.exists():
             return ""

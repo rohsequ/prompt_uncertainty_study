@@ -16,7 +16,7 @@ if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
 from src.utils.config_loader import ConfigManager
-from src.agents.agent_registry import get_agent_registry
+from src.agents import get_agent_registry
 
 
 # --- Pydantic Models for LLM Response ---
@@ -316,7 +316,7 @@ def classify_tools(
     )
 
     # Save to file
-    agent_dir = project_root / "src" / "agents" / "agents" / agent_type
+    agent_dir = project_root / "src" / "agents" / "definitions" / agent_type
     output_path = agent_dir / "tool_classification.json"
 
     if not agent_dir.exists():
@@ -342,7 +342,7 @@ def load_tool_classification(agent_type: str, config_path: str = "src/configs/co
     Returns:
         ToolClassification object with categorized tools
     """
-    agent_dir = project_root / "src" / "agents" / "agents" / agent_type
+    agent_dir = project_root / "src" / "agents" / "definitions" / agent_type
     classification_path = agent_dir / "tool_classification.json"
     
     if not classification_path.exists():

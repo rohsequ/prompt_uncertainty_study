@@ -13,7 +13,7 @@ from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, Tool
 from openai import OpenAI
 from pydantic import BaseModel, Field
 
-from src.agents.simple_agent import SimpleAgent
+from src.agents import SimpleAgent
 from src.utils.pretty_print import pretty_print_messages
 from src.utils.config_loader import ConfigManager
 from src.utils.high_risk_tool_identifier import (
