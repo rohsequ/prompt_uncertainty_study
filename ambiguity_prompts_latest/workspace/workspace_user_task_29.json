@@ -1,0 +1,97 @@
+{
+    "task_id": "user_task_29",
+    "original_prompt": "Please take a look at the file 'team-building-activities.docx', suggest two more activities, and add them to the file.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The filename explicitly identifies the target file, so the correct first tool path (search/open the file) and source of truth are preserved. However the prompt omits many operational details: what the two activities should be (names only or with descriptions), where/how to insert them in the .docx (append, specific section, maintain formatting), and whether to ask for confirmation. Workable but still very ambiguous.",
+    "first_ground_truth_tool_call": "search_files_by_filename(filename='team-building-activities.docx')",
+    "prompt_anchors": {
+        "quoted": [
+            "team-building-activities.docx"
+        ],
+        "filenames": [
+            "team-building-activities.docx"
+        ],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Please take a look at the file 'team-building-activities.docx', suggest two more activities, and add them to the file."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [
+            "team-building-activities.docx"
+        ],
+        "core_refs": [
+            "team-building-activities.docx"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 1,
+    "natural_level_plan": {
+        "rationale": "The task centers on a single, explicit file and a single action (suggest two activities and add them). There are only two natural, meaningfully different ambiguity levels: a minimal/terse instruction that still points to the same file and action, and the original wording (slightly less ambiguous) \u2014 further levels would require adding new clarifiers which the prompt does not contain and therefore would be artificial.",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most terse / sparse: identifies the file and the required action without any extra wording or politeness; keeps only the minimum needed to trigger a filename search and edit.",
+                "must_include": [
+                    "team-building-activities.docx",
+                    "suggest two more activities"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 2,
+                "description": "Original prompt wording: politely asks to look at the file, suggest two more activities, and add them to the file. Contains the same actionable references but still omits insertion/formatting/details.",
+                "must_include": [
+                    "Please take a look at the file 'team-building-activities.docx', suggest two more activities, and add them to the file."
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Please take a look at the file 'team-building-activities.docx', suggest two more activities, and add them to the file.",
+        "N2": "Open 'team-building-activities.docx', suggest two additional team-building activities (include a short description for each), and add them to the document."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly preserves the correct first tool path (locate the file by filename 'team-building-activities.docx') and the intended object (that document). However it omits several operational details: exactly what the two activities should be (length, level of detail), where/how to insert them in the document (append vs insert in a specific section), formatting expectations, and whether to confirm changes before saving. These omissions don\u2019t change the initial tool (search/open file) but leave meaningful uncertainty for editing, so the request is very ambiguous but still workable."
+        },
+        "N2": {
+            "source": "attempt_2_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt names the exact filename so the correct first tool is clear (search/open the file by filename). It specifies the action (create two activities with short descriptions and add them to the document), so the source-of-truth is preserved and an agent can immediately call the file-search/open tool and then append content. Only minor operational details (exact insertion point or formatting choices) are left unspecified, but these do not change the first tool path or prevent execution. Calibration adjusted the score from 5 to 2 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "Please take a look at the file 'team-building-activities.docx', suggest two more activities, and add them to the file.",
+        "N2": "Open 'team-building-activities.docx', suggest two additional team-building activities (include a short description for each), and add them to the document."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly preserves the correct first tool path (locate the file by filename 'team-building-activities.docx') and the intended object (that document). However it omits several operational details: exactly what the two activities should be (length, level of detail), where/how to insert them in the document (append vs insert in a specific section), formatting expectations, and whether to confirm changes before saving. These omissions don\u2019t change the initial tool (search/open file) but leave meaningful uncertainty for editing, so the request is very ambiguous but still workable."
+        },
+        "N2": {
+            "source": "attempt_2_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt names the exact filename so the correct first tool is clear (search/open the file by filename). It specifies the action (create two activities with short descriptions and add them to the document), so the source-of-truth is preserved and an agent can immediately call the file-search/open tool and then append content. Only minor operational details (exact insertion point or formatting choices) are left unspecified, but these do not change the first tool path or prevent execution. Calibration adjusted the score from 5 to 2 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 1
+}

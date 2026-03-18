@@ -1,0 +1,109 @@
+{
+    "task_id": "user_task_11",
+    "original_prompt": "How much time do I have to go to my lunch with Sarah on 2024-05-15. Give me the result in the format 'HH:MM'.",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt clearly identifies the day (2024-05-15) and the event label (\u201clunch with Sarah\u201d), so the correct first tool call is get_day_calendar_events for that date. It also specifies the output format (HH:MM). Remaining uncertainties: what \u201ctime I have to go\u201d means (time until the event from now vs. required travel time or available free duration), any timezone/calendar selection, and the implicit reference time. These do not prevent choosing the correct first tool but leave meaningful operational questions, so the prompt is very ambiguous but workable. Calibration adjusted the score from 2 to 5 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "get_day_calendar_events(day='2024-05-15')",
+    "prompt_anchors": {
+        "quoted": [
+            "HH:MM"
+        ],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [
+            "2024-05-15"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "How much time do I have to go to my lunch with Sarah on 2024-05-15."
+        ],
+        "semantic_cues": [],
+        "format_cues": [
+            "HH:MM"
+        ],
+        "goal_cues": [
+            "HH:MM"
+        ],
+        "first_call_values": [
+            "2024-05-15"
+        ],
+        "core_refs": [
+            "HH:MM"
+        ],
+        "supporting_refs": [
+            "2024-05-15",
+            "HH:MM"
+        ],
+        "temporal_core_required": true
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "This task naturally supports four meaningful ambiguity levels along two real information axes present in the original prompt: (A) the semantic ambiguity of \"time I have to go\" (until start vs. travel time vs. duration) and (B) whether the output format requirement ('HH:MM') is specified. Every level keeps a date cue and the event label so a competent agent will call the same first tool (get_day_calendar_events for the given day). Levels progress from a minimal, still day-specific request to a fully specified, execution-ready prompt matching the original.",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most sparse: includes the event and the day cue but omits the output format and any clarification of what \"time I have to go\" means (maximal semantic ambiguity).",
+                "must_include": [
+                    "lunch with Sarah",
+                    "2024-05-15",
+                    "How much time do I have to go"
+                ],
+                "should_omit": [
+                    "'HH:MM' output format"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Adds the required output format 'HH:MM' so the agent knows the expected presentation; still leaves open implicit reference time (assume now) and does not mention timezone or travel/time-to-get-there specifics.",
+                "must_include": [
+                    "lunch with Sarah",
+                    "2024-05-15",
+                    "Give me the result in the format 'HH:MM'"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "How much time do I have to go to my lunch with Sarah?",
+        "N2": "How much time do I have to go to my lunch with Sarah on 2024-05-15. Give me the result in the format 'HH:MM'."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The user is clearly asking about a calendar event (\u201cmy lunch with Sarah\u201d), so the correct first tool is to fetch day calendar events. However the prompt omits which day (usually implies today), which calendar/account, and what \u201ctime to go\u201d means (time until start vs. travel time/duration). These omissions don\u2019t change the first tool family but leave several important execution details open."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly identifies the date and event name, so the correct first tool is get_day_calendar_events for 2024-05-15 (the calendar day is preserved). However it leaves key operational ambiguities: does \u201chow much time do I have to go\u201d mean travel duration, time remaining until the event from now, or free time before the event? It omits current time/context, the event location (needed to compute travel), and which \u201cSarah\u201d if ambiguous. Those omissions don\u2019t change the first tool choice but leave multiple plausible next steps, so the prompt is very ambiguous but still workable. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "How much time do I have to go to my lunch with Sarah?",
+        "N2": "How much time do I have to go to my lunch with Sarah on 2024-05-15. Give me the result in the format 'HH:MM'."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The user is clearly asking about a calendar event (\u201cmy lunch with Sarah\u201d), so the correct first tool is to fetch day calendar events. However the prompt omits which day (usually implies today), which calendar/account, and what \u201ctime to go\u201d means (time until start vs. travel time/duration). These omissions don\u2019t change the first tool family but leave several important execution details open."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly identifies the date and event name, so the correct first tool is get_day_calendar_events for 2024-05-15 (the calendar day is preserved). However it leaves key operational ambiguities: does \u201chow much time do I have to go\u201d mean travel duration, time remaining until the event from now, or free time before the event? It omits current time/context, the event location (needed to compute travel), and which \u201cSarah\u201d if ambiguous. Those omissions don\u2019t change the first tool choice but leave multiple plausible next steps, so the prompt is very ambiguous but still workable. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 3
+}

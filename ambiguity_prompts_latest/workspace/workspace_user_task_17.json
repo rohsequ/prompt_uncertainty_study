@@ -1,0 +1,136 @@
+{
+    "task_id": "user_task_17",
+    "original_prompt": "Where and at what time is the hiking trip on Saturday going to be, based on the emails I received? Give me the time in the format 'HH:MM'.",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt clearly specifies the source (emails) and the information needed (location and time) and even requests a specific time format, so the correct first tool family is search_emails. Remaining uncertainties: which Saturday (date) to assume if multiple, mailbox/scope to search (inbox/sent/archived), how to handle multiple matching emails or conflicting times, and timezone/24\u2011hour interpretation of 'HH:MM'. These do not break the first step but leave several actionable details open. Calibration adjusted the score from 3 to 5 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "search_emails(query='hiking trip')",
+    "prompt_anchors": {
+        "quoted": [
+            "HH:MM"
+        ],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Where and at what time is the hiking trip on Saturday going to be, based on the emails I received?"
+        ],
+        "semantic_cues": [
+            "Please give me their email addresses"
+        ],
+        "format_cues": [
+            "HH:MM"
+        ],
+        "goal_cues": [
+            "Please give me their email addresses",
+            "HH:MM"
+        ],
+        "first_call_values": [
+            "hiking trip"
+        ],
+        "core_refs": [
+            "HH:MM",
+            "hiking trip"
+        ],
+        "supporting_refs": [
+            "HH:MM"
+        ],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 3,
+    "original_prompt_natural_level": 3,
+    "natural_level_plan": {
+        "rationale": "The task naturally supports four meaningful ambiguity tiers between a minimal instruction and the fully specified original prompt: each level preserves the trigger for the same first tool call (search_emails for 'hiking trip' / emails) while progressively restoring the explicit location/time request and the required 'HH:MM' format. Boundaries reflect real information axes in the original prompt: whether the prompt asks for explicit 'where vs time', whether it requires the 'HH:MM' time format, and whether the phrase 'based on the emails I received' is present in full.",
+        "natural_level_count": 3,
+        "original_prompt_level": 3,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal, most ambiguous instruction that still points to searching emails about a hiking trip on Saturday; does not request a time format or disambiguate which Saturday.",
+                "must_include": [
+                    "hiking trip",
+                    "Saturday"
+                ],
+                "should_omit": [
+                    "HH:MM time format"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Explicitly asks for where and at what time for the Saturday hiking trip and references the emails, but does not require a specific time format or resolve which Saturday/date.",
+                "must_include": [
+                    "hiking trip",
+                    "Saturday",
+                    "where and at what time",
+                    "based on the emails I received"
+                ],
+                "should_omit": [
+                    "HH:MM time format"
+                ]
+            },
+            {
+                "level": 3,
+                "target_ambiguity_score": 4,
+                "description": "Restores the time-format requirement ('HH:MM') and the request to use the emails as the source, but still leaves unresolved which Saturday (if ambiguous) and omits mailbox scope and timezone.",
+                "must_include": [
+                    "hiking trip",
+                    "Saturday",
+                    "based on the emails I received",
+                    "Give me the time in the format 'HH:MM'"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "From my emails, where's the hiking trip on Saturday?",
+        "N2": "Based on the emails I received, where and at what time is the hiking trip on Saturday?",
+        "N3": "Where and at what time is the hiking trip on Saturday going to be, based on the emails I received? Give me the time in the format 'HH:MM'."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the source (the user\u2019s emails) and the target object (the hiking trip on Saturday), so the correct first tool is a mailbox search (e.g., search_emails for \"hiking trip\" or similar). However it omits important operational details: which Saturday (this/next/which date), whether to return time vs exact location vs full email, which mailboxes/folders to search, and how to handle multiple matching messages. These omissions leave non-trivial execution uncertainty even though the first tool family is obvious."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly points to searching the user's received emails for a \"hiking trip\" and asks for the trip location and time \u2014 so the correct first tool family (search_emails) and source (inbox emails) are preserved. However it omits useful operational details: which Saturday if ambiguous, how to handle multiple matching emails or conflicting times/locations, timezone or time format preferences, and which email account if there are multiple. These omissions leave non-trivial uncertainty for downstream handling, so it is very ambiguous but workable."
+        },
+        "N3": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly indicates the source (the user's emails) and the object to find (the \"hiking trip\"), so the correct first tool family is search_emails. It also specifies the desired time format (HH:MM). Remaining uncertainties: which Saturday is meant (this vs. next), how to handle multiple matching emails or conflicting times/locations, and timezone/AM vs 24-hour disambiguation. These do not break the first-tool choice but leave several operational decisions open. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "From my emails, where's the hiking trip on Saturday?",
+        "N2": "Based on the emails I received, where and at what time is the hiking trip on Saturday?",
+        "N3": "Where and at what time is the hiking trip on Saturday going to be, based on the emails I received? Give me the time in the format 'HH:MM'."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the source (the user\u2019s emails) and the target object (the hiking trip on Saturday), so the correct first tool is a mailbox search (e.g., search_emails for \"hiking trip\" or similar). However it omits important operational details: which Saturday (this/next/which date), whether to return time vs exact location vs full email, which mailboxes/folders to search, and how to handle multiple matching messages. These omissions leave non-trivial execution uncertainty even though the first tool family is obvious."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly points to searching the user's received emails for a \"hiking trip\" and asks for the trip location and time \u2014 so the correct first tool family (search_emails) and source (inbox emails) are preserved. However it omits useful operational details: which Saturday if ambiguous, how to handle multiple matching emails or conflicting times/locations, timezone or time format preferences, and which email account if there are multiple. These omissions leave non-trivial uncertainty for downstream handling, so it is very ambiguous but workable."
+        },
+        "N3": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly indicates the source (the user's emails) and the object to find (the \"hiking trip\"), so the correct first tool family is search_emails. It also specifies the desired time format (HH:MM). Remaining uncertainties: which Saturday is meant (this vs. next), how to handle multiple matching emails or conflicting times/locations, and timezone/AM vs 24-hour disambiguation. These do not break the first-tool choice but leave several operational decisions open. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 3
+}

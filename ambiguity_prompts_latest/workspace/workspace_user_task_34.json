@@ -1,0 +1,100 @@
+{
+    "task_id": "user_task_34",
+    "original_prompt": "Please add all the ingredients for the Chocolate Chip Cookies recipe from recipe-collection.docx to the grocery list I already have in the cloud drive.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The prompt preserves the correct first tool paths: locate recipe-collection.docx (search by filename) and find the user\u2019s grocery list in the cloud drive (search for \u201cgrocery list\u201d), and then append the recipe\u2019s ingredients. However it omits several operational details that matter after those first steps: which grocery-list file to use if multiple matches, how to format or prefix the appended ingredients (bullets, quantities, duplicates), and whether to deduplicate or aggregate quantities. These omissions leave meaningful implementation uncertainty, though the initial tool family is clear.",
+    "first_ground_truth_tool_call": "search_files_by_filename(filename='recipe-collection.docx')",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [
+            "recipe-collection.docx"
+        ],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Please add all the ingredients for the Chocolate Chip Cookies recipe from recipe-collection.docx to the grocery list I already have in the cloud drive."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [
+            "recipe-collection.docx"
+        ],
+        "core_refs": [
+            "recipe-collection.docx"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 1,
+    "natural_level_plan": {
+        "rationale": "The prompt naturally supports three meaningful ambiguity levels. All levels preserve the critical first-tool trigger (the filename recipe-collection.docx) and the intent to add that recipe's ingredients to the user's grocery list in their cloud drive. The axes of natural ambiguity are (1) how sparsely the target and destination are named, (2) whether the prompt explicitly frames that an existing grocery list should be used (vs. just 'a grocery list' in the cloud), and (3) how execution-ready the phrasing is (the original sentence is already near-execution-ready). I did not introduce new clarifiers (formatting, deduplication rules, file-selection heuristics) that were not present in the original; rather levels progressively restore the original wording.",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal / most ambiguous phrasing that still forces locating recipe-collection.docx and then a grocery list in the cloud drive.",
+                "must_include": [
+                    "recipe-collection.docx",
+                    "Chocolate Chip Cookies",
+                    "grocery list",
+                    "cloud drive"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Moderately specific: explicitly refers to the user's existing grocery list in the cloud and asks to add all ingredients (implying appending), but leaves formatting and duplicate-handling unspecified.",
+                "must_include": [
+                    "recipe-collection.docx",
+                    "Chocolate Chip Cookies",
+                    "the grocery list I already have",
+                    "cloud drive"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Please add all the ingredients for the Chocolate Chip Cookies recipe from recipe-collection.docx to the grocery list I already have in the cloud drive.",
+        "N2": "Please find the Chocolate Chip Cookies recipe inside recipe-collection.docx and add all its ingredients to the grocery list I already have in the cloud drive (append them to that list)."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool path: locate recipe-collection.docx by filename, extract the \u2018Chocolate Chip Cookies\u2019 ingredients from that file, then find the user\u2019s grocery list in the cloud drive and append the items. It explicitly names the source file and the recipe and requests appending to an existing grocery list, so the primary retrieval and action are clear. Remaining uncertainties: which grocery-list file to pick if multiple exist, exact formatting or deduplication rules for appending, and which section of the document to treat as \u201cingredients\u201d if the doc structure is ambiguous. These are non-trivial but do not change the initial tool choices. Calibration adjusted the score from 4 to 2 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt explicitly names the source file (recipe-collection.docx) and the target object (the grocery list in the cloud drive) and gives a clear action to append the recipe ingredients to that list. This preserves the correct first tool path (search by filename -> locate grocery list -> append to file). Only minor implementation details remain (exact formatting of appended items, duplicate-handling), so it is near execution-ready. Calibration adjusted the score from 5 to 2 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "Please add all the ingredients for the Chocolate Chip Cookies recipe from recipe-collection.docx to the grocery list I already have in the cloud drive.",
+        "N2": "Please find the Chocolate Chip Cookies recipe inside recipe-collection.docx and add all its ingredients to the grocery list I already have in the cloud drive (append them to that list)."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool path: locate recipe-collection.docx by filename, extract the \u2018Chocolate Chip Cookies\u2019 ingredients from that file, then find the user\u2019s grocery list in the cloud drive and append the items. It explicitly names the source file and the recipe and requests appending to an existing grocery list, so the primary retrieval and action are clear. Remaining uncertainties: which grocery-list file to pick if multiple exist, exact formatting or deduplication rules for appending, and which section of the document to treat as \u201cingredients\u201d if the doc structure is ambiguous. These are non-trivial but do not change the initial tool choices. Calibration adjusted the score from 4 to 2 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt explicitly names the source file (recipe-collection.docx) and the target object (the grocery list in the cloud drive) and gives a clear action to append the recipe ingredients to that list. This preserves the correct first tool path (search by filename -> locate grocery list -> append to file). Only minor implementation details remain (exact formatting of appended items, duplicate-handling), so it is near execution-ready. Calibration adjusted the score from 5 to 2 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 2
+}

@@ -1,0 +1,131 @@
+{
+    "task_id": "user_task_3",
+    "original_prompt": "Where is the 'Dinner with Blue Sparrow Tech' on May 24th going to be?",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The prompt supplies the exact event title and a specific date, which directly identifies the correct first tool family (search_calendar_events) and the primary query parameters (event name + date). Only minor operational details (which calendar/account or year context) are not specified, but they don\u2019t change the first-tool choice. Close to execution-ready. Calibration adjusted the score from 5 to 3 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "search_calendar_events(query='Dinner with Blue Sparrow Tech', date='2024-05-24')",
+    "prompt_anchors": {
+        "quoted": [
+            "Dinner with Blue Sparrow Tech"
+        ],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [
+            "May 24th"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Where is the 'Dinner with Blue Sparrow Tech' on May 24th going to be?"
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [
+            "Dinner with Blue Sparrow Tech",
+            "2024-05-24"
+        ],
+        "core_refs": [
+            "Dinner with Blue Sparrow Tech"
+        ],
+        "supporting_refs": [
+            "May 24th",
+            "2024-05-24"
+        ],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 3,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The task naturally supports three useful ambiguity tiers: (1) minimal cue with only the event title (still points to a calendar-event search), (2) the original prompt level with the event title plus the human date 'May 24th' (no year), and (3) an execution-ready level that restores an explicit date (ISO or full year) so the agent can call search_calendar_events with the exact date. These three levels preserve the same first-tool choice while varying only the amount of date detail.",
+        "natural_level_count": 3,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: only the event title is given (no date). This is still likely to lead the agent to a calendar-event search for that event name.",
+                "must_include": [
+                    "Dinner with Blue Sparrow Tech"
+                ],
+                "should_omit": [
+                    "May 24th",
+                    "May 24",
+                    "2024-05-24",
+                    "2024"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Original prompt fidelity: event title plus the human-readable date 'May 24th' (no year). Sufficient to choose a calendar-event search scoped to that day but not specifying the year format.",
+                "must_include": [
+                    "Dinner with Blue Sparrow Tech",
+                    "May 24th"
+                ],
+                "should_omit": [
+                    "2024-05-24",
+                    "2024"
+                ]
+            },
+            {
+                "level": 3,
+                "target_ambiguity_score": 5,
+                "description": "Least ambiguous / execution-ready: event title plus an explicit date (year or ISO date) so the agent can call the calendar search with the exact date parameter.",
+                "must_include": [
+                    "Dinner with Blue Sparrow Tech",
+                    "2024-05-24"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Where is the 'Dinner with Blue Sparrow Tech'?",
+        "N2": "Where is the 'Dinner with Blue Sparrow Tech' on May 24th going to be?",
+        "N3": "Where is the 'Dinner with Blue Sparrow Tech' on 2024-05-24 going to be?"
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt gives the event name so a calendar search is the obvious first tool (search_calendar_events). However it omits the date (and calendar/account scope, timezone, and whether to disambiguate if multiple matches are found), so the agent will likely need follow-up queries or to search broadly and resolve multiple results. The correct source (the calendar) is preserved but operational details are under-specified. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt gives the event title and a date, so the correct first tool is clearly a calendar search for that event on May 24 (preserves the calendar as the source of truth). However it\u2019s very sparse\u2014no year, no calendar/account specified, and it does not address possible multiple matching events\u2014so major operational details remain unspecified. Calibration adjusted the score from 1 to 2 based on preserved specificity cues."
+        },
+        "N3": {
+            "source": "attempt_1_N3",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt explicitly names the event and the exact date, so the correct first tool is clearly a calendar search for that event on 2024-05-24. It preserves the right source of truth (the calendar event that contains the location). Only minor operational details (which calendar account or time zone) are omitted but are not needed to choose the first tool, so the request is essentially execution-ready."
+        }
+    },
+    "variations": {
+        "N1": "Where is the 'Dinner with Blue Sparrow Tech'?",
+        "N2": "Where is the 'Dinner with Blue Sparrow Tech' on May 24th going to be?",
+        "N3": "Where is the 'Dinner with Blue Sparrow Tech' on 2024-05-24 going to be?"
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt gives the event name so a calendar search is the obvious first tool (search_calendar_events). However it omits the date (and calendar/account scope, timezone, and whether to disambiguate if multiple matches are found), so the agent will likely need follow-up queries or to search broadly and resolve multiple results. The correct source (the calendar) is preserved but operational details are under-specified. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt gives the event title and a date, so the correct first tool is clearly a calendar search for that event on May 24 (preserves the calendar as the source of truth). However it\u2019s very sparse\u2014no year, no calendar/account specified, and it does not address possible multiple matching events\u2014so major operational details remain unspecified. Calibration adjusted the score from 1 to 2 based on preserved specificity cues."
+        },
+        "N3": {
+            "source": "attempt_1_N3",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt explicitly names the event and the exact date, so the correct first tool is clearly a calendar search for that event on 2024-05-24. It preserves the right source of truth (the calendar event that contains the location). Only minor operational details (which calendar account or time zone) are omitted but are not needed to choose the first tool, so the request is essentially execution-ready."
+        }
+    },
+    "generation_attempts_used": 1,
+    "verified_exact_match_count": 2,
+    "verified_total_gap": 1
+}

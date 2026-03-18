@@ -1,0 +1,107 @@
+{
+    "task_id": "user_task_25",
+    "original_prompt": "Please send an email to each person mentioned in the TODO list in the team meeting minutes file with the task they need to execute. Be very precise in the explanation and include the deadline for each task in YYYY-MM-DD format!",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The prompt preserves the correct first tool family (locate the team meeting minutes file / search_files) and the main source of truth (the TODO list in that file), so an agent would start by retrieving that file. However it omits many operational details: which meeting minutes (date/version) if multiple exist, how to map person names in the TODO list to email addresses, whether deadlines are already present or must be inferred/normalized, exact email subject/body format beyond \u201cbe very precise\u201d, whether to send separate messages or one batch, and handling of ambiguous or missing TODO items. These omissions leave substantial downstream choices but do not break the initial retrieval step.",
+    "first_ground_truth_tool_call": "search_files(query='team meeting minutes')",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Please send an email to each person mentioned in the TODO list in the team meeting minutes file with the task they need to execute."
+        ],
+        "semantic_cues": [
+            "Please give me their email addresses"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please give me their email addresses"
+        ],
+        "first_call_values": [
+            "team meeting minutes"
+        ],
+        "core_refs": [
+            "team meeting minutes"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The prompt's single clear retrieval trigger is 'team meeting minutes' and the core action is to email people listed in that file's TODO list. The main natural ambiguity axes are (1) whether the deadline/format requirement is present, and (2) whether the instruction to be 'very precise' is included. These yield three meaningful levels: a minimal instruction that still leads to searching the meeting minutes, an intermediate level that restores precision/deadline requirements but not the explicit date format, and the full original prompt (precision + YYYY-MM-DD).",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: ask to send an email to each person in the TODO list of the team meeting minutes file with the task they must do \u2014 no explicit precision or deadline-format requirements.",
+                "must_include": [
+                    "team meeting minutes",
+                    "TODO list",
+                    "task they need to execute"
+                ],
+                "should_omit": [
+                    "be very precise",
+                    "deadline",
+                    "YYYY-MM-DD"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 2,
+                "description": "Moderately specified: restores the request to be 'very precise' and to include a deadline for each task, but does not state the exact date format.",
+                "must_include": [
+                    "team meeting minutes",
+                    "TODO list",
+                    "send an email to each person",
+                    "task they need to execute",
+                    "be very precise",
+                    "include the deadline"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Please send an email to each person mentioned in the TODO list in the team meeting minutes file with the task they need to execute.",
+        "N2": "Please send an email to each person mentioned in the TODO list in the team meeting minutes file with the task they need to execute. Be very precise in the explanation and include the deadline for each task in YYYY-MM-DD format!"
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the source object and first step: find the team meeting minutes and read the TODO list (so a file search + parsing tool is the correct first tool path). However it omits many operational details: which specific minutes file if there are multiple, how to resolve person names to email addresses, exact email subject/body format (what parts of the TODO to include, whether to include deadlines or context), CC/headers, and confirmation/handling of duplicates. Those omissions leave substantial execution uncertainty though the first tool family is preserved."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool path (locate the team meeting minutes file and find the TODO list) and therefore points to a file-search/open-file first step. It clearly identifies the source of truth (the TODO list in the meeting minutes) and the desired outcome (send emails to each named person including precise task and a YYYY-MM-DD deadline). However many operational details are missing: which specific meeting minutes file if there are multiple, how to handle persons with multiple TODOs, what to do if a deadline is missing or ambiguous, exact email subject/body format, CC/BCC rules, sender identity, and handling duplicates/invalid addresses. These omissions leave significant implementation choices after the first retrieval step."
+        }
+    },
+    "variations": {
+        "N1": "Please send an email to each person mentioned in the TODO list in the team meeting minutes file with the task they need to execute.",
+        "N2": "Please send an email to each person mentioned in the TODO list in the team meeting minutes file with the task they need to execute. Be very precise in the explanation and include the deadline for each task in YYYY-MM-DD format!"
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the source object and first step: find the team meeting minutes and read the TODO list (so a file search + parsing tool is the correct first tool path). However it omits many operational details: which specific minutes file if there are multiple, how to resolve person names to email addresses, exact email subject/body format (what parts of the TODO to include, whether to include deadlines or context), CC/headers, and confirmation/handling of duplicates. Those omissions leave substantial execution uncertainty though the first tool family is preserved."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool path (locate the team meeting minutes file and find the TODO list) and therefore points to a file-search/open-file first step. It clearly identifies the source of truth (the TODO list in the meeting minutes) and the desired outcome (send emails to each named person including precise task and a YYYY-MM-DD deadline). However many operational details are missing: which specific meeting minutes file if there are multiple, how to handle persons with multiple TODOs, what to do if a deadline is missing or ambiguous, exact email subject/body format, CC/BCC rules, sender identity, and handling duplicates/invalid addresses. These omissions leave significant implementation choices after the first retrieval step."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 1
+}

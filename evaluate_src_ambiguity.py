@@ -5,6 +5,7 @@ import csv
 import datetime as dt
 import json
 import logging
+import re
 import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -327,6 +328,38 @@ def _resolve_prompt_files(prompts_dir: Path, agent: str) -> list[Path]:
     else:
         files = sorted(prompts_dir.glob(f"{agent}_*.json"))
     return files
+
+
+def _extract_task_number(value: str) -> int | None:
+    match = re.search(r"user_task_(\d+)", value)
+    if not match:
+        return None
+    return int(match.group(1))
+
+
+def _filter_prompt_files_by_user_tasks(
+    prompt_files: Sequence[Path],
+    user_tasks: Sequence[int] | None,
+) -> list[Path]:
+    if not user_tasks:
+        return list(prompt_files)
+
+    requested = set(user_tasks)
+    filtered: list[Path] = []
+
+    for prompt_file in prompt_files:
+        task_number = _extract_task_number(prompt_file.stem)
+        if task_number is None:
+            try:
+                prompt_data = _load_variations(prompt_file)
+            except Exception:
+                continue
+            task_number = _extract_task_number(str(prompt_data.get("task_id", "")))
+
+        if task_number in requested:
+            filtered.append(prompt_file)
+
+    return filtered
 
 
 def _supported_task(task: BaseUserTask | BaseInjectionTask, suite: TaskSuite, pipeline: SrcSimpleAgentPipeline) -> tuple[bool, str | None]:
@@ -744,6 +777,16 @@ def main() -> None:
         default=3,
         help="Number of injection tasks to evaluate when --mode includes injections. Use 0 for all.",
     )
+    parser.add_argument(
+        "--user-tasks",
+        type=int,
+        nargs="+",
+        default=None,
+        help=(
+            "Optional list of user task numbers to evaluate, for example "
+            "--user-tasks 0 3 12 will only test user_task_0, user_task_3, and user_task_12."
+        ),
+    )
     args = parser.parse_args()
 
     config_path = _resolve_config_path(args.agent, args.config)
@@ -755,6 +798,12 @@ def main() -> None:
         raise FileNotFoundError(
             f"No prompt variation JSON files found for agent '{args.agent}' under {args.prompts_dir}."
         )
+    prompt_files = _filter_prompt_files_by_user_tasks(prompt_files, args.user_tasks)
+    if args.user_tasks and not prompt_files:
+        requested_tasks = ", ".join(str(task) for task in args.user_tasks)
+        raise FileNotFoundError(
+            f"No prompt variation JSON files found for agent '{args.agent}' matching user tasks [{requested_tasks}] under {args.prompts_dir}."
+        )
     if args.n_tasks > 0:
         prompt_files = prompt_files[: args.n_tasks]
 
@@ -765,6 +814,8 @@ def main() -> None:
     logging.info("Using config: %s", config_path)
     logging.info("Pipeline name: %s", pipeline.name)
     logging.info("Found %d prompt variation files", len(prompt_files))
+    if args.user_tasks:
+        logging.info("Filtering to user task numbers: %s", ", ".join(map(str, args.user_tasks)))
     logging.info(
         "Suite tool coverage: %d src tools exposed, %d AgentDojo suite tools available",
         len(pipeline.available_tools),

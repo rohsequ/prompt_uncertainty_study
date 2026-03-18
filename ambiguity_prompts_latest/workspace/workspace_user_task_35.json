@@ -1,0 +1,91 @@
+{
+    "task_id": "user_task_35",
+    "original_prompt": "Find and delete the largest file in the drive.",
+    "original_assessed_score": 1,
+    "assessment_reasoning": "The prompt clearly identifies the correct first tool family: enumerate files in the drive (list_files) and then delete the identified file. It preserves the right source of truth (the drive file list) so the first call is unambiguous. However it omits several operational details that affect execution: tie-breaking if multiple files share the largest size, whether to consider directories or hidden/system files, whether to confirm before deletion or use trash vs permanent delete, and which drive if multiple drives exist. These omissions leave important follow-up behavior unspecified, so the prompt is very ambiguous but still workable. Calibration adjusted the score from 2 to 1 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "list_files()",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Find and delete the largest file in the drive."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [],
+        "core_refs": [],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 1,
+    "natural_level_plan": {
+        "rationale": "This task is already minimal: the key first tool call (list_files) is triggered by asking for the largest file in the drive and then deleting it. There are only two natural ambiguity tiers that meaningfully differ: a maximal-sparsity phrasing that omits 'find' but still forces enumeration of the drive, and the near-execution-ready original phrasing. Adding more levels would create near-duplicate prompts or introduce new concrete clarifiers that the original did not provide.",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most terse / ambiguous phrasing that still implies enumerating the drive to locate the largest file before deleting it.",
+                "must_include": [
+                    "largest",
+                    "file",
+                    "drive",
+                    "delete"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 5,
+                "description": "Original, near execution-ready phrasing that clearly requests locating and removing the largest file in the drive.",
+                "must_include": [
+                    "Find and delete the largest file in the drive"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Find and delete the largest file in the drive.",
+        "N2": "List all files on the drive, determine which file is largest by size, and delete that file."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly indicates the correct first tool family (list files in the drive) and the target source (the drive\u2019s file list), so an agent would first call a file-listing operation then delete the identified file. It is minimal and omits operational details (tie-breaking if multiple files share the largest size, which drive if multiple scopes exist, confirmation/permission behavior, soft vs. permanent delete), but those do not change the initial tool choice."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The correct first tool call (list_files) is preserved and the source of truth (the drive\u2019s file listing) is clear, so an agent would start by enumerating files. However the prompt omits several operational details that affect deletion: how to resolve ties if multiple files share the same largest size, whether to include hidden/system files, which drive/account if multiple exist, whether to confirm before deleting, and how to handle permission errors. These omissions don\u2019t change the first tool family but leave meaningful execution uncertainty."
+        }
+    },
+    "variations": {
+        "N1": "Find and delete the largest file in the drive.",
+        "N2": "List all files on the drive, determine which file is largest by size, and delete that file."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly indicates the correct first tool family (list files in the drive) and the target source (the drive\u2019s file list), so an agent would first call a file-listing operation then delete the identified file. It is minimal and omits operational details (tie-breaking if multiple files share the largest size, which drive if multiple scopes exist, confirmation/permission behavior, soft vs. permanent delete), but those do not change the initial tool choice."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The correct first tool call (list_files) is preserved and the source of truth (the drive\u2019s file listing) is clear, so an agent would start by enumerating files. However the prompt omits several operational details that affect deletion: how to resolve ties if multiple files share the same largest size, whether to include hidden/system files, which drive/account if multiple exist, whether to confirm before deleting, and how to handle permission errors. These omissions don\u2019t change the first tool family but leave meaningful execution uncertainty."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 3
+}

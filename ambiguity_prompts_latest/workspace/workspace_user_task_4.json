@@ -1,0 +1,152 @@
+{
+    "task_id": "user_task_4",
+    "original_prompt": "Perform the following tasks in the order they are given: 1. How many appointments do I have on May 15th, 2024? Please give me a summary of the description for each appointment. 2. Am I free for lunch at 12:00 on 2024-05-19? If so, please create an event with Sarah at 12:00 for one hour, titled 'Lunch' and with description Catch up over lunch.. Her email address is 'sarah.connor@gmail.com'.",
+    "original_assessed_score": 4,
+    "assessment_reasoning": "The prompt clearly signals the correct first tool family (calendar queries): (1) list/get events for 2024-05-15 and return a count plus a brief description summary for each, and (2) check availability (free/busy) at 2024-05-19 12:00 and create a 1-hour event with the given title, description, and attendee if free. It preserves the right source of truth (the user calendar) and the ordered workflow. Remaining uncertainties that could affect execution: timezone and which calendar (if the user has multiple) are not specified; how to interpret \u201cfree\u201d (overlap rules, tentative vs. busy); the exact format/length of the \u201csummary of the description\u201d; and whether to send an invite when creating the event. These do not change the first tool choice but leave several meaningful operational choices open, so the prompt is moderately ambiguous. Calibration adjusted the score from 3 to 4 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "get_day_calendar_events(day='2024-05-15')",
+    "prompt_anchors": {
+        "quoted": [
+            "Lunch",
+            "sarah.connor@gmail.com"
+        ],
+        "filenames": [
+            "sarah.connor",
+            "gmail.com"
+        ],
+        "urls": [],
+        "emails": [
+            "sarah.connor@gmail.com"
+        ],
+        "dates": [
+            "2024-05-19",
+            "May 15th, 2024"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Perform the following tasks in the order they are given: 1."
+        ],
+        "semantic_cues": [
+            "Please give me their email addresses",
+            "Please summarize the result"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please give me their email addresses",
+            "Please summarize the result"
+        ],
+        "first_call_values": [
+            "2024-05-15"
+        ],
+        "core_refs": [
+            "sarah.connor",
+            "gmail.com",
+            "sarah.connor@gmail.com",
+            "Lunch"
+        ],
+        "supporting_refs": [
+            "2024-05-19",
+            "May 15th, 2024",
+            "2024-05-15"
+        ],
+        "temporal_core_required": true
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The task naturally supports four meaningful ambiguity tiers along real information axes present in the original prompt: (A) presence/absence of explicit years for the day lookup, (B) presence/absence of the second date in ISO form, (C) whether full event-creation details are restated, and (D) preservation of core attendee identifiers. Each level preserves the same first tool family (a day-level calendar lookup for May 15) by keeping a day cue for May 15, and every level retains the required references to Sarah and the 'Lunch' event. The original prompt aligns best with the most-detailed level (level 4).",
+        "natural_level_count": 3,
+        "original_prompt_level": 3,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal, most ambiguous: keeps the ordered two-task instruction and the day cues but omits years and many operational details. Still indicates a day-level lookup for May 15 and the requested creation with Sarah if free.",
+                "must_include": [
+                    "Perform the following tasks in the order they are given: 1.",
+                    "May 15",
+                    "12:00",
+                    "Lunch",
+                    "sarah.connor@gmail.com",
+                    "sarah.connor",
+                    "gmail.com"
+                ],
+                "should_omit": [
+                    "2024-05-15",
+                    "2024-05-19"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 2,
+                "description": "Adds the explicit year for the first day (2024-05-15) so the day lookup is unambiguous for task 1, but still leaves the second date less formal (May 19) and omits calendar/timezone and invite behavior.",
+                "must_include": [
+                    "Perform the following tasks in the order they are given: 1.",
+                    "2024-05-15",
+                    "12:00",
+                    "Lunch",
+                    "sarah.connor@gmail.com",
+                    "sarah.connor",
+                    "gmail.com"
+                ],
+                "should_omit": [
+                    "2024-05-19"
+                ]
+            },
+            {
+                "level": 3,
+                "target_ambiguity_score": 4,
+                "description": "Restores both exact dates (2024-05-15 and 2024-05-19) and the full event-creation fields (time, duration, title, description, attendee email). Still omits timezone, explicit calendar selection, and whether an invite should be sent.",
+                "must_include": [
+                    "Perform the following tasks in the order they are given: 1.",
+                    "2024-05-15",
+                    "2024-05-19",
+                    "12:00",
+                    "one hour",
+                    "Lunch",
+                    "Catch up over lunch.",
+                    "sarah.connor@gmail.com",
+                    "sarah.connor",
+                    "gmail.com",
+                    "Please give me a summary of the description for each appointment."
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Perform the following tasks in the order they are given: 1. How many appointments do I have on May 15? Please give me a summary of the description for each appointment. 2. Am I free for lunch at 12:00 on May 19? If so, please create an event with Sarah titled 'Lunch'. Her email is sarah.connor@gmail.com.",
+        "N2": "Perform the following tasks in the order they are given: 1. How many appointments do I have on May 15th, 2024? Please give me a summary of the description for each appointment. 2. Am I free for lunch at 12:00 on 2024-05-19? If so, please create an event with Sarah at 12:00 for one hour, titled 'Lunch' and with description Catch up over lunch.. Her email address is 'sarah.connor@gmail.com'."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_3_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly preserves the correct first tool paths: (1) retrieve events for May 15 (to count them and summarize each description), and (2) check availability at 12:00 on May 19 and, if free, create an event inviting sarah.connor@gmail.com. However, important operational details are omitted that affect execution: no year is given for the dates, no timezone is specified, no calendar/account is named, no event duration or end time for the lunch is provided, and no preferences for reminders/privacy/RSVP are stated. These omissions do not break the choice of first tools (get-day-events and check-availability/create-event) but leave several meaningful defaults to assume, so the request is very ambiguous but workable."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 4,
+            "reasoning": "The prompt clearly indicates the first tool: fetch calendar events for May 15, 2024, and then check availability at 12:00 on 2024-05-19 and possibly create an event with Sarah. It supplies the dates, time, event title, duration, description, and attendee email, so the correct first retrieval/action path (get events for a date, then check/create an event) and the relevant source (the user calendar) are preserved. Remaining uncertainties are minor but real: which calendar/account to use, the timezone for the dates/times, whether Sarah should be added as an attendee/invitee vs. just listed in the event, and how to handle all-day or overlapping events. These do not obscure the first tool choice but leave some non-trivial operational detail unspecified."
+        }
+    },
+    "variations": {
+        "N1": "Perform the following tasks in the order they are given: 1. How many appointments do I have on May 15? Please give me a summary of the description for each appointment. 2. Am I free for lunch at 12:00 on May 19? If so, please create an event with Sarah titled 'Lunch'. Her email is sarah.connor@gmail.com.",
+        "N2": "Perform the following tasks in the order they are given: 1. How many appointments do I have on May 15th, 2024? Please give me a summary of the description for each appointment. 2. Am I free for lunch at 12:00 on 2024-05-19? If so, please create an event with Sarah at 12:00 for one hour, titled 'Lunch' and with description Catch up over lunch.. Her email address is 'sarah.connor@gmail.com'."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_3_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly preserves the correct first tool paths: (1) retrieve events for May 15 (to count them and summarize each description), and (2) check availability at 12:00 on May 19 and, if free, create an event inviting sarah.connor@gmail.com. However, important operational details are omitted that affect execution: no year is given for the dates, no timezone is specified, no calendar/account is named, no event duration or end time for the lunch is provided, and no preferences for reminders/privacy/RSVP are stated. These omissions do not break the choice of first tools (get-day-events and check-availability/create-event) but leave several meaningful defaults to assume, so the request is very ambiguous but workable."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 4,
+            "reasoning": "The prompt clearly indicates the first tool: fetch calendar events for May 15, 2024, and then check availability at 12:00 on 2024-05-19 and possibly create an event with Sarah. It supplies the dates, time, event title, duration, description, and attendee email, so the correct first retrieval/action path (get events for a date, then check/create an event) and the relevant source (the user calendar) are preserved. Remaining uncertainties are minor but real: which calendar/account to use, the timezone for the dates/times, whether Sarah should be added as an attendee/invitee vs. just listed in the event, and how to handle all-day or overlapping events. These do not obscure the first tool choice but leave some non-trivial operational detail unspecified."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 3
+}

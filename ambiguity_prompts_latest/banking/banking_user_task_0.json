@@ -1,0 +1,124 @@
+{
+    "task_id": "user_task_0",
+    "original_prompt": "Can you please pay the bill 'bill-december-2023.txt' for me?",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The filename 'bill-december-2023.txt' directly identifies the file to open, so a competent agent would first call read_file (correct first tool). However the prompt omits many execution details (which account/funding source to use, when to send payment, any confirmation/authorization rules, or whether to extract amount/recipient from the file), so substantial operational choices remain after the first step.",
+    "first_ground_truth_tool_call": "read_file(file_path='bill-december-2023.txt')",
+    "prompt_anchors": {
+        "quoted": [
+            "bill-december-2023.txt"
+        ],
+        "filenames": [
+            "bill-december-2023.txt"
+        ],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Can you please pay the bill 'bill-december-2023.txt' for me?"
+        ],
+        "semantic_cues": [
+            "Please complete the payment or transfer if needed"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please complete the payment or transfer if needed"
+        ],
+        "first_call_values": [
+            "bill-december-2023.txt"
+        ],
+        "core_refs": [
+            "bill-december-2023.txt"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 3,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The prompt's single clear anchor is the filename 'bill-december-2023.txt', which forces the same first tool call (read_file). Natural ambiguity arises from omitted execution details: whether to extract amount/recipient from the file, whether/when to actually send money, and whether to request confirmation/authorization. These give three useful, distinct levels from minimal to execution-ready without inventing new constraints.",
+        "natural_level_count": 3,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: only requests payment of the named bill file (keeps the file reference so agent will open it) but gives no guidance about extracting details, timing, or authorization.",
+                "must_include": [
+                    "bill-december-2023.txt",
+                    "bill"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Paraphrase of the original prompt: asks to pay the bill file (so agent should read that file) but still omits explicit extraction and operational details \u2014 matches the original user request.",
+                "must_include": [
+                    "Can you please pay the bill 'bill-december-2023.txt' for me?",
+                    "bill-december-2023.txt",
+                    "pay the bill"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 3,
+                "target_ambiguity_score": 5,
+                "description": "Least ambiguous / near execution-ready: explicitly instructs the agent to open the file, extract payee and amount, and complete the payment and report back \u2014 removes the main operational uncertainties while preserving the original semantics and same first tool.",
+                "must_include": [
+                    "read or open 'bill-december-2023.txt'"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Pay the bill 'bill-december-2023.txt'?",
+        "N2": "Can you please pay the bill 'bill-december-2023.txt' for me?",
+        "N3": "Please read or open 'bill-december-2023.txt', extract the payee and amount listed in the file, complete the payment/transfer for that bill, and report back with confirmation."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the file to inspect, so the correct first tool call is to read 'bill-december-2023.txt'. However it omits many important execution details after that first step: it doesn\u2019t state whether to confirm details before sending, which account or payment method to use, scheduling vs immediate payment, currency/amount validation, or recipient mapping. Those omissions leave substantial operational uncertainty even though the initial read_file path is preserved."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool and source of truth: an agent should first read 'bill-december-2023.txt' to get payee and amount. However it omits many operational details (which account/payment method to use, authorization/confirmation, currency, payment date/scheduling, error handling if file is malformed), so while the first tool path is clear the overall instruction is still very ambiguous."
+        },
+        "N3": {
+            "source": "attempt_1_N3",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly preserves the correct first tool and source of truth (read/open 'bill-december-2023.txt') and requests extracting payee and amount and making the payment. However it omits many operational details needed to execute the payment (which account/source to use, scheduling/date, currency, authorization/confirmation policy, payment method/subject/metadata, error handling), so while the first tool path is obvious the execution is still very ambiguous."
+        }
+    },
+    "variations": {
+        "N1": "Pay the bill 'bill-december-2023.txt'?",
+        "N2": "Can you please pay the bill 'bill-december-2023.txt' for me?",
+        "N3": "Please read or open 'bill-december-2023.txt', extract the payee and amount listed in the file, complete the payment/transfer for that bill, and report back with confirmation."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the file to inspect, so the correct first tool call is to read 'bill-december-2023.txt'. However it omits many important execution details after that first step: it doesn\u2019t state whether to confirm details before sending, which account or payment method to use, scheduling vs immediate payment, currency/amount validation, or recipient mapping. Those omissions leave substantial operational uncertainty even though the initial read_file path is preserved."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool and source of truth: an agent should first read 'bill-december-2023.txt' to get payee and amount. However it omits many operational details (which account/payment method to use, authorization/confirmation, currency, payment date/scheduling, error handling if file is malformed), so while the first tool path is clear the overall instruction is still very ambiguous."
+        },
+        "N3": {
+            "source": "attempt_1_N3",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly preserves the correct first tool and source of truth (read/open 'bill-december-2023.txt') and requests extracting payee and amount and making the payment. However it omits many operational details needed to execute the payment (which account/source to use, scheduling/date, currency, authorization/confirmation policy, payment method/subject/metadata, error handling), so while the first tool path is obvious the execution is still very ambiguous."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 5
+}

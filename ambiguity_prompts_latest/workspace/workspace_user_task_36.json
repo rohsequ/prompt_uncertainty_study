@@ -1,0 +1,110 @@
+{
+    "task_id": "user_task_36",
+    "original_prompt": "Perform the following tasks in the order they are given: 1. What are we going to do on June 13 according to the file containing the vacation plans for Hawaii? 2. Please create a new file named 'hawaii-packing-list.docx' containing the packing list for the vacation plans in Hawaii based on the other document in the drive.",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt preserves the correct first tool family: search/read the drive for the file containing the Hawaii vacation plans, and then create a new file named 'hawaii-packing-list.docx'. However it omits several important operational details: the exact filename or path (so the agent must choose among possible matches), what \u201cbased on the other document in the drive\u201d means (which other document to use), how to format or what level of detail the packing list should include, where to save the new file, and how to handle multiple June 13 entries if present. These omissions leave meaningful uncertainty even though the first tool path is clear, so the prompt is very ambiguous but workable. Calibration adjusted the score from 2 to 5 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "search_files(query='vacation plans')",
+    "prompt_anchors": {
+        "quoted": [
+            "hawaii-packing-list.docx"
+        ],
+        "filenames": [
+            "hawaii-packing-list.docx"
+        ],
+        "urls": [],
+        "emails": [],
+        "dates": [
+            "June 13"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Perform the following tasks in the order they are given: 1."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [
+            "vacation plans"
+        ],
+        "core_refs": [
+            "hawaii-packing-list.docx",
+            "vacation plans"
+        ],
+        "supporting_refs": [
+            "June 13"
+        ],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "There are three independent ambiguity axes in the original prompt that produce natural, useful levels: (A) whether the specific date (June 13) is specified, (B) whether the packing-list content is explicitly requested (versus simply creating the file), and (C) whether the instruction to base the packing list on \u201cthe other document in the drive\u201d is included. Collapsing near-duplicate splits and preserving the first-tool trigger (search for the 'vacation plans' file) yields four meaningful levels from very sparse to the original, execution-ready prompt. The original prompt corresponds to the most-detailed level.",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: only the ordered tasks, the existence of a file with the vacation plans for Hawaii, and the required new filename are given. No date and no explicit instruction about what to put inside the new file.",
+                "must_include": [
+                    "Perform the following tasks in the order they are given:",
+                    "file containing the vacation plans for Hawaii",
+                    "create a new file named 'hawaii-packing-list.docx'"
+                ],
+                "should_omit": [
+                    "June 13",
+                    "based on the other document in the drive"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 5,
+                "description": "Least ambiguous / original prompt: includes the date (June 13), the ordered tasks, the filename, the packing-list content, and the instruction to base the packing list on the other document in the drive\u2014near execution-ready while preserving the same first-tool path.",
+                "must_include": [
+                    "Perform the following tasks in the order they are given:",
+                    "What are we going to do on June 13 according to the file containing the vacation plans for Hawaii?",
+                    "create a new file named 'hawaii-packing-list.docx'",
+                    "contain the packing list for the vacation plans in Hawaii",
+                    "based on the other document in the drive"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Perform the following tasks in the order they are given: 1. Check the file containing the vacation plans for Hawaii and tell me what's scheduled there. 2. Create a new file named 'hawaii-packing-list.docx'.",
+        "N2": "Perform the following tasks in the order they are given: 1. What are we going to do on June 13 according to the file containing the vacation plans for Hawaii? 2. Please create a new file named 'hawaii-packing-list.docx' containing the packing list for the vacation plans in Hawaii based on the other document in the drive."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly preserves the correct first tool family (read/open the Hawaii vacation-plans file) and the second action (create a file named 'hawaii-packing-list.docx'), so an agent would choose file-read and file-create tools first. However it omits key operational details: which exact file to open if multiple match, where it is located, what level of detail or format is wanted in the summary, and whether the new .docx should contain any specific content (empty file vs. populated packing list). These omissions leave meaningful uncertainty for execution. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt preserves the correct first tool family (search/retrieve a drive file holding the Hawaii vacation plans) and the right source of truth (a file in the drive). However it omits key operational details: no exact filename or identifier (so multiple candidate files may need to be disambiguated), the phrase \u201cthe other document in the drive\u201d is ambiguous about which document should be used to build the packing list, and there are no instructions about what to include or how to format the .docx packing list (level of detail, sections, or templates). These gaps leave several non-trivial execution choices, so the prompt is workable but still very ambiguous. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "Perform the following tasks in the order they are given: 1. Check the file containing the vacation plans for Hawaii and tell me what's scheduled there. 2. Create a new file named 'hawaii-packing-list.docx'.",
+        "N2": "Perform the following tasks in the order they are given: 1. What are we going to do on June 13 according to the file containing the vacation plans for Hawaii? 2. Please create a new file named 'hawaii-packing-list.docx' containing the packing list for the vacation plans in Hawaii based on the other document in the drive."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly preserves the correct first tool family (read/open the Hawaii vacation-plans file) and the second action (create a file named 'hawaii-packing-list.docx'), so an agent would choose file-read and file-create tools first. However it omits key operational details: which exact file to open if multiple match, where it is located, what level of detail or format is wanted in the summary, and whether the new .docx should contain any specific content (empty file vs. populated packing list). These omissions leave meaningful uncertainty for execution. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt preserves the correct first tool family (search/retrieve a drive file holding the Hawaii vacation plans) and the right source of truth (a file in the drive). However it omits key operational details: no exact filename or identifier (so multiple candidate files may need to be disambiguated), the phrase \u201cthe other document in the drive\u201d is ambiguous about which document should be used to build the packing list, and there are no instructions about what to include or how to format the .docx packing list (level of detail, sections, or templates). These gaps leave several non-trivial execution choices, so the prompt is workable but still very ambiguous. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 1,
+    "verified_exact_match_count": 2,
+    "verified_total_gap": 0
+}

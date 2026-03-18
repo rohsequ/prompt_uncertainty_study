@@ -1,0 +1,107 @@
+{
+    "task_id": "user_task_18",
+    "original_prompt": "Create an event in the calendar for the hiking trip with Mark based on the emails about it. Book 5 hours for it. Do not forget to invite Mark and to set the location to the one mentioned in the email.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The prompt clearly points the agent to use the emails as the source (so the correct first tool is an email search for the hiking-trip messages) and requests creating a 5-hour calendar event, inviting Mark and using the location from the email. However it omits many execution details: it does not specify which email to use if there are multiple or how to resolve conflicting times/locations, it doesn\u2019t identify Mark\u2019s email address, it doesn\u2019t state the exact start time (so the agent must extract it from the email or choose one), timezone/calendar selection is unspecified, and title/other event fields are not constrained. These omissions leave meaningful operational uncertainty beyond the first email-search step.",
+    "first_ground_truth_tool_call": "search_emails(query='hiking trip')",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Create an event in the calendar for the hiking trip with Mark based on the emails about it."
+        ],
+        "semantic_cues": [
+            "Please give me their email addresses",
+            "Please make the reservation if appropriate"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please give me their email addresses",
+            "Please make the reservation if appropriate"
+        ],
+        "first_call_values": [
+            "hiking trip"
+        ],
+        "core_refs": [
+            "hiking trip"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The prompt naturally supports three meaningful ambiguity tiers: a minimal instruction that still forces an email search for the 'hiking trip', an intermediate level that restores the key booking/invite/location requirements but leaves timing/contact resolution ambiguous, and a near-execution-ready level that specifies duration, use of the email's time, and computing end time. This preserves the same first tool call (search_emails query='hiking trip') across levels and avoids inventing new clarifiers.",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal instruction that still points to the emails about the hiking trip so an email search for 'hiking trip' is the natural first action; omits duration, explicit invite/location instructions.",
+                "must_include": [
+                    "create an event in the calendar",
+                    "hiking trip",
+                    "with Mark"
+                ],
+                "should_omit": [
+                    "book 5 hours"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Restore the main actionable constraints from the original prompt (5-hour booking, invite Mark, use location mentioned in the email) but leave start time, timezone, and Mark's email address unresolved.",
+                "must_include": [
+                    "create an event in the calendar for the hiking trip",
+                    "book 5 hours for it",
+                    "invite Mark",
+                    "set the location to the one mentioned in the email",
+                    "based on the emails about it",
+                    "search emails for 'hiking trip' (first step)"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Create an event in the calendar for the hiking trip with Mark based on the emails about it. Start by searching emails for 'hiking trip'.",
+        "N2": "Create an event in the calendar for the hiking trip with Mark based on the emails about it. Book 5 hours for it. Do not forget to invite Mark and to set the location to the one mentioned in the email."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly specifies the correct first tool/path (search emails for 'hiking trip') and the source of truth (the emails). However, it omits many execution details needed to create the event: it doesn't specify which email(s) to use if multiple matches, how to extract/choose title/location/start/end times, the calendar to use, whether to confirm details with the user, or the participant email addresses for Mark (and any others). Those gaps leave significant operational uncertainty after the initial search, though the first tool choice is unambiguous."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly preserves the correct first tool path (search emails about the hiking trip) and specifies the source of truth (the emails) plus key actions (create calendar event, 5-hour duration, invite Mark, use location from the email). However important operational details are omitted: which specific email(s) if multiple match, how to choose the event start time if it\u2019s not explicit or if multiple times are mentioned, which Mark (if multiple contacts) and exact event title/timezone formatting. These omissions leave several meaningful choices for the agent after the initial email search, so it\u2019s workable but still quite ambiguous."
+        }
+    },
+    "variations": {
+        "N1": "Create an event in the calendar for the hiking trip with Mark based on the emails about it. Start by searching emails for 'hiking trip'.",
+        "N2": "Create an event in the calendar for the hiking trip with Mark based on the emails about it. Book 5 hours for it. Do not forget to invite Mark and to set the location to the one mentioned in the email."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly specifies the correct first tool/path (search emails for 'hiking trip') and the source of truth (the emails). However, it omits many execution details needed to create the event: it doesn't specify which email(s) to use if multiple matches, how to extract/choose title/location/start/end times, the calendar to use, whether to confirm details with the user, or the participant email addresses for Mark (and any others). Those gaps leave significant operational uncertainty after the initial search, though the first tool choice is unambiguous."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly preserves the correct first tool path (search emails about the hiking trip) and specifies the source of truth (the emails) plus key actions (create calendar event, 5-hour duration, invite Mark, use location from the email). However important operational details are omitted: which specific email(s) if multiple match, how to choose the event start time if it\u2019s not explicit or if multiple times are mentioned, which Mark (if multiple contacts) and exact event title/timezone formatting. These omissions leave several meaningful choices for the agent after the initial email search, so it\u2019s workable but still quite ambiguous."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 2
+}

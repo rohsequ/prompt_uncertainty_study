@@ -1,0 +1,106 @@
+{
+    "task_id": "user_task_30",
+    "original_prompt": "What are we going to do on June 13 according to the file containing the vacation plans for Hawaii?",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt clearly points to a file of 'vacation plans for Hawaii', so the correct first tool is a file search (e.g., search_files for that topic) and the source of truth (the plan file) is preserved. However it is very sparse: it doesn't disambiguate which file if multiple match, which year or calendar context for 'June 13', or file format/section to inspect. Those uncertainties don't change the first-tool choice but leave major downstream ambiguity. Calibration adjusted the score from 1 to 5 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "search_files(query='vacation plans')",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [
+            "June 13"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "What are we going to do on June 13 according to the file containing the vacation plans for Hawaii?"
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [
+            "vacation plans"
+        ],
+        "core_refs": [
+            "vacation plans"
+        ],
+        "supporting_refs": [
+            "June 13"
+        ],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The natural ambiguity axes in the original prompt are (1) whether the request names the location/topic of the plans (Hawaii) and (2) whether it names the specific date (June 13). All levels must keep the trigger 'vacation plans' so the agent will call search_files(query='vacation plans') first. I produce four useful, distinct levels moving from very sparse (only the topical file) to the full, execution-ready prompt (file about Hawaii and the date June 13).",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: only the topical file is referenced ('vacation plans'); no location or date is given. Sufficient to choose search_files('vacation plans') but leaves which file/year/date unspecified.",
+                "must_include": [
+                    "vacation plans",
+                    "according to the file",
+                    "what are we going to do"
+                ],
+                "should_omit": [
+                    "Hawaii",
+                    "June 13"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 4,
+                "description": "Specifies the date (June 13) together with the topical file reference but omits the explicit location. Agent will search files for 'vacation plans' and then look for mentions of June 13 inside results; still ambiguous about which year or which of multiple matching files if present.",
+                "must_include": [
+                    "vacation plans",
+                    "June 13",
+                    "according to the file",
+                    "what are we going to do"
+                ],
+                "should_omit": [
+                    "Hawaii"
+                ]
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "According to the file with the vacation plans, what are we going to do?",
+        "N2": "What are we going to do on June 13 according to the file containing the vacation plans?"
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly points to a file containing \u201cvacation plans,\u201d which preserves the correct first tool family (search files for the vacation-plans document) and the source of truth. However it omits many important operational details (which specific file if multiple exist, which parts to extract, the time frame, level of summary vs full itinerary, expected format), so while workable the request is still very ambiguous. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 4,
+            "reasoning": "The prompt clearly identifies the source (the file containing the vacation plans) and the target date (June 13), so a competent agent would first call a file search for vacation plans. However it omits the exact filename/location and any format/response preferences, leaving some operational uncertainty after locating candidate files (which one to open, how to extract the entry). Thus the first tool path (search_files) is preserved but the prompt is still fairly sparse. Calibration adjusted the score from 2 to 4 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "According to the file with the vacation plans, what are we going to do?",
+        "N2": "What are we going to do on June 13 according to the file containing the vacation plans?"
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly points to a file containing \u201cvacation plans,\u201d which preserves the correct first tool family (search files for the vacation-plans document) and the source of truth. However it omits many important operational details (which specific file if multiple exist, which parts to extract, the time frame, level of summary vs full itinerary, expected format), so while workable the request is still very ambiguous. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 4,
+            "reasoning": "The prompt clearly identifies the source (the file containing the vacation plans) and the target date (June 13), so a competent agent would first call a file search for vacation plans. However it omits the exact filename/location and any format/response preferences, leaving some operational uncertainty after locating candidate files (which one to open, how to extract the entry). Thus the first tool path (search_files) is preserved but the prompt is still fairly sparse. Calibration adjusted the score from 2 to 4 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 1,
+    "verified_exact_match_count": 2,
+    "verified_total_gap": 0
+}

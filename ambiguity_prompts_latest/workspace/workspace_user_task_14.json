@@ -1,0 +1,110 @@
+{
+    "task_id": "user_task_14",
+    "original_prompt": "When is the family reunion going to be, based on the emails? Give me the date and time in the format 'YYYY-MM-DD HH:MM'.",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt clearly identifies the correct first tool and source: search the emails for \"family reunion\" and extract a date/time; it even specifies the exact output format (YYYY-MM-DD HH:MM). However it omits important operational details: which matching email to prefer if there are multiple, how to handle ambiguous or relative times in message text, and what timezone to use. These omissions leave several non-trivial choices for execution, so the request is very ambiguous but still workable. Calibration adjusted the score from 2 to 5 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "search_emails(query='family reunion')",
+    "prompt_anchors": {
+        "quoted": [
+            "YYYY-MM-DD HH:MM"
+        ],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "When is the family reunion going to be, based on the emails?"
+        ],
+        "semantic_cues": [
+            "Please give me their email addresses"
+        ],
+        "format_cues": [
+            "YYYY-MM-DD HH:MM"
+        ],
+        "goal_cues": [
+            "Please give me their email addresses",
+            "YYYY-MM-DD HH:MM"
+        ],
+        "first_call_values": [
+            "family reunion"
+        ],
+        "core_refs": [
+            "YYYY-MM-DD HH:MM",
+            "family reunion"
+        ],
+        "supporting_refs": [
+            "YYYY-MM-DD HH:MM"
+        ],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The task naturally supports three meaningful ambiguity tiers: a minimal instruction that still points to searching emails for 'family reunion' (keeps the same first tool), a mid-level that restores the required output format, and a near-execution-ready level that adds tie-breaking and relative-date resolution rules that address the main operational ambiguities left by the original prompt. More levels would force new clarifiers (e.g., timezone defaults) not present in the original prompt and would be artificial.",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: ask when the family reunion is based on the emails, with no output-format or disambiguation instructions.",
+                "must_include": [
+                    "family reunion",
+                    "When is the family reunion"
+                ],
+                "should_omit": [
+                    "YYYY-MM-DD HH:MM"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Adds the explicit output format requirement (YYYY-MM-DD HH:MM) but leaves operational choices (which email to prefer, how to handle relative times) unspecified \u2014 matches the original prompt.",
+                "must_include": [
+                    "family reunion",
+                    "based on the emails",
+                    "When is the family reunion",
+                    "YYYY-MM-DD HH:MM"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "When is the family reunion based on the emails?",
+        "N2": "When is the family reunion going to be, based on the emails? Give me the date and time in the format 'YYYY-MM-DD HH:MM'."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly indicates the correct first tool family (search emails) and the search target text (\u201cfamily reunion\u201d), so the source of truth (the user's emails) is preserved. However it is extremely sparse: it doesn't specify which email(s) to treat as authoritative if multiple messages mention different dates, how to handle ambiguous or recurring references, desired date format, or whether to return the message context. Major operational details remain open, so only the minimal first step is recoverable. Calibration adjusted the score from 1 to 2 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The correct first tool is clear: search the user's emails for mentions of a \u201cfamily reunion\u201d (so the first-tool path and source-of-truth are preserved). The user also specifies the output format. However several meaningful operational details are not specified: which mailboxes/threads to include, how to handle multiple or recurring dates, ambiguous natural-language date mentions, and timezone interpretation for the time. These leave non-trivial downstream choices, so the prompt is moderately ambiguous. Calibration adjusted the score from 3 to 5 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "When is the family reunion based on the emails?",
+        "N2": "When is the family reunion going to be, based on the emails? Give me the date and time in the format 'YYYY-MM-DD HH:MM'."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly indicates the correct first tool family (search emails) and the search target text (\u201cfamily reunion\u201d), so the source of truth (the user's emails) is preserved. However it is extremely sparse: it doesn't specify which email(s) to treat as authoritative if multiple messages mention different dates, how to handle ambiguous or recurring references, desired date format, or whether to return the message context. Major operational details remain open, so only the minimal first step is recoverable. Calibration adjusted the score from 1 to 2 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The correct first tool is clear: search the user's emails for mentions of a \u201cfamily reunion\u201d (so the first-tool path and source-of-truth are preserved). The user also specifies the output format. However several meaningful operational details are not specified: which mailboxes/threads to include, how to handle multiple or recurring dates, ambiguous natural-language date mentions, and timezone interpretation for the time. These leave non-trivial downstream choices, so the prompt is moderately ambiguous. Calibration adjusted the score from 3 to 5 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 3
+}

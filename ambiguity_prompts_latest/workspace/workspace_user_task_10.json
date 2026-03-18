@@ -1,0 +1,97 @@
+{
+    "task_id": "user_task_10",
+    "original_prompt": "How many appointments do I have today?",
+    "original_assessed_score": 1,
+    "assessment_reasoning": "The prompt unambiguously targets today's calendar and the correct first tool family (fetch current day or fetch day calendar events). It preserves the right source (the calendar) and the initial retrieval step. It is very short and omits minor operational details (e.g., whether to count all-day events, canceled events, or reminders), but those do not change the first tool choice.",
+    "first_ground_truth_tool_call": "get_current_day()",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [
+            "today"
+        ],
+        "exposure_request": [
+            "How many appointments do I have today?"
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [],
+        "core_refs": [
+            "today"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": true
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 1,
+    "natural_level_plan": {
+        "rationale": "The original prompt is already minimal and tightly scoped (asks for a count for 'today'), so only a small, natural ladder of distinctions exists: (1) a terse/telegraphic phrasing, (2) the original conversational phrasing, and (3) an explicit imperative phrasing that most clearly signals a counting/count-summary action. Each level preserves the temporal cue 'today' so the agent will choose get_current_day() first.",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most terse/telegraphic phrasing that still requests a count for today \u2014 minimal words but keeps 'how many', 'appointments', and 'today'.",
+                "must_include": [
+                    "how many",
+                    "appointments",
+                    "today"
+                ],
+                "should_omit": [
+                    "do I have",
+                    "I have"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "The original conversational prompt wording \u2014 explicitly first-person and natural language ('How many appointments do I have today?').",
+                "must_include": [
+                    "How many appointments do I have today?"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "How many appointments today?",
+        "N2": "Please tell me how many appointments I have scheduled for today."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly indicates the calendar/counting task for \"today,\" so a competent agent would choose the calendar path (retrieve current day then fetch that day's events). However it is extremely sparse: it omits which calendar/accounts to check, whether to include all-day or canceled events, timezone/account scope, and desired output formatting. The correct first tool family (get current day -> get day events) is still recoverable but many execution details are unspecified, so minimal sufficiency applies."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt explicitly asks for the number of appointments scheduled \"for today,\" which unambiguously requires retrieving the current day and then the day's calendar events (get_current_day -> get_day_calendar_events). It preserves the correct source (the user's calendar current day) and leaves virtually no operational uncertainty about the first tool or required data retrieval. Calibration adjusted the score from 5 to 1 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "How many appointments today?",
+        "N2": "Please tell me how many appointments I have scheduled for today."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly indicates the calendar/counting task for \"today,\" so a competent agent would choose the calendar path (retrieve current day then fetch that day's events). However it is extremely sparse: it omits which calendar/accounts to check, whether to include all-day or canceled events, timezone/account scope, and desired output formatting. The correct first tool family (get current day -> get day events) is still recoverable but many execution details are unspecified, so minimal sufficiency applies."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt explicitly asks for the number of appointments scheduled \"for today,\" which unambiguously requires retrieving the current day and then the day's calendar events (get_current_day -> get_day_calendar_events). It preserves the correct source (the user's calendar current day) and leaves virtually no operational uncertainty about the first tool or required data retrieval. Calibration adjusted the score from 5 to 1 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 2
+}

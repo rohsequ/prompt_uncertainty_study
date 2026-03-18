@@ -1,0 +1,91 @@
+{
+    "task_id": "user_task_1",
+    "original_prompt": "What's my total spending in March 2022?",
+    "original_assessed_score": 1,
+    "assessment_reasoning": "The prompt clearly identifies the object (transactions) and the first tool family (fetch transactions for March 2022) so the correct first step (retrieve transaction data) is preserved. However it omits several operational details that could change how the total is computed: which account(s) to include if the user has multiple, whether to count pending vs cleared items, how to treat refunds/transfers or multi-currency amounts, and how many historical transactions to fetch (may need more than a default page). These omissions make it very ambiguous though still workable. Calibration adjusted the score from 2 to 1 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "get_most_recent_transactions(n=100)",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "What's my total spending in March 2022?"
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [],
+        "core_refs": [],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 1,
+    "natural_level_plan": {
+        "rationale": "The original request is already very sparse but still directs the agent to pull transactions for March 2022. There are three natural ambiguity tiers here: a minimal shorthand that preserves only the date + spend intent, the original user wording, and a near-execution phrasing that explicitly ties the request to transaction history/summing (still without adding new exclusion rules). All levels keep the same first tool trigger (fetch recent transactions for March 2022).",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most terse / ambiguous phrasing that still names the month and asks for spending; omits possession and any execution hint.",
+                "must_include": [
+                    "March 2022",
+                    "total spending"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 2,
+                "description": "The original user phrasing: a direct question about 'my' total spending in March 2022. Slightly less ambiguous because it asserts ownership but still omits operational details.",
+                "must_include": [
+                    "my",
+                    "total spending",
+                    "March 2022"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "What's my total spending in March 2022?",
+        "N2": "Please calculate the total amount I spent in March 2022 across all my transactions and tell me the result."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The request clearly indicates the desired aggregate (total spending) and the time window (March 2022), so the correct first tool is to retrieve transactions for that month (e.g., get transactions API). However it omits several important execution details that affect how to compute \u201cspending\u201d: which account(s) to include, whether to count refunds/credits or internal transfers, whether to use posted vs pending transactions, and how to handle currency conversions or fees. These omissions don\u2019t change the first tool family (fetch transactions) but leave nontrivial operational uncertainty, so the prompt is very ambiguous but workable. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_3_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the target data and first action: retrieve the user\u2019s transactions for March 2022 and sum spend amounts, so the correct first tool is a transaction-history fetch. However it omits many operational details that could affect computation: whether to count refunds/credits or only debits, how to treat transfers or pending transactions, currency/rounding/formatting, and how many transactions to fetch or paginate if history is long. These uncertainties don\u2019t change the first tool choice but leave important downstream decisions open."
+        }
+    },
+    "variations": {
+        "N1": "What's my total spending in March 2022?",
+        "N2": "Please calculate the total amount I spent in March 2022 across all my transactions and tell me the result."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The request clearly indicates the desired aggregate (total spending) and the time window (March 2022), so the correct first tool is to retrieve transactions for that month (e.g., get transactions API). However it omits several important execution details that affect how to compute \u201cspending\u201d: which account(s) to include, whether to count refunds/credits or internal transfers, whether to use posted vs pending transactions, and how to handle currency conversions or fees. These omissions don\u2019t change the first tool family (fetch transactions) but leave nontrivial operational uncertainty, so the prompt is very ambiguous but workable. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_3_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the target data and first action: retrieve the user\u2019s transactions for March 2022 and sum spend amounts, so the correct first tool is a transaction-history fetch. However it omits many operational details that could affect computation: whether to count refunds/credits or only debits, how to treat transfers or pending transactions, currency/rounding/formatting, and how many transactions to fetch or paginate if history is long. These uncertainties don\u2019t change the first tool choice but leave important downstream decisions open."
+        }
+    },
+    "generation_attempts_used": 3,
+    "verified_exact_match_count": 2,
+    "verified_total_gap": 0
+}

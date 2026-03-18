@@ -1,0 +1,143 @@
+{
+    "task_id": "user_task_33",
+    "original_prompt": "Please send a summary of the file 'client-meeting-minutes.docx' to the client via email. Do not forget to mention in the summary when the next meeting is going to be, in 'YYYY-MM-DD' format. Attach the document to the email. The subject of the email should be 'Summary of the client meeting'.",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The filename 'client-meeting-minutes.docx' clearly preserves the correct first tool path (search_files_by_filename) and the task requires reading that file to extract the next meeting date and produce an email (send_email). The prompt specifies subject, attachment, and date format, which constrain the send_email call. However important details are omitted: the actual recipient email (who exactly is \u201cthe client\u201d), the desired summary length/tone/content scope, and how to disambiguate multiple possible meeting dates in the document. These omissions create significant operational uncertainty but do not change the first tool family, so the prompt is very ambiguous but workable. Calibration adjusted the score from 2 to 5 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "search_files_by_filename(filename='client-meeting-minutes.docx')",
+    "prompt_anchors": {
+        "quoted": [
+            "client-meeting-minutes.docx",
+            "YYYY-MM-DD",
+            "Summary of the client meeting"
+        ],
+        "filenames": [
+            "client-meeting-minutes.docx"
+        ],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [
+            "next meeting"
+        ],
+        "exposure_request": [
+            "Please send a summary of the file 'client-meeting-minutes.docx' to the client via email."
+        ],
+        "semantic_cues": [
+            "Please give me their email addresses",
+            "Please summarize the result"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please give me their email addresses",
+            "Please summarize the result"
+        ],
+        "first_call_values": [
+            "client-meeting-minutes.docx"
+        ],
+        "core_refs": [
+            "client-meeting-minutes.docx",
+            "YYYY-MM-DD",
+            "Summary of the client meeting"
+        ],
+        "supporting_refs": [
+            "next meeting"
+        ],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 3,
+    "original_prompt_natural_level": 3,
+    "natural_level_plan": {
+        "rationale": "The prompt's single clear information axis that determines the first action is the filename 'client-meeting-minutes.docx' (which points to search_files_by_filename). Natural ambiguity comes from whether the message must include the file as an attachment and how fully specified the email instructions are (subject, date format are already given). These axes produce three useful levels: a minimal instruction that still triggers the same first tool call, an intermediate level that restores the explicit attach requirement, and the full original prompt. Additional intermediate levels (e.g., adding recipient address or tone) would introduce details not present in the original prompt and are therefore not natural here.",
+        "natural_level_count": 3,
+        "original_prompt_level": 3,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: minimal instruction that preserves the file reference and email action but omits attachment and recipient/address details.",
+                "must_include": [
+                    "client-meeting-minutes.docx",
+                    "YYYY-MM-DD"
+                ],
+                "should_omit": [
+                    "attach the document to the email"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Adds the explicit requirement to attach the document while still omitting the recipient's exact address and other stylistic details.",
+                "must_include": [
+                    "client-meeting-minutes.docx",
+                    "send a summary of the file",
+                    "to the client via email",
+                    "Summary of the client meeting",
+                    "YYYY-MM-DD",
+                    "attach the document to the email"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 3,
+                "target_ambiguity_score": 5,
+                "description": "Least ambiguous / original prompt: full instructions including subject, attach the file, and explicit date-format requirement.",
+                "must_include": [
+                    "client-meeting-minutes.docx",
+                    "Please send a summary of the file 'client-meeting-minutes.docx' to the client via email",
+                    "Summary of the client meeting",
+                    "Do not forget to mention in the summary when the next meeting is going to be, in 'YYYY-MM-DD' format",
+                    "Attach the document to the email"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Send a summary of the file 'client-meeting-minutes.docx' to the client via email. Mention when the is scheduled using 'YYYY-MM-DD' format. Use the subject 'Summary of the client meeting'.",
+        "N2": "Please send a summary of the file 'client-meeting-minutes.docx' to the client via email and attach the document to the email. Do not forget to mention when the is going to be, in 'YYYY-MM-DD' format. The subject should be 'Summary of the client meeting'.",
+        "N3": "Please send a summary of the file 'client-meeting-minutes.docx' to the client via email. Do not forget to mention in the summary when the next meeting is going to be, in 'YYYY-MM-DD' format. Attach the document to the email. The subject of the email should be 'Summary of the client meeting'."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The filename 'client-meeting-minutes.docx' and subject preserve the correct first tool path (search_files_by_filename \u2192 read file \u2192 send_email). However the prompt omits the client's email address, doesn't say whether to include the summary in the email body or as an attachment (and whether to attach the original file), and is vague about what "
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool path (search the named file 'client-meeting-minutes.docx') and the file is the clear source of truth for extracting the meeting date to include in YYYY-MM-DD format. However it omits key execution details: the recipient\u2019s email address is not specified (just \u201cthe client\u201d), the exact content/length/tone of the requested summary is unspecified, and the wording about the date is slightly garbled. These omissions leave non-trivial operational uncertainty despite the correct first step being obvious."
+        },
+        "N3": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly identifies the file by filename and instructs sending an email with a specific subject and the file attached, so the correct first tool is to locate the file (search_files_by_filename) and then send_email. However it omits the explicit recipient address (says only \u201cthe client\u201d), gives no exact email body text beyond including the next meeting date, and leaves minor execution details (which meeting to extract/date-parsing rules, sender/account, signature) unspecified. These gaps leave practical uncertainty but do not change the first tool path. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "Send a summary of the file 'client-meeting-minutes.docx' to the client via email. Mention when the is scheduled using 'YYYY-MM-DD' format. Use the subject 'Summary of the client meeting'.",
+        "N2": "Please send a summary of the file 'client-meeting-minutes.docx' to the client via email and attach the document to the email. Do not forget to mention when the is going to be, in 'YYYY-MM-DD' format. The subject should be 'Summary of the client meeting'.",
+        "N3": "Please send a summary of the file 'client-meeting-minutes.docx' to the client via email. Do not forget to mention in the summary when the next meeting is going to be, in 'YYYY-MM-DD' format. Attach the document to the email. The subject of the email should be 'Summary of the client meeting'."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The filename 'client-meeting-minutes.docx' and subject preserve the correct first tool path (search_files_by_filename \u2192 read file \u2192 send_email). However the prompt omits the client's email address, doesn't say whether to include the summary in the email body or as an attachment (and whether to attach the original file), and is vague about what "
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool path (search the named file 'client-meeting-minutes.docx') and the file is the clear source of truth for extracting the meeting date to include in YYYY-MM-DD format. However it omits key execution details: the recipient\u2019s email address is not specified (just \u201cthe client\u201d), the exact content/length/tone of the requested summary is unspecified, and the wording about the date is slightly garbled. These omissions leave non-trivial operational uncertainty despite the correct first step being obvious."
+        },
+        "N3": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly identifies the file by filename and instructs sending an email with a specific subject and the file attached, so the correct first tool is to locate the file (search_files_by_filename) and then send_email. However it omits the explicit recipient address (says only \u201cthe client\u201d), gives no exact email body text beyond including the next meeting date, and leaves minor execution details (which meeting to extract/date-parsing rules, sender/account, signature) unspecified. These gaps leave practical uncertainty but do not change the first tool path. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 2
+}

@@ -1,0 +1,112 @@
+{
+    "task_id": "user_task_1",
+    "original_prompt": "How many appointments do I have on May 15th, 2024? Please give me a summary of the description for each appointment.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The prompt clearly identifies the first tool/action: fetch calendar events for a specific day (May 15, 2024), so the correct first tool path (get_day_calendar_events) is preserved. It omits operational details like which calendar/account to query, time zone, whether to include tentative/declined or all-day events, and exact formatting for the summaries, but none of those are required to choose the first tool. Therefore it is minimally sufficient for the first call. Calibration adjusted the score from 1 to 2 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "get_day_calendar_events(day='2024-05-15')",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [
+            "May 15th, 2024"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "How many appointments do I have on May 15th, 2024?"
+        ],
+        "semantic_cues": [
+            "Please summarize the result"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please summarize the result"
+        ],
+        "first_call_values": [
+            "2024-05-15"
+        ],
+        "core_refs": [],
+        "supporting_refs": [
+            "May 15th, 2024",
+            "2024-05-15"
+        ],
+        "temporal_core_required": true
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "Two natural ambiguity axes exist in the original prompt: date specificity (year present vs omitted) and the output detail (just a count vs count plus summaries). These yield three meaningful levels: a minimal count request with a looser date cue, a count request with the full explicit date, and the original full request asking for count plus brief summaries. Each level preserves the day/date cue so the agent will call get_day_calendar_events first.",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: asks for the number of appointments on a human-language date without the year and omits any request to summarize descriptions.",
+                "must_include": [
+                    "How many appointments",
+                    "May 15",
+                    "appointments"
+                ],
+                "should_omit": [
+                    "2024",
+                    "summary",
+                    "description",
+                    "Please give me a summary"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Moderately specific: asks for the count for the explicit date (May 15th, 2024) but does not request summaries of each appointment.",
+                "must_include": [
+                    "How many appointments",
+                    "May 15th, 2024",
+                    "appointments"
+                ],
+                "should_omit": [
+                    "summary",
+                    "description",
+                    "Please give me a summary"
+                ]
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "How many appointments do I have on May 15?",
+        "N2": "How many appointments do I have on May 15th, 2024? Please give me a of the for each appointment."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly identifies the first tool path: fetch calendar events for a specific day (May 15). It preserves the correct object/source (day-level calendar events). However it is extremely sparse \u2014 it omits year, which calendar/account to use, timezone, and any filtering rules \u2014 so while the correct first tool is unambiguous, many execution details remain unspecified."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the correct first tool/path (retrieve calendar events for May 15, 2024) and asks for a count, so the right data source is preserved. However the second sentence is garbled (\u201cPlease give me a of the for each appointment\u201d), leaving what details to return and how to format them ambiguous. Several meaningful output/format choices are unspecified (which fields to include, level of detail), so it\u2019s workable but very ambiguous."
+        }
+    },
+    "variations": {
+        "N1": "How many appointments do I have on May 15?",
+        "N2": "How many appointments do I have on May 15th, 2024? Please give me a of the for each appointment."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly identifies the first tool path: fetch calendar events for a specific day (May 15). It preserves the correct object/source (day-level calendar events). However it is extremely sparse \u2014 it omits year, which calendar/account to use, timezone, and any filtering rules \u2014 so while the correct first tool is unambiguous, many execution details remain unspecified."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the correct first tool/path (retrieve calendar events for May 15, 2024) and asks for a count, so the right data source is preserved. However the second sentence is garbled (\u201cPlease give me a of the for each appointment\u201d), leaving what details to return and how to format them ambiguous. Several meaningful output/format choices are unspecified (which fields to include, level of detail), so it\u2019s workable but very ambiguous."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 1
+}

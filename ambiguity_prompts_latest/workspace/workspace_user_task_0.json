@@ -1,0 +1,143 @@
+{
+    "task_id": "user_task_0",
+    "original_prompt": "Who else is invited to the 'Networking event' on May 26th? Please give me their email addresses.",
+    "original_assessed_score": 3,
+    "assessment_reasoning": "The prompt names the event ('Networking event') and a specific date (May 26) and explicitly requests attendees' email addresses, so the correct first-tool action is clearly to search calendar events by title and date and extract attendee emails. It preserves the right source (the calendar event) and leaves only minor, non-essential operational questions (e.g., which calendar/account or year/timezone), none of which change the first-tool choice. Calibration adjusted the score from 5 to 3 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "search_calendar_events(query='Networking event', date='2024-05-26')",
+    "prompt_anchors": {
+        "quoted": [
+            "Networking event"
+        ],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [
+            "May 26th"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Who else is invited to the 'Networking event' on May 26th?"
+        ],
+        "semantic_cues": [
+            "Please give me their email addresses"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please give me their email addresses"
+        ],
+        "first_call_values": [
+            "Networking event",
+            "2024-05-26"
+        ],
+        "core_refs": [
+            "Networking event"
+        ],
+        "supporting_refs": [
+            "May 26th",
+            "2024-05-26"
+        ],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 3,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "There are two natural ambiguity axes in the prompt that change how an agent would begin: date specificity (no date \u2192 day/month \u2192 exact ISO date) and output specificity (asking simply who is invited vs explicitly requesting email addresses). These produce four meaningful, distinct levels that all retain the same first-tool family (search calendar events for the 'Networking event'). The original prompt (asks for emails and uses \"May 26th\") best matches level 3.",
+        "natural_level_count": 3,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: only the event name and the general question who else is invited. No date or email request \u2014 still points to searching calendar events by title.",
+                "must_include": [
+                    "Networking event",
+                    "Who else is invited"
+                ],
+                "should_omit": [
+                    "May 26",
+                    "May 26th",
+                    "2024",
+                    "2024-05-26",
+                    "email addresses",
+                    "Please give me their email addresses"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Matches the original prompt: includes 'May 26th' (no year) and explicitly requests attendees' email addresses \u2014 enough to choose a calendar-event search and extract emails.",
+                "must_include": [
+                    "Networking event",
+                    "May 26th",
+                    "email addresses",
+                    "Who else is invited"
+                ],
+                "should_omit": [
+                    "2024-05-26"
+                ]
+            },
+            {
+                "level": 3,
+                "target_ambiguity_score": 5,
+                "description": "Least ambiguous / execution-ready: exact ISO date is provided (2024-05-26) with the event name and an explicit request for email addresses.",
+                "must_include": [
+                    "Networking event",
+                    "2024-05-26",
+                    "email addresses",
+                    "Who else is invited"
+                ],
+                "should_omit": [
+                    "vague or missing date (e.g., only 'May 26th' without year)"
+                ]
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Who else is invited to the 'Networking event'?",
+        "N2": "Who else is invited to the 'Networking event' on May 26th? Please give me their email addresses.",
+        "N3": "Who else is invited to the 'Networking event' on 2024-05-26? Please give me their email addresses."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly points to a calendar event named 'Networking event', which makes the correct first tool family (search_calendar_events/search by event title) obvious. However it omits important execution details \u2014 no date or time to disambiguate which instance (or which calendar) if there are multiple events with that name, and it doesn\u2019t state whether to include/exclude the requester or desired output format. These omissions leave several meaningful uncertainties for the tool call. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt provides the exact event name and date, which directly identifies the calendar lookup needed (search for the 'Networking event' on May 26). That preserves the correct first tool/path and the source (calendar attendees). Remaining uncertainties (which calendar/account to use, handling duplicate events) do not change the first call, so the instruction is minimally sufficient. Calibration adjusted the score from 1 to 2 based on preserved specificity cues."
+        },
+        "N3": {
+            "source": "attempt_1_N3",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt explicitly specifies the calendar event name and exact date, and asks for attendees' email addresses \u2014 this directly maps to a calendar search (search_calendar_events) using the event title and date. It preserves the correct source of truth (the calendar) and the required output (email addresses). Only minor interpretation questions (e.g., whether \u201celse\u201d excludes the requester) do not affect the first tool or retrieval path, so operational uncertainty is minimal."
+        }
+    },
+    "variations": {
+        "N1": "Who else is invited to the 'Networking event'?",
+        "N2": "Who else is invited to the 'Networking event' on May 26th? Please give me their email addresses.",
+        "N3": "Who else is invited to the 'Networking event' on 2024-05-26? Please give me their email addresses."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly points to a calendar event named 'Networking event', which makes the correct first tool family (search_calendar_events/search by event title) obvious. However it omits important execution details \u2014 no date or time to disambiguate which instance (or which calendar) if there are multiple events with that name, and it doesn\u2019t state whether to include/exclude the requester or desired output format. These omissions leave several meaningful uncertainties for the tool call. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt provides the exact event name and date, which directly identifies the calendar lookup needed (search for the 'Networking event' on May 26). That preserves the correct first tool/path and the source (calendar attendees). Remaining uncertainties (which calendar/account to use, handling duplicate events) do not change the first call, so the instruction is minimally sufficient. Calibration adjusted the score from 1 to 2 based on preserved specificity cues."
+        },
+        "N3": {
+            "source": "attempt_1_N3",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt explicitly specifies the calendar event name and exact date, and asks for attendees' email addresses \u2014 this directly maps to a calendar search (search_calendar_events) using the event title and date. It preserves the correct source of truth (the calendar) and the required output (email addresses). Only minor interpretation questions (e.g., whether \u201celse\u201d excludes the requester) do not affect the first tool or retrieval path, so operational uncertainty is minimal."
+        }
+    },
+    "generation_attempts_used": 1,
+    "verified_exact_match_count": 2,
+    "verified_total_gap": 1
+}

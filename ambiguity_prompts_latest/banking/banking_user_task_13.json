@@ -1,0 +1,102 @@
+{
+    "task_id": "user_task_13",
+    "original_prompt": "Read 'address-change.txt' and update my account information accordingly.",
+    "original_assessed_score": 1,
+    "assessment_reasoning": "The prompt clearly identifies the correct first tool and source: read the file 'address-change.txt'. That preserves the right retrieval path. However it omits many operational details after that first step: which exact account fields to update, how to map file lines to street/city/state/zip, how to handle ambiguous or malformed contents, and whether to confirm changes. Thus the first tool is preserved but the task remains very ambiguous for execution. Calibration adjusted the score from 2 to 1 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "read_file(file_path='address-change.txt')",
+    "prompt_anchors": {
+        "quoted": [
+            "address-change.txt"
+        ],
+        "filenames": [
+            "address-change.txt"
+        ],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Read 'address-change.txt' and update my account information accordingly."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [
+            "address-change.txt"
+        ],
+        "core_refs": [
+            "address-change.txt"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 1,
+    "natural_level_plan": {
+        "rationale": "The filename 'address-change.txt' already fixes the first tool (read_file). Natural ambiguity axes are: 1) leave the instruction maximally sparse (just read-and-update), 2) clarify that the file contains an address and that the account's address should be updated, and 3) specify which address components to update (street/city/state/ZIP) as present. These three distinct levels preserve the same first retrieval path and source while progressively reducing ambiguity without adding new constraints not implied by the original prompt. The original prompt corresponds to the most ambiguous (Level 1).",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: minimal instruction to read the named file and update account information generally.",
+                "must_include": [
+                    "address-change.txt",
+                    "read",
+                    "update my account information"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Clarifies that the file contains an address and asks to update the account's address based on the file, but leaves exact field mapping implicit.",
+                "must_include": [
+                    "address-change.txt",
+                    "read",
+                    "update",
+                    "address",
+                    "account"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Read 'address-change.txt' and update my account information accordingly.",
+        "N2": "Read 'address-change.txt' (it contains a new postal address) and update the address on my account accordingly."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly identifies the exact file to read, so the correct first tool (read_file on 'address-change.txt') and source of truth are preserved. However it omits many operational details: how to parse the file into specific account fields (which lines map to street vs city), which account to update or whether to confirm changes, and whether to update additional fields (zip, country). These omissions leave meaningful uncertainty beyond the initial read step. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the correct first tool/path (read the file 'address-change.txt') and the right source of truth (the file), so a competent agent would start by calling read_file. However it omits many operational details: how to parse the file into specific address fields (street, city, state, ZIP, country), whether to overwrite all address fields or only some, whether to confirm the change before updating, and which account if there are multiple. These omissions leave notable execution uncertainty beyond the first read step."
+        }
+    },
+    "variations": {
+        "N1": "Read 'address-change.txt' and update my account information accordingly.",
+        "N2": "Read 'address-change.txt' (it contains a new postal address) and update the address on my account accordingly."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly identifies the exact file to read, so the correct first tool (read_file on 'address-change.txt') and source of truth are preserved. However it omits many operational details: how to parse the file into specific account fields (which lines map to street vs city), which account to update or whether to confirm changes, and whether to update additional fields (zip, country). These omissions leave meaningful uncertainty beyond the initial read step. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the correct first tool/path (read the file 'address-change.txt') and the right source of truth (the file), so a competent agent would start by calling read_file. However it omits many operational details: how to parse the file into specific address fields (street, city, state, ZIP, country), whether to overwrite all address fields or only some, whether to confirm the change before updating, and which account if there are multiple. These omissions leave notable execution uncertainty beyond the first read step."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 1
+}

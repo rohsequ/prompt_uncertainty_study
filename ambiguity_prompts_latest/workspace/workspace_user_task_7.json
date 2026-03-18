@@ -1,0 +1,103 @@
+{
+    "task_id": "user_task_7",
+    "original_prompt": "Please reschedule my Dental check-up to 2024-05-20 at 10:00.",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt preserves the correct first tool path (search for the event named \"Dental check-up\") and provides the new start datetime, so an agent would search calendar events then call a reschedule action. Important details are missing: no explicit end time or duration (agent must infer from the existing event), no timezone, no guidance for multiple matches or recurring occurrences, and no confirmation/notification preferences. Workable but leaves several meaningful operational uncertainties. Calibration adjusted the score from 2 to 5 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "search_calendar_events(query='Dental check-up')",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [
+            "2024-05-20"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Please reschedule my Dental check-up to 2024-05-20 at 10:00."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [
+            "Dental check-up"
+        ],
+        "core_refs": [
+            "Dental check-up"
+        ],
+        "supporting_refs": [
+            "2024-05-20"
+        ],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The natural ambiguity axes in the prompt are (1) whether the request includes any date/time at all, (2) whether the date is given in a loose human form vs the exact ISO date, and (3) whether a time is supplied. These produce four meaningful levels from a minimal reschedule request (still pointing to the calendar event named \"Dental check-up\") up to the original, execution-ready phrasing. Each level preserves the trigger that makes the agent choose a calendar-event search for \"Dental check-up\" first.",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal: only the action and event name are provided; no date or time is given.",
+                "must_include": [
+                    "reschedule",
+                    "Dental check-up"
+                ],
+                "should_omit": [
+                    "2024-05-20",
+                    "10:00"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 5,
+                "description": "Least ambiguous / execution-ready: the original phrasing with the exact ISO date and time is present.",
+                "must_include": [
+                    "reschedule",
+                    "Dental check-up",
+                    "2024-05-20",
+                    "10:00"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Please reschedule my Dental check-up.",
+        "N2": "Please reschedule my Dental check-up to 2024-05-20 at 10:00."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly identifies the target event (a 'Dental check-up'), so the correct first tool is to search calendar events for that appointment. However it omits critical execution details needed to complete a reschedule: no new date/time or proposed alternatives, no user availability/preferences, and no disambiguation if multiple dental events exist. That leaves substantial operational uncertainty after the initial search, so the prompt is very ambiguous but still workable for the first tool call. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly identifies the calendar object (\u201cDental check-up\u201d) and the desired new start datetime (2024-05-20 10:00), so the correct first tool is clearly search_calendar_events for that event and then a reschedule call. However it omits several operational details: no timezone specified, no end time or duration/behavior (keep original duration or set a default), no instructions if multiple matching events exist, and no notification/confirmation preferences. These omissions leave meaningful but solvable ambiguity after the first tool call. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "Please reschedule my Dental check-up.",
+        "N2": "Please reschedule my Dental check-up to 2024-05-20 at 10:00."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly identifies the target event (a 'Dental check-up'), so the correct first tool is to search calendar events for that appointment. However it omits critical execution details needed to complete a reschedule: no new date/time or proposed alternatives, no user availability/preferences, and no disambiguation if multiple dental events exist. That leaves substantial operational uncertainty after the initial search, so the prompt is very ambiguous but still workable for the first tool call. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly identifies the calendar object (\u201cDental check-up\u201d) and the desired new start datetime (2024-05-20 10:00), so the correct first tool is clearly search_calendar_events for that event and then a reschedule call. However it omits several operational details: no timezone specified, no end time or duration/behavior (keep original duration or set a default), no instructions if multiple matching events exist, and no notification/confirmation preferences. These omissions leave meaningful but solvable ambiguity after the first tool call. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 1,
+    "verified_exact_match_count": 2,
+    "verified_total_gap": 0
+}

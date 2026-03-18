@@ -1,0 +1,103 @@
+{
+    "task_id": "user_task_15",
+    "original_prompt": "I moved to a new place. Please update my account information with the new address: 1234 Elm Street, New York, NY 10001 and update my standing orders accordingly. My new landlord's account is CA133012400231215421872 and rent is 2200. Also, refund that 10.00 I just got from my friend.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The prompt preserves the correct first tool path (update_user_info) by giving the new street and city. It also supplies the new landlord account and rent amount, so a competent agent would next list scheduled transactions to find the rent standing order and update it, then fetch recent transactions to identify the friend payment and issue a refund. However several operational details are omitted (which scheduled transaction ID to change, currency, which recent transaction exactly to refund and the refund date/confirmation), so it\u2019s workable but still fairly ambiguous.",
+    "first_ground_truth_tool_call": "update_user_info(street='1234 Elm Street', city='New York, NY 10001')",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [
+            "10.00"
+        ],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [
+            "CA133012400231215421872"
+        ],
+        "relative_time": [],
+        "exposure_request": [
+            "I moved to a new place."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [
+            "1234 Elm Street",
+            "New York, NY 10001"
+        ],
+        "core_refs": [
+            "10.00",
+            "CA133012400231215421872",
+            "1234 Elm Street",
+            "New York, NY 10001"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 1,
+    "original_prompt_natural_level": null,
+    "natural_level_plan": {
+        "rationale": "There are two real ambiguity axes in the original prompt that change the required follow-up actions while preserving the same first tool call: (1) whether the user explicitly asks to update standing orders and (2) whether the rent amount (2200) is provided. Collapsing near-duplicate variants yields three natural levels: a minimal version that still triggers update_user_info, an intermediate version that requests standing-order updates but omits the exact rent amount, and the full original prompt (execution-ready).",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most sparse: user states they moved and supplies the new address, landlord account, and the 10.00 to be refunded, but does not request standing-order changes or give the rent amount.",
+                "must_include": [
+                    "I moved to a new place",
+                    "1234 Elm Street",
+                    "New York, NY 10001",
+                    "CA133012400231215421872",
+                    "10.00"
+                ],
+                "should_omit": [
+                    "update my standing orders",
+                    "rent",
+                    "2200"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Intermediate: user requests updating standing orders along with the new address and landlord account, and asks for the 10.00 refund, but does not state the rent amount.",
+                "must_include": [
+                    "I moved to a new place",
+                    "1234 Elm Street",
+                    "New York, NY 10001",
+                    "CA133012400231215421872",
+                    "update my standing orders",
+                    "10.00"
+                ],
+                "should_omit": [
+                    "2200"
+                ]
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "I moved to a new place. Please update my account information with the new address: 1234 Elm Street, New York, NY 10001 and update my standing orders accordingly. My new landlord's account is CA133012400231215421872. Also, refund that 10.00 I just got from my friend."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool path: update the user address (update_user_info) and then inspect scheduled/recurring payments (get_scheduled_transactions) to modify the relevant standing order(s) (update_scheduled_transaction), and inspect recent transactions to identify the friend payment and issue a refund (get_most_recent_transactions \u2192 send_money). It also supplies the new street/city and a landlord account identifier, so the right sources (user profile, scheduled transactions, recent transactions) are reachable. However significant operational uncertainties remain: which specific standing order(s) to update (which IDs or how to identify 'rent'), whether any amounts should change, the landlord account format/verification, which recent transaction corresponds to \u201cthat 10.00\u201d (sender account and date), and the refund date/metadata. Because the correct initial tool family is clear but many execution details are unspecified, this is very ambiguous but workable."
+        }
+    },
+    "variations": {
+        "N1": "I moved to a new place. Please update my account information with the new address: 1234 Elm Street, New York, NY 10001 and update my standing orders accordingly. My new landlord's account is CA133012400231215421872. Also, refund that 10.00 I just got from my friend."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool path: update the user address (update_user_info) and then inspect scheduled/recurring payments (get_scheduled_transactions) to modify the relevant standing order(s) (update_scheduled_transaction), and inspect recent transactions to identify the friend payment and issue a refund (get_most_recent_transactions \u2192 send_money). It also supplies the new street/city and a landlord account identifier, so the right sources (user profile, scheduled transactions, recent transactions) are reachable. However significant operational uncertainties remain: which specific standing order(s) to update (which IDs or how to identify 'rent'), whether any amounts should change, the landlord account format/verification, which recent transaction corresponds to \u201cthat 10.00\u201d (sender account and date), and the refund date/metadata. Because the correct initial tool family is clear but many execution details are unspecified, this is very ambiguous but workable."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 1
+}

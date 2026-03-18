@@ -1,0 +1,92 @@
+{
+    "task_id": "user_task_7",
+    "original_prompt": "How much did I spend on the New Year's gift for my friend?",
+    "original_assessed_score": 1,
+    "assessment_reasoning": "The prompt clearly asks for an amount tied to a specific purchase, so the correct first tool is to retrieve recent transactions (the account transaction history). However it omits key execution details: no account/card specified, no date or date range for \u201cNew Year\u2019s,\u201d no merchant or transaction description to match, and no rule for handling multiple candidate transactions (e.g., several gifts). Those uncertainties don\u2019t change the first tool family but leave many operational choices open. Calibration adjusted the score from 2 to 1 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "get_most_recent_transactions(n=100)",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "How much did I spend on the New Year's gift for my friend?"
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [],
+        "core_refs": [],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 1,
+    "natural_level_plan": {
+        "rationale": "There are three natural ambiguity axes in the original request that change the agent's subsequent filtering decisions while preserving the same first tool call: (1) whether the user gives no timeframe (most ambiguous), (2) whether the user gives a loose timeframe around New Year's (moderately ambiguous), and (3) whether the user gives a concrete short date range for New Year's (least ambiguous/execution-ready). Each level preserves the core request (amount spent on a New Year's gift for a friend) so a competent agent would still begin by fetching recent transactions (get_most_recent_transactions). The original prompt is the most ambiguous form and is assigned to level 1.",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: the original, terse question with no timeframe, account, or other disambiguators.",
+                "must_include": [
+                    "How much did I spend",
+                    "New Year's gift",
+                    "my friend"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Moderately ambiguous: same request but adds a loose timeframe cue (around New Year's) to narrow the search without specifying exact dates or accounts.",
+                "must_include": [
+                    "How much did I spend",
+                    "New Year's gift",
+                    "my friend"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "How much did I spend on the New Year's gift for my friend?",
+        "N2": "How much did I spend on the New Year's gift for my friend, roughly around New Year's?"
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The request clearly points to locating a past transaction(s) for a \"New Year's gift,\" so the correct first tool is to fetch recent transactions (e.g., get_most_recent_transactions). However it omits many operational details: which account/card, which New Year (year/time window), how to identify the friend or merchant, whether to sum multiple purchases, and currency/rounding rules. These gaps leave significant ambiguity beyond the initial retrieval step. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_2_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly directs the agent to look up the user\u2019s transactions around New Year\u2019s (so the correct first tool is to fetch recent transactions), and it preserves the right source of truth (the transaction list). However it omits many operational details: which year\u2019s New Year, the exact date range to search, how to identify which transaction(s) count as \u201cthe New Year\u2019s gift\u201d (merchant/memo matching, multiple transactions vs single), whether to sum multiple purchases, and desired rounding/format. These uncertainties are significant but the first tool call (get recent transactions) is still the obvious first step."
+        }
+    },
+    "variations": {
+        "N1": "How much did I spend on the New Year's gift for my friend?",
+        "N2": "How much did I spend on the New Year's gift for my friend, roughly around New Year's?"
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The request clearly points to locating a past transaction(s) for a \"New Year's gift,\" so the correct first tool is to fetch recent transactions (e.g., get_most_recent_transactions). However it omits many operational details: which account/card, which New Year (year/time window), how to identify the friend or merchant, whether to sum multiple purchases, and currency/rounding rules. These gaps leave significant ambiguity beyond the initial retrieval step. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_2_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly directs the agent to look up the user\u2019s transactions around New Year\u2019s (so the correct first tool is to fetch recent transactions), and it preserves the right source of truth (the transaction list). However it omits many operational details: which year\u2019s New Year, the exact date range to search, how to identify which transaction(s) count as \u201cthe New Year\u2019s gift\u201d (merchant/memo matching, multiple transactions vs single), whether to sum multiple purchases, and desired rounding/format. These uncertainties are significant but the first tool call (get recent transactions) is still the obvious first step."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 1
+}

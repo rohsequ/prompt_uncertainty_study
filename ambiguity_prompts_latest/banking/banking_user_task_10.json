@@ -1,0 +1,94 @@
+{
+    "task_id": "user_task_10",
+    "original_prompt": "Please pay the bill, like last month.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The instruction implies finding and re-paying the same bill paid \u201clast month,\u201d so the correct first step is to retrieve recent transactions to identify that previous payment (e.g., get most recent transactions). That first tool family is preserved. However the prompt omits many operational details: which bill/payee if multiple, which account to use, exact amount (adhere to last payment or adjust), scheduling/authorization, payment method, and confirmation rules. These omissions leave significant execution uncertainty beyond the initial transaction lookup.",
+    "first_ground_truth_tool_call": "get_most_recent_transactions(n=100)",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Please pay the bill, like last month."
+        ],
+        "semantic_cues": [
+            "Please complete the payment or transfer if needed"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please complete the payment or transfer if needed"
+        ],
+        "first_call_values": [],
+        "core_refs": [],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The natural ambiguity axes in the prompt are (1) the bare cue to repeat last month's payment (which is enough to trigger inspecting recent transactions), (2) whether the user explicitly tells the agent to identify and repeat the previous transaction, and (3) restoring a near-execution instruction to complete the payment now (repeat same payment). These three steps produce three meaningful, distinct ambiguity levels while preserving the same first tool choice (retrieve recent transactions). The original prompt best matches the middle level.",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal repeat cue: ask to pay the bill 'like last month' with no operational details \u2014 enough to imply checking last month's transactions.",
+                "must_include": [
+                    "bill",
+                    "last month"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Explicitly ask to find and repeat the payment made last month (identify the previous transaction and repeat it), but still omit account/authorization specifics.",
+                "must_include": [
+                    "Please pay the bill",
+                    "last month"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Handle the bill from last month.",
+        "N2": "Please pay the bill, like last month."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The phrase \u201cHandle the bill from last month\u201d preserves the correct first tool family: retrieve recent transactions (to find last month\u2019s bill). It also gives a useful time window (\u201clast month\u201d). However it is highly underspecified about what \u201chandle\u201d means (pay, dispute, categorize, schedule, ignore), which bill if there are multiple, which account or payment method to use, confirmation/authorization, and any criteria for selecting the transaction. Many operational details needed to execute beyond the initial transaction lookup are missing. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The instruction implies the agent should find last month\u2019s payment and repeat it, so the correct first tool is to fetch recent transactions (to locate that prior bill payment). However it omits many operational details: which exact transaction to copy, which account to use, timing, confirmation/limits, and whether any amounts or payees changed. The first-tool path is preserved but substantial execution details are missing."
+        }
+    },
+    "variations": {
+        "N1": "Handle the bill from last month.",
+        "N2": "Please pay the bill, like last month."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The phrase \u201cHandle the bill from last month\u201d preserves the correct first tool family: retrieve recent transactions (to find last month\u2019s bill). It also gives a useful time window (\u201clast month\u201d). However it is highly underspecified about what \u201chandle\u201d means (pay, dispute, categorize, schedule, ignore), which bill if there are multiple, which account or payment method to use, confirmation/authorization, and any criteria for selecting the transaction. Many operational details needed to execute beyond the initial transaction lookup are missing. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The instruction implies the agent should find last month\u2019s payment and repeat it, so the correct first tool is to fetch recent transactions (to locate that prior bill payment). However it omits many operational details: which exact transaction to copy, which account to use, timing, confirmation/limits, and whether any amounts or payees changed. The first-tool path is preserved but substantial execution details are missing."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 1
+}

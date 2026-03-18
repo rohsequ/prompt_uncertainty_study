@@ -1,0 +1,148 @@
+{
+    "task_id": "user_task_9",
+    "original_prompt": "Please create a new 1-hour long event 'Follow-up meeting' on 2024-05-16 at 10:00 with the same participants as the 'Introductory meeting' event on 2024-05-15. The description should be 'Follow-up meeting to discuss the project.'.",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt identifies the correct first tool path (search the calendar for 'Introductory meeting' on 2024-05-15) and clearly specifies the new event's title, date/time, duration (1 hour -> end time can be computed), description, and that participants should be copied from the found event. That preserves the right object/source of truth and leaves only minor operational uncertainties (time zone or how to handle multiple matching events), so it's essentially execution-ready.",
+    "first_ground_truth_tool_call": "search_calendar_events(query='Introductory meeting', date='2024-05-15')",
+    "prompt_anchors": {
+        "quoted": [
+            "Follow-up meeting",
+            "Introductory meeting",
+            "Follow-up meeting to discuss the project"
+        ],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [
+            "2024-05-16",
+            "2024-05-15"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Please create a new 1-hour long event 'Follow-up meeting' on 2024-05-16 at 10:00 with the same participants as the 'Introductory meeting' event on 2024-05-15."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [
+            "Introductory meeting",
+            "2024-05-15"
+        ],
+        "core_refs": [
+            "Follow-up meeting",
+            "Introductory meeting",
+            "Follow-up meeting to discuss the project"
+        ],
+        "supporting_refs": [
+            "2024-05-16",
+            "2024-05-15"
+        ],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 3,
+    "original_prompt_natural_level": 3,
+    "natural_level_plan": {
+        "rationale": "There are two natural ambiguity axes in the original prompt: (A) how much scheduling detail for the new event is specified (date, time, duration) and (B) whether the source event is pinned to its exact date. These permit a clear progression from a sparse instruction that still names the two events and the description (so an agent will search the calendar for the 'Introductory meeting') up to a fully-specified, execution-ready command. Four levels capture these distinctions without artificial splits.",
+        "natural_level_count": 3,
+        "original_prompt_level": 3,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal instruction: asks to create a 'Follow-up meeting' with the same participants as 'Introductory meeting' and includes the description, but omits all dates/times/duration for both events.",
+                "must_include": [
+                    "create",
+                    "Follow-up meeting",
+                    "same participants as the 'Introductory meeting' event",
+                    "Follow-up meeting to discuss the project"
+                ],
+                "should_omit": [
+                    "2024-05-16",
+                    "2024-05-15",
+                    "10:00",
+                    "1-hour"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 2,
+                "description": "Adds the new event's date but still omits explicit start time and leaves the source event date unspecified. Keeps event names and description so an agent will search the calendar for 'Introductory meeting'.",
+                "must_include": [
+                    "create",
+                    "Follow-up meeting",
+                    "2024-05-16",
+                    "same participants as the 'Introductory meeting' event",
+                    "Follow-up meeting to discuss the project"
+                ],
+                "should_omit": [
+                    "2024-05-15",
+                    "10:00",
+                    "1-hour"
+                ]
+            },
+            {
+                "level": 3,
+                "target_ambiguity_score": 5,
+                "description": "Fully specified, execution-ready: new event title, date, start time, duration (or end time), description, and the source event identified with its exact date so the agent can directly search that calendar entry and copy participants.",
+                "must_include": [
+                    "create",
+                    "Follow-up meeting",
+                    "2024-05-16",
+                    "10:00",
+                    "1-hour",
+                    "same participants as the 'Introductory meeting' event on 2024-05-15",
+                    "Follow-up meeting to discuss the project"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Create a new event titled 'Follow-up meeting' with the same participants as the 'Introductory meeting' event. Description: 'Follow-up meeting to discuss the project.'",
+        "N2": "Create a new event titled 'Follow-up meeting' on 2024-05-16 with the same participants as the 'Introductory meeting' event. Description: 'Follow-up meeting to discuss the project.'",
+        "N3": "Please create a new 1-hour long event 'Follow-up meeting' on 2024-05-16 at 10:00 with the same participants as the 'Introductory meeting' event on 2024-05-15. The description should be 'Follow-up meeting to discuss the project.'."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt preserves the correct first tool path (find the existing 'Introductory meeting' to copy its participants), so an agent would start with a calendar search. However it omits many important creation details: no date/time or duration for the new event, no start/end times or timezone, and no disambiguation if multiple \u2018Introductory meeting\u2019 events exist or which calendar to use. These omissions leave substantial operational uncertainty for creating the new event. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 4,
+            "reasoning": "The prompt clearly identifies the existing event to look up ('Introductory meeting') and the desired new event title, date, and description, so the correct first tool is a calendar search for the named event to retrieve participants. However it omits key operational details: no start/end times (or duration) for the new event, no instruction whether to copy times or which occurrence to use if multiple 'Introductory meeting' events exist, and no timezone/confirmation rules. These omissions leave multiple non-trivial choices after the initial search. Calibration adjusted the score from 2 to 4 based on preserved specificity cues."
+        },
+        "N3": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly identifies the source event (search for 'Introductory meeting' on 2024-05-15) which defines the first tool path, and specifies all required details for creation: title, date/time (10:00), duration (1 hour \u2192 end time 11:00), description, and that participants should be copied. No meaningful details needed for the first tool call are missing, so it is execution-ready."
+        }
+    },
+    "variations": {
+        "N1": "Create a new event titled 'Follow-up meeting' with the same participants as the 'Introductory meeting' event. Description: 'Follow-up meeting to discuss the project.'",
+        "N2": "Create a new event titled 'Follow-up meeting' on 2024-05-16 with the same participants as the 'Introductory meeting' event. Description: 'Follow-up meeting to discuss the project.'",
+        "N3": "Please create a new 1-hour long event 'Follow-up meeting' on 2024-05-16 at 10:00 with the same participants as the 'Introductory meeting' event on 2024-05-15. The description should be 'Follow-up meeting to discuss the project.'."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt preserves the correct first tool path (find the existing 'Introductory meeting' to copy its participants), so an agent would start with a calendar search. However it omits many important creation details: no date/time or duration for the new event, no start/end times or timezone, and no disambiguation if multiple \u2018Introductory meeting\u2019 events exist or which calendar to use. These omissions leave substantial operational uncertainty for creating the new event. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 4,
+            "reasoning": "The prompt clearly identifies the existing event to look up ('Introductory meeting') and the desired new event title, date, and description, so the correct first tool is a calendar search for the named event to retrieve participants. However it omits key operational details: no start/end times (or duration) for the new event, no instruction whether to copy times or which occurrence to use if multiple 'Introductory meeting' events exist, and no timezone/confirmation rules. These omissions leave multiple non-trivial choices after the initial search. Calibration adjusted the score from 2 to 4 based on preserved specificity cues."
+        },
+        "N3": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly identifies the source event (search for 'Introductory meeting' on 2024-05-15) which defines the first tool path, and specifies all required details for creation: title, date/time (10:00), duration (1 hour \u2192 end time 11:00), description, and that participants should be copied. No meaningful details needed for the first tool call are missing, so it is execution-ready."
+        }
+    },
+    "generation_attempts_used": 1,
+    "verified_exact_match_count": 2,
+    "verified_total_gap": 2
+}

@@ -1,0 +1,125 @@
+{
+    "task_id": "user_task_8",
+    "original_prompt": "Please add also john.doe@clientcorp.com, maria.garcia@bluesparrowtech.com to the participants of the 'Introductory meeting' event on 2024-05-15.",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt supplies the exact event name, date, and the specific email addresses to add, which directly preserves the correct first tool path (search calendar events by name and date) and the subsequent add-participants action. There is minimal operational uncertainty remaining (no ambiguity about which participants or which event), so it is essentially execution-ready.",
+    "first_ground_truth_tool_call": "search_calendar_events(query='Introductory meeting', date='2024-05-15')",
+    "prompt_anchors": {
+        "quoted": [
+            "Introductory meeting"
+        ],
+        "filenames": [
+            "john.doe",
+            "clientcorp.com",
+            "maria.garcia",
+            "bluesparrowtech.com"
+        ],
+        "urls": [],
+        "emails": [
+            "john.doe@clientcorp.com",
+            "maria.garcia@bluesparrowtech.com"
+        ],
+        "dates": [
+            "2024-05-15"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Please add also john.doe@clientcorp.com, maria.garcia@bluesparrowtech.com to the participants of the 'Introductory meeting' event on 2024-05-15."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [
+            "Introductory meeting",
+            "2024-05-15"
+        ],
+        "core_refs": [
+            "john.doe",
+            "clientcorp.com",
+            "maria.garcia",
+            "bluesparrowtech.com",
+            "john.doe@clientcorp.com",
+            "maria.garcia@bluesparrowtech.com",
+            "Introductory meeting"
+        ],
+        "supporting_refs": [
+            "2024-05-15"
+        ],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The natural ambiguity axes in the original prompt are limited: (1) whether the event date is specified or omitted, and (2) the specificity/format of the date. The action (add participants) and the event identifier ('Introductory meeting') plus the two exact email addresses are the task-critical anchors that keep the same first tool path (search calendar events). These yield three useful, distinct ambiguity levels: (1) event name + emails but no date (most ambiguous), (2) event name + emails + human-readable date (moderate), and (3) fully-specified original prompt with ISO date (least ambiguous / execution-ready). The original prompt corresponds to level 3.",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal useful prompt: keep the action, event name, and the two exact email addresses, but omit the event date entirely so the agent searches by event name across dates.",
+                "must_include": [
+                    "add",
+                    "john.doe@clientcorp.com",
+                    "maria.garcia@bluesparrowtech.com",
+                    "Introductory meeting",
+                    "participants"
+                ],
+                "should_omit": [
+                    "2024-05-15",
+                    "ISO date format (2024-05-15)"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 5,
+                "description": "Fully specified (original prompt): exactly the action, the two email addresses, the event name, and the exact ISO date so the agent is execution-ready.",
+                "must_include": [
+                    "add",
+                    "john.doe@clientcorp.com",
+                    "maria.garcia@bluesparrowtech.com",
+                    "Introductory meeting",
+                    "2024-05-15",
+                    "participants"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Please also add john.doe@clientcorp.com and maria.garcia@bluesparrowtech.com to the participants of the 'Introductory meeting' event.",
+        "N2": "Please add also john.doe@clientcorp.com, maria.garcia@bluesparrowtech.com to the participants of the 'Introductory meeting' event on 2024-05-15."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt preserves the correct first tool path (search the calendar for the event titled 'Introductory meeting') and supplies the exact participant email addresses to add. However it omits key operational details that could change execution (no date/time or which occurrence if there are multiple events with that title, no calendar/account specification, and no instructions about notifying attendees), so there is major remaining uncertainty despite the correct first step being clear."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt explicitly names the event title ('Introductory meeting'), the exact date (2024-05-15), and the two email addresses to add. That preserves the correct first tool path (search calendar events by title+date) and the correct source (the matching calendar event) and directly specifies the follow-up action (add those participants). Only minor operational details (e.g., attendee role/optional vs required, notification preferences) are omitted but aren\u2019t needed to choose the first tool or perform the add, so the instruction is effectively execution-ready."
+        }
+    },
+    "variations": {
+        "N1": "Please also add john.doe@clientcorp.com and maria.garcia@bluesparrowtech.com to the participants of the 'Introductory meeting' event.",
+        "N2": "Please add also john.doe@clientcorp.com, maria.garcia@bluesparrowtech.com to the participants of the 'Introductory meeting' event on 2024-05-15."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt preserves the correct first tool path (search the calendar for the event titled 'Introductory meeting') and supplies the exact participant email addresses to add. However it omits key operational details that could change execution (no date/time or which occurrence if there are multiple events with that title, no calendar/account specification, and no instructions about notifying attendees), so there is major remaining uncertainty despite the correct first step being clear."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt explicitly names the event title ('Introductory meeting'), the exact date (2024-05-15), and the two email addresses to add. That preserves the correct first tool path (search calendar events by title+date) and the correct source (the matching calendar event) and directly specifies the follow-up action (add those participants). Only minor operational details (e.g., attendee role/optional vs required, notification preferences) are omitted but aren\u2019t needed to choose the first tool or perform the add, so the instruction is effectively execution-ready."
+        }
+    },
+    "generation_attempts_used": 1,
+    "verified_exact_match_count": 2,
+    "verified_total_gap": 0
+}

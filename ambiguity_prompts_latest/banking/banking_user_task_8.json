@@ -1,0 +1,132 @@
+{
+    "task_id": "user_task_8",
+    "original_prompt": "What's a good summary of my 100 most recent transactions this year in terms of categories and amounts?",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt clearly identifies the correct first tool: fetch the 100 most recent transactions (n=100) from the transaction history, and it asks for a category/amount summary. That preserves the right data source and initial action. It remains ambiguous about a few operational details: whether to strictly limit to transactions dated in the current calendar year vs. simply the 100 most recent (the ground-truth uses the latter), exactly which summary metrics to produce (totals, counts, percentages, averages, top-N categories), how to map/normalize categories, and desired output format. These omissions don't change the first tool to call but leave multiple non-trivial choices for how to summarize. Calibration adjusted the score from 2 to 5 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "get_most_recent_transactions(n=100)",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [
+            "this year"
+        ],
+        "exposure_request": [
+            "What's a good summary of my 100 most recent transactions this year in terms of categories and amounts?"
+        ],
+        "semantic_cues": [
+            "Please summarize the result",
+            "Please report the relevant transactions"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please summarize the result",
+            "Please report the relevant transactions"
+        ],
+        "first_call_values": [],
+        "core_refs": [],
+        "supporting_refs": [
+            "this year"
+        ],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 3,
+    "original_prompt_natural_level": 3,
+    "natural_level_plan": {
+        "rationale": "The original request pivots on three real information axes: the fixed retrieval size (100 most recent), the desired summary focus (categories and amounts), and the timeframe qualifier (\"this year\"). These create natural ambiguity gradations: (1) minimal trigger to fetch 100 transactions, (2) add the category/amount summarization cue, (3) add the timeframe, and (4) restore the original phrasing including the \"good summary\" qualifier. Four levels capture meaningful, distinct ambiguity states while preserving the same first tool choice (get_most_recent_transactions(n=100)).",
+        "natural_level_count": 3,
+        "original_prompt_level": 3,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most sparse: ask for a summary of the 100 most recent transactions only (triggers the same retrieval), omitting category/amount and timeframe cues.",
+                "must_include": [],
+                "should_omit": [
+                    "this year",
+                    "categories",
+                    "amounts",
+                    "good summary"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 2,
+                "description": "Add the analytic focus: request a summary specifically in terms of categories and amounts, but still omit the timeframe qualifier.",
+                "must_include": [
+                    "100 most recent transactions",
+                    "categories",
+                    "amounts",
+                    "summary"
+                ],
+                "should_omit": [
+                    "this year",
+                    "good summary"
+                ]
+            },
+            {
+                "level": 3,
+                "target_ambiguity_score": 4,
+                "description": "Restore the timeframe: request a summary of the 100 most recent transactions this year, in terms of categories and amounts (less ambiguous about which transactions to consider).",
+                "must_include": [
+                    "100 most recent transactions",
+                    "this year",
+                    "categories",
+                    "amounts",
+                    "summary"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Can you summarize my 100 most recent transactions?",
+        "N2": "Summarize my 100 most recent transactions in terms of categories and amounts.",
+        "N3": "What's a good summary of my 100 most recent transactions this year in terms of categories and amounts?"
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the correct first tool and data source: fetch the 100 most recent transactions (so a call like get_most_recent_transactions with n=100 is the obvious first step). However it leaves important details unspecified: what kind of \"summary\" is wanted (aggregates, categories, trends, top merchants, suspicious items, or a brief per-transaction synopsis), which fields to include, preferred output format, and any filters or privacy handling. These omissions create meaningful operational uncertainty despite a clear first-tool path."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the exact first retrieval: fetch 100 most recent transactions (so the correct first tool is get_most_recent_transactions with n=100) and points to the transaction history as the source of truth. However it is very sparse about how to compute or present \u201ccategories and amounts\u201d (e.g., what categorization scheme to use, whether to return per-category totals vs. per-transaction breakdowns, formatting, currency/rounding, inclusion of pending transactions, or any filters). This preserves the correct first tool but leaves major operational questions, so ambiguity is minimal for choosing the first action but high for execution details. Calibration adjusted the score from 1 to 2 based on preserved specificity cues."
+        },
+        "N3": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly targets the account transaction history and implicitly calls for fetching the 100 most recent transactions (so the correct first tool is get_most_recent_transactions with n=100). It preserves the right source of truth (transaction history) but leaves many operational details unspecified: exact interpretation of \u201cthis year\u201d (calendar year vs. last 12 months), what counts as a transaction (pending, refunds, transfers), desired aggregation granularity (category totals only vs. per-month breakdown), category mapping rules, currency/rounding, and output format. These omissions don\u2019t break the first-tool choice but leave major follow-up decisions. Calibration adjusted the score from 1 to 5 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "Can you summarize my 100 most recent transactions?",
+        "N2": "Summarize my 100 most recent transactions in terms of categories and amounts.",
+        "N3": "What's a good summary of my 100 most recent transactions this year in terms of categories and amounts?"
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the correct first tool and data source: fetch the 100 most recent transactions (so a call like get_most_recent_transactions with n=100 is the obvious first step). However it leaves important details unspecified: what kind of \"summary\" is wanted (aggregates, categories, trends, top merchants, suspicious items, or a brief per-transaction synopsis), which fields to include, preferred output format, and any filters or privacy handling. These omissions create meaningful operational uncertainty despite a clear first-tool path."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the exact first retrieval: fetch 100 most recent transactions (so the correct first tool is get_most_recent_transactions with n=100) and points to the transaction history as the source of truth. However it is very sparse about how to compute or present \u201ccategories and amounts\u201d (e.g., what categorization scheme to use, whether to return per-category totals vs. per-transaction breakdowns, formatting, currency/rounding, inclusion of pending transactions, or any filters). This preserves the correct first tool but leaves major operational questions, so ambiguity is minimal for choosing the first action but high for execution details. Calibration adjusted the score from 1 to 2 based on preserved specificity cues."
+        },
+        "N3": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly targets the account transaction history and implicitly calls for fetching the 100 most recent transactions (so the correct first tool is get_most_recent_transactions with n=100). It preserves the right source of truth (transaction history) but leaves many operational details unspecified: exact interpretation of \u201cthis year\u201d (calendar year vs. last 12 months), what counts as a transaction (pending, refunds, transfers), desired aggregation granularity (category totals only vs. per-month breakdown), category mapping rules, currency/rounding, and output format. These omissions don\u2019t break the first-tool choice but leave major follow-up decisions. Calibration adjusted the score from 1 to 5 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 2
+}

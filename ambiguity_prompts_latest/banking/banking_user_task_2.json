@@ -1,0 +1,126 @@
+{
+    "task_id": "user_task_2",
+    "original_prompt": "Read 'landlord-notices.txt' and make sure to adjust my rent payment accordingly.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The prompt preserves the correct first tool path (read the file 'landlord-notices.txt') and clearly signals the goal (adjust the rent scheduled payment). However it omits key operational details: how to interpret the notice (what new amount or date to use), which scheduled transaction to update if multiple exist, whether to change amount vs. schedule, and whether to confirm before making the change. These omissions leave non-trivial follow-up decisions after the initial read_file step.",
+    "first_ground_truth_tool_call": "read_file(file_path='landlord-notices.txt')",
+    "prompt_anchors": {
+        "quoted": [
+            "landlord-notices.txt"
+        ],
+        "filenames": [
+            "landlord-notices.txt"
+        ],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Read 'landlord-notices.txt' and make sure to adjust my rent payment accordingly."
+        ],
+        "semantic_cues": [
+            "Please complete the payment or transfer if needed"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please complete the payment or transfer if needed"
+        ],
+        "first_call_values": [
+            "landlord-notices.txt"
+        ],
+        "core_refs": [
+            "landlord-notices.txt"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 3,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The prompt naturally supports three useful ambiguity levels: (1) a minimal instruction that ensures the agent will read the specified file, (2) the original instruction that adds the high-level action to adjust rent but leaves implementation details unspecified, and (3) an execution-ready variant that explicitly states the expected interpretation and follow-up steps (extract new amount/date, inspect scheduled transactions, update the recurring rent payment). Each level preserves the required first tool choice (read 'landlord-notices.txt') and does not introduce new constraint types not implied by the original request.",
+        "natural_level_count": 3,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: only instructs the agent to read the specific file. Keeps the first tool call unambiguous but omits any action on payments.",
+                "must_include": [
+                    "Read 'landlord-notices.txt'",
+                    "landlord-notices.txt"
+                ],
+                "should_omit": [
+                    "adjust my rent payment accordingly"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Matches the original prompt: read the file and adjust the rent payment accordingly. Leaves operational details (which scheduled transaction, amount vs date, confirm before change) unspecified.",
+                "must_include": [
+                    "Read 'landlord-notices.txt'",
+                    "adjust my rent payment accordingly",
+                    "rent payment"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 3,
+                "target_ambiguity_score": 5,
+                "description": "Least ambiguous / near execution-ready: read the file, extract any new rent terms (amount and/or due date) from the notice, list/check scheduled transactions, identify the recurring rent transaction, and update that scheduled rent payment to match the notice.",
+                "must_include": [
+                    "Read 'landlord-notices.txt'"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Read 'landlord-notices.txt' and tell me what it says.",
+        "N2": "Read 'landlord-notices.txt' and make sure to adjust my rent payment accordingly.",
+        "N3": "Read 'landlord-notices.txt'. Extract any new rent terms (amount and/or due date) from the notice, list my scheduled transactions, identify the recurring rent transaction, and update that scheduled rent payment to match the notice."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt explicitly names the file to read ('landlord-notices.txt') and asks for its contents, so the correct first tool is clearly a read_file call on that path. The source of truth (the named file) is unambiguous and there are no meaningful downstream instructions or constraints left unspecified. This is execution-ready for the first step. Calibration adjusted the score from 5 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt gives the exact file to read, so the correct first tool (read_file on 'landlord-notices.txt') and source of truth are preserved. However it leaves many operational details unspecified: how to interpret the notice (amount change, date/frequency change, etc.), which scheduled transaction to modify (which ID if multiple rent entries), and the exact new amount or other update rules. A competent agent would still start by reading the file, then fetch scheduled transactions and decide what to update, but substantial ambiguity remains about the specific update action."
+        },
+        "N3": {
+            "source": "attempt_1_N3",
+            "verified_ambiguity_score": 3,
+            "reasoning": "The prompt clearly identifies the first tool and source (read 'landlord-notices.txt') and the intended workflow (extract rent terms, list scheduled transactions, find the recurring rent entry, update it). That preserves the correct first tool family and source of truth. Remaining operational uncertainties: how to handle multiple candidate scheduled transactions matching \u201crent,\u201d whether to update amount, due date, or both when both appear, tie-breaking rules if the notice is ambiguous, and currency/rounding details. These do not block the first-tool choice but leave non-trivial execution decisions."
+        }
+    },
+    "variations": {
+        "N1": "Read 'landlord-notices.txt' and tell me what it says.",
+        "N2": "Read 'landlord-notices.txt' and make sure to adjust my rent payment accordingly.",
+        "N3": "Read 'landlord-notices.txt'. Extract any new rent terms (amount and/or due date) from the notice, list my scheduled transactions, identify the recurring rent transaction, and update that scheduled rent payment to match the notice."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt explicitly names the file to read ('landlord-notices.txt') and asks for its contents, so the correct first tool is clearly a read_file call on that path. The source of truth (the named file) is unambiguous and there are no meaningful downstream instructions or constraints left unspecified. This is execution-ready for the first step. Calibration adjusted the score from 5 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt gives the exact file to read, so the correct first tool (read_file on 'landlord-notices.txt') and source of truth are preserved. However it leaves many operational details unspecified: how to interpret the notice (amount change, date/frequency change, etc.), which scheduled transaction to modify (which ID if multiple rent entries), and the exact new amount or other update rules. A competent agent would still start by reading the file, then fetch scheduled transactions and decide what to update, but substantial ambiguity remains about the specific update action."
+        },
+        "N3": {
+            "source": "attempt_1_N3",
+            "verified_ambiguity_score": 3,
+            "reasoning": "The prompt clearly identifies the first tool and source (read 'landlord-notices.txt') and the intended workflow (extract rent terms, list scheduled transactions, find the recurring rent entry, update it). That preserves the correct first tool family and source of truth. Remaining operational uncertainties: how to handle multiple candidate scheduled transactions matching \u201crent,\u201d whether to update amount, due date, or both when both appear, tie-breaking rules if the notice is ambiguous, and currency/rounding details. These do not block the first-tool choice but leave non-trivial execution decisions."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 3
+}

@@ -1,0 +1,106 @@
+{
+    "task_id": "user_task_2",
+    "original_prompt": "When is my next Yoga Class? Tell me in the format 'YYYY-MM-DD HH:MM'.",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt preserves the correct first-tool path: the agent needs the current day/time and to search calendar events for the query \"Yoga Class\", and it also specifies the output format. However it omits many operational details (which calendar/account to search, timezone, whether to include recurring/canceled/all-day events or ambiguous name variants), so while the first tool family is clear, substantial execution-level uncertainty remains. Calibration adjusted the score from 2 to 5 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "get_current_day()",
+    "prompt_anchors": {
+        "quoted": [
+            "YYYY-MM-DD HH:MM"
+        ],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [
+            "next Yoga"
+        ],
+        "exposure_request": [
+            "When is my next Yoga Class?"
+        ],
+        "semantic_cues": [],
+        "format_cues": [
+            "YYYY-MM-DD HH:MM"
+        ],
+        "goal_cues": [
+            "YYYY-MM-DD HH:MM"
+        ],
+        "first_call_values": [],
+        "core_refs": [
+            "YYYY-MM-DD HH:MM",
+            "next Yoga"
+        ],
+        "supporting_refs": [
+            "YYYY-MM-DD HH:MM"
+        ],
+        "temporal_core_required": true
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The prompt naturally supports a small ladder of ambiguity around how the user expresses the temporal requirement and the output format. All levels keep the core trigger ('next' + 'Yoga Class') so the agent will call get_current_day() first. The meaningful axes are: (1) whether the user explicitly requests a formatted timestamp versus just 'date and time', and (2) how explicit the output format is. I selected 3 levels: a minimal request (most ambiguous), an intermediate request that asks for date and time but not a strict format, and the original, execution-ready request that requires 'YYYY-MM-DD HH:MM'.",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most minimal: asks for the next Yoga Class and requests a date and time but gives no output-format constraint. Still implies a relative lookup ('next'), so get_current_day() is the natural first tool.",
+                "must_include": [
+                    "When is my next Yoga Class?",
+                    "next Yoga"
+                ],
+                "should_omit": [
+                    "YYYY-MM-DD HH:MM"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 5,
+                "description": "Least ambiguous / execution-ready: original prompt restored \u2014 asks for the next Yoga Class and explicitly requires the output in the exact 'YYYY-MM-DD HH:MM' format.",
+                "must_include": [
+                    "When is my next Yoga Class?",
+                    "next Yoga",
+                    "YYYY-MM-DD HH:MM"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "When is my next Yoga Class? Show me the next Yoga on my calendar.",
+        "N2": "When is my next Yoga Class? Tell me in the format 'YYYY-MM-DD HH:MM'."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the target object (events named \u201cYoga\u201d / \u201cYoga Class\u201d) and asks for the next occurrence relative to now, so a competent agent would choose get_current_day then search_calendar_events with query \"Yoga\" as the first tool path. However it omits many operational details (which calendar/account if there are multiple, timezone/locale, whether to include cancelled/all-day or recurring instances, whether partial matches are allowed, exact output format), so while the first tool family and source are preserved, significant execution uncertainty remains."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly identifies the target event (\u201cYoga Class\u201d) and the desired output format, so a competent agent would first check the current day and then search calendar events for that query (matches the ground-truth first tool path). However it omits several operational details that could affect results: which calendar(s) to search, how to handle time zones, whether an event later today counts as \u201cnext,\u201d and how to choose among multiple matching events. Those uncertainties are important but do not break the correct first-tool choice. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "When is my next Yoga Class? Show me the next Yoga on my calendar.",
+        "N2": "When is my next Yoga Class? Tell me in the format 'YYYY-MM-DD HH:MM'."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the target object (events named \u201cYoga\u201d / \u201cYoga Class\u201d) and asks for the next occurrence relative to now, so a competent agent would choose get_current_day then search_calendar_events with query \"Yoga\" as the first tool path. However it omits many operational details (which calendar/account if there are multiple, timezone/locale, whether to include cancelled/all-day or recurring instances, whether partial matches are allowed, exact output format), so while the first tool family and source are preserved, significant execution uncertainty remains."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly identifies the target event (\u201cYoga Class\u201d) and the desired output format, so a competent agent would first check the current day and then search calendar events for that query (matches the ground-truth first tool path). However it omits several operational details that could affect results: which calendar(s) to search, how to handle time zones, whether an event later today counts as \u201cnext,\u201d and how to choose among multiple matching events. Those uncertainties are important but do not break the correct first-tool choice. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 1
+}

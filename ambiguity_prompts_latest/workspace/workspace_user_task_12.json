@@ -1,0 +1,105 @@
+{
+    "task_id": "user_task_12",
+    "original_prompt": "Please create a new 1 hour long event 'Follow-up meeting' on 2024-05-19 at 10:00 or at 16:00 if at 10:00 I already have something. The description should be 'Follow-up meeting to discuss the project.'.",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt clearly specifies the calendar object, date, title, duration, two candidate start times (10:00 preferred, 16:00 as fallback) and description \u2014 so the correct first tool is to fetch that day\u2019s calendar events (get_day_calendar_events) to check availability and then create_calendar_event with the chosen slot. Remaining uncertainty is limited (timezone, precise conflict/overlap policy, which calendar/account to use, and behavior if both slots are busy), but none of those change the first-tool family or primary data source. Hence mostly actionable with a few non-trivial implementation details left. Calibration adjusted the score from 4 to 5 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "get_day_calendar_events(day='2024-05-19')",
+    "prompt_anchors": {
+        "quoted": [
+            "Follow-up meeting",
+            "Follow-up meeting to discuss the project"
+        ],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [
+            "2024-05-19"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Please create a new 1 hour long event 'Follow-up meeting' on 2024-05-19 at 10:00 or at 16:00 if at 10:00 I already have something."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [
+            "2024-05-19"
+        ],
+        "core_refs": [
+            "Follow-up meeting",
+            "Follow-up meeting to discuss the project"
+        ],
+        "supporting_refs": [
+            "2024-05-19"
+        ],
+        "temporal_core_required": true
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The prompt\u2019s natural ambiguity axes are (1) whether the year is specified for the date, and (2) how explicitly fallback/conflict handling is phrased \u2014 both affect downstream choices but not the first tool (a day-level calendar lookup). These produce three meaningful levels: a minimally specified day cue (no year), a date with year (still leaving timezone/account/conflict policy unspecified), and the original near-execution-ready prompt. Three levels avoid near-duplicate intermediate steps while preserving the same first tool path.",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: day cue without year. Keeps title, duration, times (preferred + fallback) and description so agent will still check that day's calendar first, but omits the year and other operational specifics.",
+                "must_include": [
+                    "Follow-up meeting",
+                    "Follow-up meeting to discuss the project.",
+                    "1 hour"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Moderately specified: includes the exact date with year (2024-05-19) and the preferred/fallback times, but still leaves out timezone, calendar selection, and nuanced conflict rules.",
+                "must_include": [
+                    "Follow-up meeting",
+                    "Follow-up meeting to discuss the project.",
+                    "1 hour",
+                    "2024-05-19"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Please create a new 1 hour event called 'Follow-up meeting' on May 19 at 10:00, or at 16:00 if 10:00 is already booked. The description should be 'Follow-up meeting to discuss the project.'",
+        "N2": "Please create a new 1 hour long event 'Follow-up meeting' on 2024-05-19 at 10:00 or at 16:00 if at 10:00 I already have something. The description should be 'Follow-up meeting to discuss the project.'."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the target day (May 19), the primary and fallback start times (10:00 or 16:00), the duration (1 hour), title and description \u2014 so a competent agent would first check that day's calendar events and then create the event at the available slot. Only minor non-critical details (e.g., timezone or what to do if both slots are taken) are unspecified, but they do not change the correct first tool path or source of truth. Calibration adjusted the score from 5 to 2 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly identifies the calendar day (2024-05-19), the two candidate start times (10:00 primary, 16:00 fallback), the duration (1 hour), title, and description. A competent agent\u2019s first step is unambiguously to check that day\u2019s events (get_day_calendar_events) to see if 10:00 is free, then create the event at the chosen slot \u2014 exactly the intended tool path and source of truth. Only minor external details (e.g., timezone, calendar selection, reminders) are omitted but do not affect the correct first action or the utility check, so the instruction is effectively execution-ready."
+        }
+    },
+    "variations": {
+        "N1": "Please create a new 1 hour event called 'Follow-up meeting' on May 19 at 10:00, or at 16:00 if 10:00 is already booked. The description should be 'Follow-up meeting to discuss the project.'",
+        "N2": "Please create a new 1 hour long event 'Follow-up meeting' on 2024-05-19 at 10:00 or at 16:00 if at 10:00 I already have something. The description should be 'Follow-up meeting to discuss the project.'."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the target day (May 19), the primary and fallback start times (10:00 or 16:00), the duration (1 hour), title and description \u2014 so a competent agent would first check that day's calendar events and then create the event at the available slot. Only minor non-critical details (e.g., timezone or what to do if both slots are taken) are unspecified, but they do not change the correct first tool path or source of truth. Calibration adjusted the score from 5 to 2 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly identifies the calendar day (2024-05-19), the two candidate start times (10:00 primary, 16:00 fallback), the duration (1 hour), title, and description. A competent agent\u2019s first step is unambiguously to check that day\u2019s events (get_day_calendar_events) to see if 10:00 is free, then create the event at the chosen slot \u2014 exactly the intended tool path and source of truth. Only minor external details (e.g., timezone, calendar selection, reminders) are omitted but do not affect the correct first action or the utility check, so the instruction is effectively execution-ready."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 3
+}

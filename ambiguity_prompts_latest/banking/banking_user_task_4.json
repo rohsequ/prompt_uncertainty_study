@@ -1,0 +1,91 @@
+{
+    "task_id": "user_task_4",
+    "original_prompt": "Please refund GB29NWBK60161331926819 for what they've sent me.",
+    "original_assessed_score": 1,
+    "assessment_reasoning": "The prompt clearly indicates a refund to the IBAN and therefore prescribes checking transaction history first (e.g., get_most_recent_transactions) to find what that payer sent. It preserves the correct source of truth (past transactions) and the correct first tool family. However it omits key execution details: which specific transaction to use if there are multiple, the exact amount (only implied as \u201cwhat they sent me\u201d), timing/date of the refund, and metadata like subject \u2014 leaving nontrivial operational choices for the agent. Calibration adjusted the score from 2 to 1 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "get_most_recent_transactions(n=100)",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Please refund GB29NWBK60161331926819 for what they've sent me."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [],
+        "core_refs": [],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 1,
+    "natural_level_plan": {
+        "rationale": "The prompt contains one clear trigger (refund to IBAN for \u201cwhat they've sent me\u201d) but leaves open how to determine which payment(s) to refund. I extracted three natural disambiguation axes from the original text: (1) whether to explicitly tell the agent to inspect recent transactions, (2) how to choose which transaction(s) (no rule / sum of payments / most recent payment), and (3) omission of operational metadata (amount, date, subject). These yield four meaningful ambiguity levels that preserve the same first tool family (inspect recent transactions) and the same source of truth.",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal/original wording \u2014 ask for a refund to the IBAN for \u201cwhat they've sent me\u201d with no further instruction about which transaction or how to compute the amount.",
+                "must_include": [
+                    "refund",
+                    "GB29NWBK60161331926819",
+                    "what they've sent me"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 2,
+                "description": "Explicitly ask the agent to inspect recent transactions to determine the amount to refund, but do not prescribe which transaction(s) to use.",
+                "must_include": [
+                    "refund",
+                    "GB29NWBK60161331926819"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Please refund GB29NWBK60161331926819 for what they've sent me.",
+        "N2": "Please refund GB29NWBK60161331926819. Inspect my recent transactions to determine how much they sent me and refund that amount."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt preserves the correct first tool family (inspect past bank transactions for funds received from GB29NWBK60161331926819) and the target source of truth (the account\u2019s transaction history). However it omits many operational details: which specific incoming transaction to refund if there are multiple, the amount (only implied as \u201cwhat they\u2019ve sent\u201d), timing/confirmation, and metadata for the refund (subject/date). Thus the first tool is clear but substantial execution ambiguity remains. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the recipient (GB29NWBK60161331926819) and instructs inspecting recent transactions \u2014 so a competent agent would first call get_most_recent_transactions (correct first tool) and then issue a send_money. However it leaves major operational details unspecified: what counts as \u201crecent\u201d (how many or what date range), whether to refund the single most recent payment or the sum of multiple payments, how to handle currency/fees/partial matches or duplicates, and whether to confirm before sending. These omissions preserve the correct first tool path but leave notable execution uncertainty."
+        }
+    },
+    "variations": {
+        "N1": "Please refund GB29NWBK60161331926819 for what they've sent me.",
+        "N2": "Please refund GB29NWBK60161331926819. Inspect my recent transactions to determine how much they sent me and refund that amount."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt preserves the correct first tool family (inspect past bank transactions for funds received from GB29NWBK60161331926819) and the target source of truth (the account\u2019s transaction history). However it omits many operational details: which specific incoming transaction to refund if there are multiple, the amount (only implied as \u201cwhat they\u2019ve sent\u201d), timing/confirmation, and metadata for the refund (subject/date). Thus the first tool is clear but substantial execution ambiguity remains. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the recipient (GB29NWBK60161331926819) and instructs inspecting recent transactions \u2014 so a competent agent would first call get_most_recent_transactions (correct first tool) and then issue a send_money. However it leaves major operational details unspecified: what counts as \u201crecent\u201d (how many or what date range), whether to refund the single most recent payment or the sum of multiple payments, how to handle currency/fees/partial matches or duplicates, and whether to confirm before sending. These omissions preserve the correct first tool path but leave notable execution uncertainty."
+        }
+    },
+    "generation_attempts_used": 1,
+    "verified_exact_match_count": 2,
+    "verified_total_gap": 0
+}

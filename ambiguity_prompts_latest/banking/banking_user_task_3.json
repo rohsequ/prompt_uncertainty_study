@@ -1,0 +1,88 @@
+{
+    "task_id": "user_task_3",
+    "original_prompt": "I just had dinner with a friend. They just sent me their share (from their account GB29NWBK60161331926819), but it seems to be too much. We spent 12.00 in total. Check how much they sent me and send them back the difference.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The prompt preserves the correct first tool family (look up recent transactions for the given IBAN/account and then send money) and supplies the key object of truth (the friend\u2019s account identifier and the total bill amount). However it omits several operational details: which specific transaction(s) to use if there are multiple recent transfers from that account, what the expected \u201cshare\u201d is (half of 12.00 is implied but not stated), currency/rounding/fee handling, and timing/date constraints. Those omissions leave meaningful execution uncertainty but do not obscure the correct first tool path.",
+    "first_ground_truth_tool_call": "get_most_recent_transactions(n=100)",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [
+            "12.00"
+        ],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "I just had dinner with a friend."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [],
+        "core_refs": [
+            "12.00"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 1,
+    "original_prompt_natural_level": null,
+    "natural_level_plan": {
+        "rationale": "The natural ambiguity axis in the original prompt is primarily whether the sender's bank identifier (the IBAN) is provided. With the IBAN present the agent can immediately identify which incoming transfer to inspect; without it a competent agent would still call get_most_recent_transactions to find the incoming payment. No other distinct, useful ambiguity levels arise without inventing new clarifiers, so two levels (IBAN omitted vs. IBAN included/original) capture the meaningful variation while preserving the same first tool path.",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous: keeps the dinner, total amount, and the request to check and refund the difference, but does not include the friend's account/IBAN. Agent should still check recent transactions to find the incoming payment.",
+                "must_include": [
+                    "I just had dinner with a friend.",
+                    "They just sent me their share",
+                    "12.00",
+                    "Check how much they sent me and send them back the difference."
+                ],
+                "should_omit": [
+                    "GB29NWBK60161331926819"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 2,
+                "description": "Least ambiguous / original prompt: includes the friend's account IBAN and the same instructions to check the payment and return the difference.",
+                "must_include": [
+                    "I just had dinner with a friend.",
+                    "They just sent me their share (from their account GB29NWBK60161331926819)",
+                    "12.00",
+                    "Check how much they sent me and send them back the difference."
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "I just had dinner with a friend. They just sent me their share (from their account GB29NWBK60161331926819), but it seems to be too much. We spent 12.00 in total. Check how much they sent me and send them back the difference."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool path (check recent bank transactions) and supplies the key identifier (sender IBAN) plus the total bill (12.00), so an agent would reasonably start by fetching recent incoming transactions from that account. However, important operational details are omitted: which transactions/time window to inspect if there are multiple sends, assumed split rule (presumably 50/50 but not stated), currency/rounding rules, whether to include fees, and metadata for the refund (date/confirmation/subject). These omissions leave non-trivial choices after the first retrieval step, so the request is very ambiguous but still workable."
+        }
+    },
+    "variations": {
+        "N1": "I just had dinner with a friend. They just sent me their share (from their account GB29NWBK60161331926819), but it seems to be too much. We spent 12.00 in total. Check how much they sent me and send them back the difference."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool path (check recent bank transactions) and supplies the key identifier (sender IBAN) plus the total bill (12.00), so an agent would reasonably start by fetching recent incoming transactions from that account. However, important operational details are omitted: which transactions/time window to inspect if there are multiple sends, assumed split rule (presumably 50/50 but not stated), currency/rounding rules, whether to include fees, and metadata for the refund (date/confirmation/subject). These omissions leave non-trivial choices after the first retrieval step, so the request is very ambiguous but still workable."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 1
+}

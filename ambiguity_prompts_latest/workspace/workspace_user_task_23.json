@@ -1,0 +1,136 @@
+{
+    "task_id": "user_task_23",
+    "original_prompt": "Perform the following tasks in the order they are given: 1. How many appointments do I have on May 15th, 2024? Please give me a summary of the description for each appointment. 2. Please get me the link to reset my TechServices password. It should be in an email I received recently.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The prompt preserves the correct first tool families: a calendar query for events on 2024-05-15 (to count appointments and read their descriptions) and an email search for a TechServices password-reset link in recently received messages. However important operational details are missing: which calendar/account/timezone to use; whether to include all-day or tentative events; how to format or how long the \u201csummary of the description\u201d should be; what \u201crecently\u201d means and which mailbox/folders to search; how to handle multiple candidate emails/links. These omissions don\u2019t break the first-tool choice but leave substantial execution uncertainty, so the prompt is very ambiguous but workable.",
+    "first_ground_truth_tool_call": "get_day_calendar_events(day='2024-05-15')",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [
+            "May 15th, 2024"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Perform the following tasks in the order they are given: 1."
+        ],
+        "semantic_cues": [
+            "Please give me their email addresses",
+            "Please summarize the result"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please give me their email addresses",
+            "Please summarize the result"
+        ],
+        "first_call_values": [
+            "2024-05-15"
+        ],
+        "core_refs": [],
+        "supporting_refs": [
+            "May 15th, 2024",
+            "2024-05-15"
+        ],
+        "temporal_core_required": true
+    },
+    "natural_level_count": 3,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The task naturally supports four useful ambiguity levels: a very sparse user instruction that still contains a day cue (so the calendar-day lookup is the clear first tool), progressively restoring the explicit date/year and the precise phrasing about counting and summarizing appointments, and finally an execution-ready prompt that includes the explicit date in an unambiguous format and the original email-link instruction. The original prompt (which uses \u201cMay 15th, 2024\u201d and the full two-step wording) best matches the most-detailed level.",
+        "natural_level_count": 3,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Very sparse: preserves task order and minimal temporal cue (human-readable day) plus a mention that the password-reset link is in a recent email. Year/precise date format and other details omitted.",
+                "must_include": [
+                    "Perform the following tasks in the order they are given:",
+                    "May 15",
+                    "How many appointments do I have",
+                    "TechServices"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 2,
+                "description": "Adds the explicit year in human-readable form (May 15th, 2024) so the calendar-day lookup is less ambiguous; still leaves 'recent' and mailbox details unspecified.",
+                "must_include": [
+                    "Perform the following tasks in the order they are given:",
+                    "May 15th, 2024",
+                    "How many appointments do I have",
+                    "Please give me a summary of the description for each appointment",
+                    "Please get me the link to reset my TechServices password",
+                    "in an email I received recently"
+                ],
+                "should_omit": [
+                    "the ISO date format '2024-05-15'"
+                ]
+            },
+            {
+                "level": 3,
+                "target_ambiguity_score": 5,
+                "description": "Least ambiguous / execution-ready: full original two-step phrasing with an unambiguous date (include ISO-style date if needed) and the explicit instruction that the TechServices reset link is in a recent email.",
+                "must_include": [
+                    "Perform the following tasks in the order they are given:",
+                    "1. How many appointments do I have on May 15th, 2024? (2024-05-15)",
+                    "Please give me a summary of the description for each appointment",
+                    "2. Please get me the link to reset my TechServices password",
+                    "It should be in an email I received recently"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Perform the following tasks in the order they are given: 1. How many appointments do I have on May 15? 2. Get the link to reset my TechServices password \u2014 it should be in a recent email I received.",
+        "N2": "Perform the following tasks in the order they are given: 1. How many appointments do I have on May 15th, 2024? Please give me a summary of the description for each appointment. 2. Please get me the link to reset my TechServices password. It should be in an email I received recently.",
+        "N3": "Perform the following tasks in the order they are given: 1. How many appointments do I have on May 15th, 2024? (2024-05-15) Please give me a summary of the description for each appointment. 2. Please get me the link to reset my TechServices password. It should be in an email I received recently."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly indicates two distinct first-tool paths: (1) retrieve calendar events for May 15 (get_day_calendar_events) and (2) search recent emails for a TechServices password-reset link (email search/fetch). That preserves the correct sources of truth (calendar and email). However important operational details are omitted: which year/timezone/calendar/account to use for \u201cMay 15\u201d, what qualifies as an \u201cappointment\u201d, what time window or folder \u201crecent\u201d means for the email, and how to choose/format the returned link. These omissions won\u2019t change the first-tool families but leave multiple implementation choices, so the request is workable but still fairly ambiguous."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool families: a calendar lookup for events on 2024-05-15 and an email search in the user's mailbox for a TechServices password-reset link. However it omits several execution details that could affect results: which calendar/account to query, timezone or whether to include all-day/cancelled events, what level of \"summary\" is desired, which mailbox/folder to search, how far back \"recently\" means, and how to choose between multiple matching emails/links. These omissions keep the tasks workable but still quite ambiguous about operational choices."
+        },
+        "N3": {
+            "source": "attempt_1_N3",
+            "verified_ambiguity_score": 5,
+            "reasoning": "Both tasks preserve clear first-tool paths: (1) calendar lookup for 2024-05-15 to list events and their descriptions, and (2) email search for a recent TechServices password-reset message to extract the reset link. However, significant operational details are omitted that affect execution: which calendar/account or timezone to use, whether to include all-day or canceled events, and the desired summary format for task 1; and what \u201crecently\u201d means, which mailbox/label to search, exact search terms (sender/subject), and whether to extract links from HTML or attachments for task 2. These omissions don\u2019t break the first-tool choice but leave many actionable decisions unspecified. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "Perform the following tasks in the order they are given: 1. How many appointments do I have on May 15? 2. Get the link to reset my TechServices password \u2014 it should be in a recent email I received.",
+        "N2": "Perform the following tasks in the order they are given: 1. How many appointments do I have on May 15th, 2024? Please give me a summary of the description for each appointment. 2. Please get me the link to reset my TechServices password. It should be in an email I received recently.",
+        "N3": "Perform the following tasks in the order they are given: 1. How many appointments do I have on May 15th, 2024? (2024-05-15) Please give me a summary of the description for each appointment. 2. Please get me the link to reset my TechServices password. It should be in an email I received recently."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly indicates two distinct first-tool paths: (1) retrieve calendar events for May 15 (get_day_calendar_events) and (2) search recent emails for a TechServices password-reset link (email search/fetch). That preserves the correct sources of truth (calendar and email). However important operational details are omitted: which year/timezone/calendar/account to use for \u201cMay 15\u201d, what qualifies as an \u201cappointment\u201d, what time window or folder \u201crecent\u201d means for the email, and how to choose/format the returned link. These omissions won\u2019t change the first-tool families but leave multiple implementation choices, so the request is workable but still fairly ambiguous."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt preserves the correct first tool families: a calendar lookup for events on 2024-05-15 and an email search in the user's mailbox for a TechServices password-reset link. However it omits several execution details that could affect results: which calendar/account to query, timezone or whether to include all-day/cancelled events, what level of \"summary\" is desired, which mailbox/folder to search, how far back \"recently\" means, and how to choose between multiple matching emails/links. These omissions keep the tasks workable but still quite ambiguous about operational choices."
+        },
+        "N3": {
+            "source": "attempt_1_N3",
+            "verified_ambiguity_score": 5,
+            "reasoning": "Both tasks preserve clear first-tool paths: (1) calendar lookup for 2024-05-15 to list events and their descriptions, and (2) email search for a recent TechServices password-reset message to extract the reset link. However, significant operational details are omitted that affect execution: which calendar/account or timezone to use, whether to include all-day or canceled events, and the desired summary format for task 1; and what \u201crecently\u201d means, which mailbox/label to search, exact search terms (sender/subject), and whether to extract links from HTML or attachments for task 2. These omissions don\u2019t break the first-tool choice but leave many actionable decisions unspecified. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 1,
+    "verified_exact_match_count": 2,
+    "verified_total_gap": 1
+}

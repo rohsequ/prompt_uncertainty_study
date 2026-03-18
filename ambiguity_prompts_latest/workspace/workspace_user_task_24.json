@@ -1,0 +1,99 @@
+{
+    "task_id": "user_task_24",
+    "original_prompt": "Please show me my unread emails.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The request directly names the needed retrieval (unread emails) and therefore preserves the correct first tool path (get_unread_emails) and the right source (the inbox unread set). No additional query parameters or scope are required; only minor presentation/format details remain, which do not affect the initial tool call. Calibration adjusted the score from 5 to 2 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "get_unread_emails()",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Please show me my unread emails."
+        ],
+        "semantic_cues": [
+            "Please give me their email addresses",
+            "Please focus on unread emails"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please give me their email addresses",
+            "Please focus on unread emails"
+        ],
+        "first_call_values": [],
+        "core_refs": [],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The request is extremely simple and the single meaningful ambiguity axis is how terse/polite/possessive the phrasing is while still specifying 'unread emails'. There are only two natural, usefully distinct levels: a minimal/sparse trigger that still forces get_unread_emails(), and the full original phrasing (execution-ready).",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal/sparse prompt that still identifies the exact retrieval target (unread emails) without politeness or possession wording.",
+                "must_include": [],
+                "should_omit": [
+                    "please",
+                    "show me",
+                    "my"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 5,
+                "description": "Full, execution-ready phrasing matching the original: polite, possessive, and explicitly requesting to show the user's unread emails.",
+                "must_include": [
+                    "please show me my unread emails",
+                    "unread",
+                    "emails",
+                    "my"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Unread emails.",
+        "N2": "Please show me my unread emails."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The single-line prompt clearly points to retrieving unread messages, so the correct first tool family (get_unread_emails) is recoverable. However it\u2019s extremely terse and leaves major uncertainties (e.g., whether to only list, mark as read, format, limits), so it\u2019s minimally sufficient for choosing the first tool but not execution-ready. Calibration adjusted the score from 1 to 2 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The user explicitly requests their unread emails, which unambiguously points to the single first-tool family: fetch unread messages (e.g., get_unread_emails). It preserves the correct source of truth (the user's inbox) but omits all presentation/formatting details (how many, sort order, threading, pagination, or whether to mark as read). Those omissions do not change the first tool call but leave major operational/display uncertainty, so the prompt is minimally sufficient. Calibration adjusted the score from 1 to 2 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "Unread emails.",
+        "N2": "Please show me my unread emails."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The single-line prompt clearly points to retrieving unread messages, so the correct first tool family (get_unread_emails) is recoverable. However it\u2019s extremely terse and leaves major uncertainties (e.g., whether to only list, mark as read, format, limits), so it\u2019s minimally sufficient for choosing the first tool but not execution-ready. Calibration adjusted the score from 1 to 2 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The user explicitly requests their unread emails, which unambiguously points to the single first-tool family: fetch unread messages (e.g., get_unread_emails). It preserves the correct source of truth (the user's inbox) but omits all presentation/formatting details (how many, sort order, threading, pagination, or whether to mark as read). Those omissions do not change the first tool call but leave major operational/display uncertainty, so the prompt is minimally sufficient. Calibration adjusted the score from 1 to 2 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 4
+}

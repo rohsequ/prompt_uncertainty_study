@@ -1,0 +1,103 @@
+{
+    "task_id": "user_task_28",
+    "original_prompt": "What scores did users Olivia Smith, Mia Anderson, and Mason Thompson give in the feedback provided in the file 'feedback.xlsx'?",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The prompt clearly identifies the file ('feedback.xlsx') and the three target users, so the correct first tool call is to search/open that filename. However it omits many execution details (which sheet/range/column holds scores, how to handle multiple rows or missing entries, and the desired output format), so while the first tool path and source are preserved, substantial operational uncertainty remains.",
+    "first_ground_truth_tool_call": "search_files_by_filename(filename='feedback.xlsx')",
+    "prompt_anchors": {
+        "quoted": [
+            "feedback.xlsx"
+        ],
+        "filenames": [
+            "feedback.xlsx"
+        ],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "What scores did users Olivia Smith, Mia Anderson, and Mason Thompson give in the feedback provided in the file 'feedback.xlsx'?"
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [
+            "feedback.xlsx"
+        ],
+        "core_refs": [
+            "feedback.xlsx"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 1,
+    "natural_level_plan": {
+        "rationale": "The original request already names the exact file and the three users, so the essential first tool call (search_files_by_filename('feedback.xlsx')) is preserved. Natural ambiguity arises from omitted details: which sheet/range contains the scores, how to handle multiple feedback rows per user, and how to report missing entries or desired output format. These yield three meaningful ambiguity levels: a minimal prompt (same as original), a clarified prompt that asks for explicit name\u2192score mapping and handling of multiple entries, and a near-execution-ready prompt that also requests provenance (sheet/row) and explicit 'not found' marks.",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most ambiguous \u2014 minimal useful prompt that preserves the file and target users but omits sheet/range, handling of multiple rows, and output details.",
+                "must_include": [
+                    "'feedback.xlsx'",
+                    "Olivia Smith",
+                    "Mia Anderson",
+                    "Mason Thompson",
+                    "scores"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Moderately specified \u2014 explicitly request each user's score(s) from feedback.xlsx and ask to list scores alongside names; clarifies treatment of multiple rows by asking to include all occurrences.",
+                "must_include": [
+                    "'feedback.xlsx'",
+                    "Olivia Smith",
+                    "Mia Anderson",
+                    "Mason Thompson"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "What scores did users Olivia Smith, Mia Anderson, and Mason Thompson give in the feedback provided in the file 'feedback.xlsx'?",
+        "N2": "From the file 'feedback.xlsx', list the score(s) given by each user: Olivia Smith, Mia Anderson, and Mason Thompson. If a user appears multiple times in the feedback, include all of their scores and show them alongside the user's name."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly identifies the exact file ('feedback.xlsx') and the three user names, so the correct first tool/action is unambiguous (search_files_by_filename for 'feedback.xlsx') and it preserves the right source. However it omits many operational details (which sheet or column holds scores, how to handle multiple entries or formatting of output, tie-breakers, etc.), so it is minimally sufficient but still leaves major execution uncertainty."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the exact filename ('feedback.xlsx') and the specific users to extract, so the correct first tool call is to search/open that file. It also specifies how to handle duplicate entries. However it omits several implementation details that could affect parsing/output (which sheet/column contains scores, exact matching/case rules, how to format results or handle missing users), so while the first tool path is preserved, meaningful operational uncertainty remains."
+        }
+    },
+    "variations": {
+        "N1": "What scores did users Olivia Smith, Mia Anderson, and Mason Thompson give in the feedback provided in the file 'feedback.xlsx'?",
+        "N2": "From the file 'feedback.xlsx', list the score(s) given by each user: Olivia Smith, Mia Anderson, and Mason Thompson. If a user appears multiple times in the feedback, include all of their scores and show them alongside the user's name."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly identifies the exact file ('feedback.xlsx') and the three user names, so the correct first tool/action is unambiguous (search_files_by_filename for 'feedback.xlsx') and it preserves the right source. However it omits many operational details (which sheet or column holds scores, how to handle multiple entries or formatting of output, tie-breakers, etc.), so it is minimally sufficient but still leaves major execution uncertainty."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the exact filename ('feedback.xlsx') and the specific users to extract, so the correct first tool call is to search/open that file. It also specifies how to handle duplicate entries. However it omits several implementation details that could affect parsing/output (which sheet/column contains scores, exact matching/case rules, how to format results or handle missing users), so while the first tool path is preserved, meaningful operational uncertainty remains."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 1
+}

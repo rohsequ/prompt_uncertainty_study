@@ -1,0 +1,95 @@
+{
+    "task_id": "user_task_22",
+    "original_prompt": "Please get me the link to reset my TechServices password. It should be in an email I received recently.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The prompt preserves the correct first tool family (searching recent emails for a TechServices password-reset message) and the source of truth (an email containing the reset link). However it omits important operational details: which mailbox/account to search, how far back \u201crecently\u201d is, whether to prefer subject/body or attachments, how to choose among multiple candidate emails/links, and whether to validate or avoid phishing. These omissions leave meaningful uncertainty even though the first tool path is clear.",
+    "first_ground_truth_tool_call": "search_emails(query='TechServices password reset')",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Please get me the link to reset my TechServices password."
+        ],
+        "semantic_cues": [
+            "Please give me their email addresses"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please give me their email addresses"
+        ],
+        "first_call_values": [],
+        "core_refs": [],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The prompt naturally supports four meaningful ambiguity gradations along two real axes present in the original text: (1) whether the item sought is explicitly called a \"link\" vs a generic password-reset item, and (2) how explicitly the email/timeframe/search intent is stated (minimal mention of a recent email \u2192 explicit recent-email phrasing \u2192 full original phrasing \u2192 explicit search instruction/query). Each level preserves the same first tool family (searching emails for a TechServices password-reset message) and the same source of truth (a recently received email).",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal trigger: indicate TechServices password-reset content is in a recent email. Keeps just enough to point to searching emails but omits explicit request for the link and all selection/validation details.",
+                "must_include": [
+                    "TechServices",
+                    "recent"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 2,
+                "description": "Adds an explicit request for the reset link and keeps the recent-email cue, but still does not specify mailbox, timeframe bounds, or tie-break rules for multiple candidates.",
+                "must_include": [
+                    "TechServices",
+                    "link",
+                    "email I received recently"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "There's a recent message mentioning TechServices and resetting a password.",
+        "N2": "Please get me the link to reset my TechServices password. It should be in an email I received recently."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_2_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly points to searching recent messages for content about \"TechServices\" and a \"password reset\", so the correct first tool family is search_emails (e.g., query containing those keywords). However it omits many operational details: mailbox/account scope, timeframe definition for \"recent\", exact query syntax, whether to return the message body/URL or take action, and expected output format. Workable but still very ambiguous. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly preserves the correct first tool family (searching the user's email) and the target object (a TechServices password-reset email), so an agent would start with an email search. However it is vague about timeframe/account scope and what to do if multiple reset emails/links exist (which one to prefer), leaving several operational details unspecified. Thus it's very ambiguous but workable."
+        }
+    },
+    "variations": {
+        "N1": "There's a recent message mentioning TechServices and resetting a password.",
+        "N2": "Please get me the link to reset my TechServices password. It should be in an email I received recently."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_2_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly points to searching recent messages for content about \"TechServices\" and a \"password reset\", so the correct first tool family is search_emails (e.g., query containing those keywords). However it omits many operational details: mailbox/account scope, timeframe definition for \"recent\", exact query syntax, whether to return the message body/URL or take action, and expected output format. Workable but still very ambiguous. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly preserves the correct first tool family (searching the user's email) and the target object (a TechServices password-reset email), so an agent would start with an email search. However it is vague about timeframe/account scope and what to do if multiple reset emails/links exist (which one to prefer), leaving several operational details unspecified. Thus it's very ambiguous but workable."
+        }
+    },
+    "generation_attempts_used": 2,
+    "verified_exact_match_count": 2,
+    "verified_total_gap": 0
+}

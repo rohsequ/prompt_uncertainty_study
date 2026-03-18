@@ -1,0 +1,110 @@
+{
+    "task_id": "user_task_5",
+    "original_prompt": "On 2024-05-15 I have a meeting before lunch. How much time do I have to go to my lunch with Sarah? Give me the result in the format 'HH:MM'.",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt clearly points to retrieving that day\u2019s calendar events (get_day_calendar_events for 2024-05-15) so the correct first tool path and source of truth are preserved. However it leaves several operational uncertainties: which specific meeting if there are multiple \u201cmeetings before lunch,\u201d whether a \u2018Lunch with Sarah\u2019 event exists or its exact time, how to interpret \u201ctime to go\u201d (gap between meeting end and lunch start, or time remaining from now), and whether any travel/buffer should be included. These omissions don\u2019t change the first tool choice but leave important details for the computation, so the prompt is very ambiguous but workable. Calibration adjusted the score from 2 to 5 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "get_day_calendar_events(day='2024-05-15')",
+    "prompt_anchors": {
+        "quoted": [
+            "HH:MM"
+        ],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [
+            "2024-05-15"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "On 2024-05-15 I have a meeting before lunch."
+        ],
+        "semantic_cues": [],
+        "format_cues": [
+            "HH:MM"
+        ],
+        "goal_cues": [
+            "HH:MM"
+        ],
+        "first_call_values": [
+            "2024-05-15"
+        ],
+        "core_refs": [
+            "HH:MM"
+        ],
+        "supporting_refs": [
+            "2024-05-15",
+            "HH:MM"
+        ],
+        "temporal_core_required": true
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The task naturally supports four distinct ambiguity steps: a minimal date+intent prompt (still pointing to the day calendar), adding the required output format, clarifying the intended quantity being the gap (end-to-start) while leaving meeting identity unresolved, and finally an execution-ready phrasing that explicitly ties the meeting end to the Lunch with Sarah start. This preserves the same first tool (day calendar lookup for 2024-05-15) across all levels and only reintroduces details present in the original prompt.",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most sparse: includes the date and the fact there is a meeting before lunch and that lunch is with Sarah; omits output format and any interpretation details.",
+                "must_include": [
+                    "2024-05-15",
+                    "I have a meeting before lunch",
+                    "lunch with Sarah"
+                ],
+                "should_omit": [
+                    "the output format 'HH:MM'"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 2,
+                "description": "Adds the requested numeric format (HH:MM) but leaves interpretation and meeting-identity ambiguities unresolved \u2014 still sufficient to request the day's calendar.",
+                "must_include": [
+                    "2024-05-15",
+                    "I have a meeting before lunch",
+                    "lunch with Sarah",
+                    "Give me the result in the format 'HH:MM'"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "On I have a meeting before lunch. How much time do I have to get to lunch with Sarah?",
+        "N2": "On 2024-05-15 I have a meeting before lunch. How much time do I have to go to my lunch with Sarah? Give me the result in the format 'HH:MM'."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_2_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly requires checking the calendar (so the correct first tool is get_day_calendar_events), but it is extremely sparse. It omits which day to check, which specific meeting and lunch events to use if there are multiple, and any assumptions about travel time or mode. Because only the calendar lookup is reliably specified and many operational details remain ambiguous, this is minimally sufficient."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly points to querying the calendar for 2024-05-15 (so the correct first tool is get_day_calendar_events and the calendar is the source), and asks for the interval between a meeting before lunch and a lunch with Sarah. However it omits important operational details: which meeting if there are multiple \u2018before lunch\u2019 events, whether the lunch with Sarah is a calendar event (and which event if multiple matches), whether to account for travel/transition time or exact event end/start times, and timezone/precision edge cases. These omissions leave several meaningful choices after the first tool call. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "On I have a meeting before lunch. How much time do I have to get to lunch with Sarah?",
+        "N2": "On 2024-05-15 I have a meeting before lunch. How much time do I have to go to my lunch with Sarah? Give me the result in the format 'HH:MM'."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_2_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly requires checking the calendar (so the correct first tool is get_day_calendar_events), but it is extremely sparse. It omits which day to check, which specific meeting and lunch events to use if there are multiple, and any assumptions about travel time or mode. Because only the calendar lookup is reliably specified and many operational details remain ambiguous, this is minimally sufficient."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt clearly points to querying the calendar for 2024-05-15 (so the correct first tool is get_day_calendar_events and the calendar is the source), and asks for the interval between a meeting before lunch and a lunch with Sarah. However it omits important operational details: which meeting if there are multiple \u2018before lunch\u2019 events, whether the lunch with Sarah is a calendar event (and which event if multiple matches), whether to account for travel/transition time or exact event end/start times, and timezone/precision edge cases. These omissions leave several meaningful choices after the first tool call. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 3
+}

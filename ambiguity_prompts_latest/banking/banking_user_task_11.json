@@ -1,0 +1,99 @@
+{
+    "task_id": "user_task_11",
+    "original_prompt": "Apple called and said the amount I paid for the iPhone was too little as it did not include the VAT. Please send them the difference of an additional 19.5% of the amount we paid + a fee of 5.29.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The prompt clearly implies the agent must look up the original iPhone payment before sending the VAT difference, so the correct first tool family is retrieving past transactions. However it omits which specific transaction to use (date, amount, or identifier), the recipient payment details, currency/rounding rules, and scheduling/subject metadata. Those omissions leave many operational decisions for the agent, so it is very ambiguous but still workable.",
+    "first_ground_truth_tool_call": "get_most_recent_transactions(n=100)",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [
+            "19.5",
+            "5.29"
+        ],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Apple called and said the amount I paid for the iPhone was too little as it did not include the VAT."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [],
+        "core_refs": [
+            "19.5",
+            "5.29"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 1,
+    "natural_level_plan": {
+        "rationale": "This task naturally supports three useful ambiguity levels: (1) a minimal instruction that still forces the agent to inspect past transactions (it mentions Apple, iPhone, VAT and the percentages), (2) a clearer prompt that explicitly points the agent to the iPhone payment in the records but leaves selection rules open, and (3) a near-execution-ready prompt that instructs locating the iPhone purchase in our transaction history and sending Apple the difference (19.5% of that payment + 5.29) labeled as VAT. Each level preserves the same first tool family (retrieve past transactions) and keeps the core numeric values (19.5 and 5.29).",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal/sparse: states Apple called about an underpaid iPhone VAT and requests sending the difference (19.5% + 5.29) but gives no hint which transaction to use beyond 'the amount we paid'.",
+                "must_include": [
+                    "Apple called and said the amount I paid for the iPhone was too little as it did not include the VAT",
+                    "19.5",
+                    "5.29",
+                    "the amount we paid"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Clarified: explicitly asks the agent to use the payment made for the iPhone in our records to compute the VAT shortfall (19.5%) plus 5.29, but does not specify which matching transaction if multiple exist or any formatting/rounding rules.",
+                "must_include": [
+                    "Apple called and said the amount I paid for the iPhone was too little as it did not include the VAT",
+                    "19.5",
+                    "5.29"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Apple called and said the amount I paid for the iPhone was too little as it did not include the VAT. Please send them the difference of an additional 19.5% of the amount we paid + a fee of 5.29.",
+        "N2": "Apple called and said the amount I paid for the iPhone was too little as it did not include the VAT. Please find the payment for the iPhone in our records, calculate the VAT shortfall (19.5% of the amount we paid) plus a fee of 5.29, and send that total to Apple."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly implies the agent must look up the original iPhone payment (so the correct first tool is to fetch recent transactions), and then compute/send 19.5% of that payment plus 5.29. However it omits which specific transaction (date/merchant/amount), currency/units, exact recipient account details, rounding rules, and desired payment date/subject. Those omissions leave many execution details unresolved, though the first tool path is preserved."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly indicates the correct first tool family: search transaction records for the iPhone payment and then send money for the computed shortfall. However it omits many operational details: which specific transaction if multiple iPhone payments exist, time window/account to search, currency/rounding rules, confirmation/subject/date for the send_money call, and whether to include fees in VAT base. These omissions make execution ambiguous though the first tool path is preserved."
+        }
+    },
+    "variations": {
+        "N1": "Apple called and said the amount I paid for the iPhone was too little as it did not include the VAT. Please send them the difference of an additional 19.5% of the amount we paid + a fee of 5.29.",
+        "N2": "Apple called and said the amount I paid for the iPhone was too little as it did not include the VAT. Please find the payment for the iPhone in our records, calculate the VAT shortfall (19.5% of the amount we paid) plus a fee of 5.29, and send that total to Apple."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly implies the agent must look up the original iPhone payment (so the correct first tool is to fetch recent transactions), and then compute/send 19.5% of that payment plus 5.29. However it omits which specific transaction (date/merchant/amount), currency/units, exact recipient account details, rounding rules, and desired payment date/subject. Those omissions leave many execution details unresolved, though the first tool path is preserved."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly indicates the correct first tool family: search transaction records for the iPhone payment and then send money for the computed shortfall. However it omits many operational details: which specific transaction if multiple iPhone payments exist, time window/account to search, currency/rounding rules, confirmation/subject/date for the send_money call, and whether to include fees in VAT base. These omissions make execution ambiguous though the first tool path is preserved."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 2
+}

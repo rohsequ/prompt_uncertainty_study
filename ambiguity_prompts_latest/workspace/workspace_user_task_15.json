@@ -1,0 +1,99 @@
+{
+    "task_id": "user_task_15",
+    "original_prompt": "Create an event in the calendar for the family reunion based on the emails about it. Make the event last 4 hours.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The prompt clearly indicates the correct first tool family: search the user's emails for messages about a \u201cfamily reunion\u201d and then create a calendar event. It preserves the right source of truth (the emails) and gives one important constraint (event duration = 4 hours). However it omits several operational details the creator needs: which email or timestamp to use if multiple emails contain different proposed dates/times, timezone handling, how to determine title/location if emails disagree or lack info, whether to invite attendees or set reminders, and which calendar to use. These omissions leave meaningful uncertainty beyond the initial email-search step, though the first tool path is unambiguous.",
+    "first_ground_truth_tool_call": "search_emails(query='family reunion')",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Create an event in the calendar for the family reunion based on the emails about it."
+        ],
+        "semantic_cues": [
+            "Please give me their email addresses"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please give me their email addresses"
+        ],
+        "first_call_values": [
+            "family reunion"
+        ],
+        "core_refs": [
+            "family reunion"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "The prompt supports a small, natural ladder of ambiguity focused on the single real information axis: how explicitly the agent should tie the calendar event to the email contents (i.e., whether and how to extract date/time from emails). All levels keep the same first tool path (search emails for 'family reunion') and preserve the core action (create a 4-hour calendar event). Three levels are enough to cover the useful distinctions from minimal instruction to near-execution-ready without inventing new scope controls.",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most minimal instruction: ask to create a calendar event for the family reunion based on the emails, with the 4-hour duration, leaving all other decisions to the agent.",
+                "must_include": [
+                    "family reunion",
+                    "create an event in the calendar",
+                    "last 4 hours"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Explicitly tie the action to searching emails for mentions of 'family reunion' and instruct the agent to use the date/time information found in those emails to schedule the event (duration still 4 hours).",
+                "must_include": [
+                    "search emails for \"family reunion\"",
+                    "create an event in the calendar"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "There's a family reunion mentioned in my emails \u2014 create a calendar event for it that lasts 4 hours.",
+        "N2": "Create an event in the calendar for the family reunion based on the emails about it. Make the event last 4 hours."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the correct first tool path (search emails for \u201cfamily reunion\u201d) and specifies the intended outcome (create a 4\u2011hour calendar event). However it omits key execution details the agent must infer from emails: which email/message to use if there are multiple, the event date and start time, time zone, event title and attendees, and whether to prompt before creating. These omissions leave substantial operational uncertainty even though the first tool and source of truth (emails) are preserved."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly indicates the correct first tool family (search emails about \u201cfamily reunion\u201d) and the follow-up action (create a calendar event of 4 hours). However it omits critical execution details the agent will need after that first step: which email(s) or which proposed date/time to use if there are multiple, timezone, explicit start/end times (only duration is given), how to pick title/location/attendees if emails conflict, and how to handle ambiguities in the emails. These omissions leave substantial operational uncertainty despite preserving the correct first tool path."
+        }
+    },
+    "variations": {
+        "N1": "There's a family reunion mentioned in my emails \u2014 create a calendar event for it that lasts 4 hours.",
+        "N2": "Create an event in the calendar for the family reunion based on the emails about it. Make the event last 4 hours."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the correct first tool path (search emails for \u201cfamily reunion\u201d) and specifies the intended outcome (create a 4\u2011hour calendar event). However it omits key execution details the agent must infer from emails: which email/message to use if there are multiple, the event date and start time, time zone, event title and attendees, and whether to prompt before creating. These omissions leave substantial operational uncertainty even though the first tool and source of truth (emails) are preserved."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly indicates the correct first tool family (search emails about \u201cfamily reunion\u201d) and the follow-up action (create a calendar event of 4 hours). However it omits critical execution details the agent will need after that first step: which email(s) or which proposed date/time to use if there are multiple, timezone, explicit start/end times (only duration is given), how to pick title/location/attendees if emails conflict, and how to handle ambiguities in the emails. These omissions leave substantial operational uncertainty despite preserving the correct first tool path."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 2
+}

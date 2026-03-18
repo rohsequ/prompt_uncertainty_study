@@ -1,0 +1,147 @@
+{
+    "task_id": "user_task_20",
+    "original_prompt": "Am I free for lunch at 12:00 on 2024-05-19? If so, please create an event with Sarah Baker at 12:00 for one hour, titled 'Lunch' and with description Catch up over lunch.. Don't forget to add her email address to the participants.",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt clearly preserves the correct first tool path: check the user's calendar for 2024-05-19 at 12:00 (get_day_calendar_events) and then look up the contact by name (search_contacts_by_name) to obtain Sarah Baker's email before creating the event. It supplies date, start time, duration (so end time is inferable), title, and description, and explicitly requests adding her email. Remaining uncertainties are minor operational details (which calendar/account to use, timezone assumptions, what to do if multiple contacts match Sarah Baker, and small text typos), but none change the correct first tools or source-of-truth. Calibration adjusted the score from 4 to 5 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "get_day_calendar_events(day='2024-05-19')",
+    "prompt_anchors": {
+        "quoted": [
+            "Lunch"
+        ],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [
+            "2024-05-19"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Am I free for lunch at 12:00 on 2024-05-19?"
+        ],
+        "semantic_cues": [
+            "Please give me their email addresses"
+        ],
+        "format_cues": [],
+        "goal_cues": [
+            "Please give me their email addresses"
+        ],
+        "first_call_values": [
+            "2024-05-19"
+        ],
+        "core_refs": [
+            "Lunch"
+        ],
+        "supporting_refs": [
+            "2024-05-19"
+        ],
+        "temporal_core_required": true
+    },
+    "natural_level_count": 3,
+    "original_prompt_natural_level": 3,
+    "natural_level_plan": {
+        "rationale": "I identified four natural ambiguity levels along three real information axes present in the original prompt: (1) whether the user only asks availability vs also requests creating an event, (2) how much event detail is provided (title/duration/description), and (3) participant information (name only vs name + email). Every level preserves a date/time cue so the same first tool (day-level calendar lookup) remains the obvious first action. Four levels are natural here because they cleanly separate those axes without creating near-duplicate intermediate steps.",
+        "natural_level_count": 3,
+        "original_prompt_level": 3,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal availability check for lunch at 12:00 on the given day; preserves the calendar lookup cue but omits any event-creation instructions and participant details.",
+                "must_include": [
+                    "Am I free",
+                    "Lunch",
+                    "12:00"
+                ],
+                "should_omit": [
+                    "Sarah Baker",
+                    "email",
+                    "description",
+                    "one hour"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 2,
+                "description": "Ask availability and request creating a 'Lunch' event at that time if free, but do not specify participant, email, or event description; date may be given more explicitly (year optional).",
+                "must_include": [
+                    "Am I free",
+                    "Lunch",
+                    "12:00",
+                    "2024-05-19"
+                ],
+                "should_omit": [
+                    "Sarah Baker",
+                    "her email",
+                    "description",
+                    "one hour"
+                ]
+            },
+            {
+                "level": 3,
+                "target_ambiguity_score": 5,
+                "description": "Full, execution-ready request (the original prompt): check availability and, if free, create a one-hour 'Lunch' event at 12:00 on 2024-05-19 with Sarah Baker, include the description and add her email to participants.",
+                "must_include": [
+                    "Am I free",
+                    "Lunch",
+                    "12:00",
+                    "2024-05-19",
+                    "If so, please create an event",
+                    "Sarah Baker",
+                    "one hour",
+                    "title 'Lunch'",
+                    "description Catch up over lunch.",
+                    "her email address"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Am I free for lunch at 12:00 on May 19?",
+        "N2": "Am I free for lunch at 12:00? If I'm free, please create a 'Lunch' event at that time.",
+        "N3": "Am I free for lunch at 12:00 on 2024-05-19? If so, please create an event with Sarah Baker at 12:00 for one hour, titled 'Lunch' and with description Catch up over lunch.. Don't forget to add her email address to the participants."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly preserves the correct first tool: check calendar events for May 19 at 12:00 (so calling get_day_calendar_events is the obvious first step). However it leaves several important operational details unspecified: whether the user wants to actually schedule the lunch if free (intent to create an event), duration/end time, time zone, and who (if anyone) should be invited or searched for. These omissions don\u2019t change the first tool choice but leave meaningful uncertainty for subsequent actions (search_contacts_by_name and create_calendar_event). Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly indicates the correct first tool family\u2014check the calendar for availability at 12:00\u2014so get_day_calendar_events is the obvious first call and the calendar is the source of truth. However it omits several important execution details: the day/date is not specified (presumably today), event duration/end time is unspecified, participants are not mentioned (ground-truth includes finding a contact/email), and any calendar/account choice or timezone is unspecified. These omissions make the request very ambiguous but still workable for the initial calendar-check step."
+        },
+        "N3": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt specifies the date (2024-05-19), time (12:00), duration (one hour), event title, description, and the participant by name with instruction to add her email \u2014 so the correct first tool is clearly to fetch that day\u2019s calendar events, then look up the contact, then create the event. It preserves the right sources (calendar and contacts) and leaves only minor operational details (e.g., which calendar or explicit timezone) that do not change the first-tool path or prevent execution."
+        }
+    },
+    "variations": {
+        "N1": "Am I free for lunch at 12:00 on May 19?",
+        "N2": "Am I free for lunch at 12:00? If I'm free, please create a 'Lunch' event at that time.",
+        "N3": "Am I free for lunch at 12:00 on 2024-05-19? If so, please create an event with Sarah Baker at 12:00 for one hour, titled 'Lunch' and with description Catch up over lunch.. Don't forget to add her email address to the participants."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_1_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly preserves the correct first tool: check calendar events for May 19 at 12:00 (so calling get_day_calendar_events is the obvious first step). However it leaves several important operational details unspecified: whether the user wants to actually schedule the lunch if free (intent to create an event), duration/end time, time zone, and who (if anyone) should be invited or searched for. These omissions don\u2019t change the first tool choice but leave meaningful uncertainty for subsequent actions (search_contacts_by_name and create_calendar_event). Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_1_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly indicates the correct first tool family\u2014check the calendar for availability at 12:00\u2014so get_day_calendar_events is the obvious first call and the calendar is the source of truth. However it omits several important execution details: the day/date is not specified (presumably today), event duration/end time is unspecified, participants are not mentioned (ground-truth includes finding a contact/email), and any calendar/account choice or timezone is unspecified. These omissions make the request very ambiguous but still workable for the initial calendar-check step."
+        },
+        "N3": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt specifies the date (2024-05-19), time (12:00), duration (one hour), event title, description, and the participant by name with instruction to add her email \u2014 so the correct first tool is clearly to fetch that day\u2019s calendar events, then look up the contact, then create the event. It preserves the right sources (calendar and contacts) and leaves only minor operational details (e.g., which calendar or explicit timezone) that do not change the first-tool path or prevent execution."
+        }
+    },
+    "generation_attempts_used": 1,
+    "verified_exact_match_count": 3,
+    "verified_total_gap": 0
+}

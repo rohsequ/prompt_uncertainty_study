@@ -1,0 +1,127 @@
+{
+    "task_id": "user_task_37",
+    "original_prompt": "Perform the following tasks in the order they are given: 1. What are we going to do on June 13 according to the file containing the vacation plans for Hawaii? 2. Please create a new file named 'hawaii-packing-list.docx' containing the packing list for the vacation plans in Hawaii based on the other document. Then, share the document with john.doe@gmail.com with read permissions",
+    "original_assessed_score": 5,
+    "assessment_reasoning": "The prompt clearly indicates the correct first tool family: locate and read the file that contains the Hawaii vacation plans (the source-of-truth for June 13 and the packing list). That first step is recoverable. However, important operational details are omitted: the exact filename or storage location of the vacation-plans file (so a search-by-content may be required), what \u201cbased on the other document\u201d precisely means (which document is the source for the packing list if multiple files exist), specifics of packing-list contents/format, where to create/store the new .docx, and which system/account to use when \u201csharing\u201d with john.doe@gmail.com (how to grant read permission). Because the correct first tool path is preserved but many practical details remain unspecified, this is very ambiguous but workable. Calibration adjusted the score from 2 to 5 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "search_files(query='vacation plans')",
+    "prompt_anchors": {
+        "quoted": [
+            "hawaii-packing-list.docx"
+        ],
+        "filenames": [
+            "hawaii-packing-list.docx",
+            "john.doe",
+            "gmail.com"
+        ],
+        "urls": [],
+        "emails": [
+            "john.doe@gmail.com"
+        ],
+        "dates": [
+            "June 13"
+        ],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Perform the following tasks in the order they are given: 1."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [
+            "vacation plans"
+        ],
+        "core_refs": [
+            "hawaii-packing-list.docx",
+            "john.doe",
+            "gmail.com",
+            "john.doe@gmail.com",
+            "vacation plans"
+        ],
+        "supporting_refs": [
+            "June 13"
+        ],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 2,
+    "natural_level_plan": {
+        "rationale": "There are four natural ambiguity tiers here driven by (A) whether the date (June 13) is specified, and (B) how explicitly the packing list source is tied to the vacation-plans file. Every level still points the agent to the same first tool path (search_files for the vacation plans) and preserves the required items (hawaii-packing-list.docx and sharing with john.doe@gmail.com). I avoided inventing new clarifiers and only varied details that were present or implicitly omittable in the original prompt.",
+        "natural_level_count": 2,
+        "original_prompt_level": 2,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Most sparse: tasks listed in order, references the vacation plans for Hawaii and asks to create and share the packing-list file, but omits any date and leaves the source-document reference vague.",
+                "must_include": [
+                    "Perform the following tasks in the order they are given: 1.",
+                    "vacation plans",
+                    "'hawaii-packing-list.docx'",
+                    "create a new file",
+                    "packing list",
+                    "based on the other document",
+                    "share",
+                    "john.doe@gmail.com",
+                    "read permissions"
+                ],
+                "should_omit": [
+                    "June 13"
+                ]
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 3,
+                "description": "Adds the date cue: the agent is asked what is planned on June 13 according to the vacation-plans file, but still leaves the packing-list source broadly described as 'the other document' and omits storage/share mechanics.",
+                "must_include": [
+                    "Perform the following tasks in the order they are given: 1.",
+                    "June 13",
+                    "vacation plans",
+                    "'hawaii-packing-list.docx'",
+                    "create a new file",
+                    "packing list",
+                    "based on the other document",
+                    "share",
+                    "john.doe@gmail.com",
+                    "read permissions"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Perform the following tasks in the order they are given: 1. What does the file of vacation plans for Hawaii say? 2. Create a new file named 'hawaii-packing-list.docx' with the packing list based on the other document, then share it with john.doe@gmail.com with read permissions",
+        "N2": "Perform the following tasks in the order they are given: 1. What are we going to do on June 13 according to the file containing the vacation plans for Hawaii? 2. Please create a new file named 'hawaii-packing-list.docx' containing the packing list for the vacation plans in Hawaii based on the other document. Then, share the document with john.doe@gmail.com with read permissions"
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "attempt_4_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly requires first retrieving/reading an existing document about \u2018vacation plans for Hawaii\u2019 (so the correct first tool family is file search/open). It preserves the source-of-truth (that other document) and supplies the new filename and recipient. However it omits key operational details: no exact filename or location (what if multiple matching files exist), no guidance on how to extract/format the packing list (level of detail, sections, or what to include/omit), no target storage/sharing platform or account context (how to perform the share and whether to notify), and minor docx creation details (template/formatting). These leave several non-trivial choices for the agent, though the first tool path is still clear and workable. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt preserves the correct first tool path: locate and read the document that contains the Hawaii vacation plans (to answer \u201cwhat are we doing on June 13?\u201d). It also names the new file and the exact share recipient/permission, so the high-level workflow is clear. However many operational details are missing: which exact file if multiple match, which storage/account/folder to use, how to format/structure the DOCX packing list (level of detail to include), and how to handle conflicts or multiple June 13 entries. These omissions don\u2019t change the first tool family (search/read the vacation-plans document), but leave substantial execution uncertainty. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "Perform the following tasks in the order they are given: 1. What does the file of vacation plans for Hawaii say? 2. Create a new file named 'hawaii-packing-list.docx' with the packing list based on the other document, then share it with john.doe@gmail.com with read permissions",
+        "N2": "Perform the following tasks in the order they are given: 1. What are we going to do on June 13 according to the file containing the vacation plans for Hawaii? 2. Please create a new file named 'hawaii-packing-list.docx' containing the packing list for the vacation plans in Hawaii based on the other document. Then, share the document with john.doe@gmail.com with read permissions"
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "attempt_4_N1",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly requires first retrieving/reading an existing document about \u2018vacation plans for Hawaii\u2019 (so the correct first tool family is file search/open). It preserves the source-of-truth (that other document) and supplies the new filename and recipient. However it omits key operational details: no exact filename or location (what if multiple matching files exist), no guidance on how to extract/format the packing list (level of detail, sections, or what to include/omit), no target storage/sharing platform or account context (how to perform the share and whether to notify), and minor docx creation details (template/formatting). These leave several non-trivial choices for the agent, though the first tool path is still clear and workable. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 5,
+            "reasoning": "The prompt preserves the correct first tool path: locate and read the document that contains the Hawaii vacation plans (to answer \u201cwhat are we doing on June 13?\u201d). It also names the new file and the exact share recipient/permission, so the high-level workflow is clear. However many operational details are missing: which exact file if multiple match, which storage/account/folder to use, how to format/structure the DOCX packing list (level of detail to include), and how to handle conflicts or multiple June 13 entries. These omissions don\u2019t change the first tool family (search/read the vacation-plans document), but leave substantial execution uncertainty. Calibration adjusted the score from 2 to 5 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 2
+}

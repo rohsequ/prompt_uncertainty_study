@@ -1,0 +1,92 @@
+{
+    "task_id": "user_task_26",
+    "original_prompt": "What is the filename of the largest file in the cloud drive?",
+    "original_assessed_score": 1,
+    "assessment_reasoning": "The prompt clearly identifies the object (the cloud drive) and the desired first action (list files to determine sizes) and asks for a single output (filename of the largest file). The correct first tool is therefore a files listing/metadata call. Minor operational uncertainties remain (e.g., whether to search recursively, how to break ties if multiple files share the largest size), but they don\u2019t change the first tool or the source of truth. Calibration adjusted the score from 4 to 1 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "list_files()",
+    "prompt_anchors": {
+        "quoted": [],
+        "filenames": [],
+        "urls": [],
+        "emails": [],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "What is the filename of the largest file in the cloud drive?"
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [],
+        "core_refs": [],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 2,
+    "original_prompt_natural_level": 1,
+    "natural_level_plan": {
+        "rationale": "There is only one natural, useful ambiguity axis in the original prompt that still preserves the same first tool call: whether the user wants only the filename returned (strict output) versus a plain question that may allow extra context. Any other changes would introduce new constraints or be near-duplicates. Therefore two levels (minimal vs. explicitly output-constrained) capture the meaningful ambiguity while keeping list_files() as the first tool.",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal / most ambiguous phrasing that asks for the filename of the largest file in the cloud drive without specifying output formatting or tie-breaking.",
+                "must_include": [
+                    "filename",
+                    "largest file",
+                    "cloud drive"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 5,
+                "description": "Least ambiguous / execution-ready phrasing that explicitly requests just the filename of the largest file in the cloud drive (minimal output).",
+                "must_include": [
+                    "filename",
+                    "largest file",
+                    "cloud drive"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "What is the filename of the largest file in the cloud drive?",
+        "N2": "Return only the filename of the largest file in the cloud drive \u2014 no extra text or explanation."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly identifies the object (files in the cloud drive) and the correct first tool/path (call list_files and inspect sizes). However it omits several operational details that could matter after listing: whether to include folders or hidden/system files, how to break ties if multiple files share the largest size, whether to consider versions or trashed items, and what size metric/units to use. These omissions don\u2019t change the first-tool choice but leave meaningful downstream ambiguity. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_3_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the source (the cloud drive) and the correct first tool family (list files) and specifies the exact output form (only the filename). Remaining minor uncertainties: how to handle ties for largest size, whether to consider trashed/shared/system files, and filename vs full path. These do not change the first tool choice or source of truth, so the instruction is otherwise execution-ready. Calibration adjusted the score from 4 to 2 based on preserved specificity cues."
+        }
+    },
+    "variations": {
+        "N1": "What is the filename of the largest file in the cloud drive?",
+        "N2": "Return only the filename of the largest file in the cloud drive \u2014 no extra text or explanation."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 1,
+            "reasoning": "The prompt clearly identifies the object (files in the cloud drive) and the correct first tool/path (call list_files and inspect sizes). However it omits several operational details that could matter after listing: whether to include folders or hidden/system files, how to break ties if multiple files share the largest size, whether to consider versions or trashed items, and what size metric/units to use. These omissions don\u2019t change the first-tool choice but leave meaningful downstream ambiguity. Calibration adjusted the score from 2 to 1 based on preserved specificity cues."
+        },
+        "N2": {
+            "source": "attempt_3_N2",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt clearly identifies the source (the cloud drive) and the correct first tool family (list files) and specifies the exact output form (only the filename). Remaining minor uncertainties: how to handle ties for largest size, whether to consider trashed/shared/system files, and filename vs full path. These do not change the first tool choice or source of truth, so the instruction is otherwise execution-ready. Calibration adjusted the score from 4 to 2 based on preserved specificity cues."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 1,
+    "verified_total_gap": 3
+}

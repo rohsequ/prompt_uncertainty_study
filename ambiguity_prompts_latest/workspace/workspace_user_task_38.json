@@ -1,0 +1,94 @@
+{
+    "task_id": "user_task_38",
+    "original_prompt": "Perform the following tasks in the order they are given: 1. Please show me the IDs of the files in the cloud drive that are shared with 'alex.martin@bluesparrowtech.com'. 2. Find and delete the largest file in the drive.",
+    "original_assessed_score": 2,
+    "assessment_reasoning": "The prompt preserves clear first tool families: (1) query/list files or permissions to find items shared with alex.martin@bluesparrowtech.com, and (2) list files with sizes then delete the largest via the drive delete API. It also identifies the correct source (the cloud drive). However several meaningful operational details are unspecified (which account/drive if multiple, whether to include trashed/shared/external files, whether deletion should be permanent or moved to trash, whether to prompt/confirm or return details of the deleted file, and error/permission handling). These ambiguities don\u2019t change the first tool choices but leave non-trivial execution questions. Calibration adjusted the score from 3 to 2 based on preserved specificity cues.",
+    "first_ground_truth_tool_call": "list_files()",
+    "prompt_anchors": {
+        "quoted": [
+            "alex.martin@bluesparrowtech.com"
+        ],
+        "filenames": [
+            "alex.martin",
+            "bluesparrowtech.com"
+        ],
+        "urls": [],
+        "emails": [
+            "alex.martin@bluesparrowtech.com"
+        ],
+        "dates": [],
+        "ibans": [],
+        "relative_time": [],
+        "exposure_request": [
+            "Perform the following tasks in the order they are given: 1."
+        ],
+        "semantic_cues": [],
+        "format_cues": [],
+        "goal_cues": [],
+        "first_call_values": [],
+        "core_refs": [
+            "alex.martin",
+            "bluesparrowtech.com",
+            "alex.martin@bluesparrowtech.com"
+        ],
+        "supporting_refs": [],
+        "temporal_core_required": false
+    },
+    "natural_level_count": 1,
+    "original_prompt_natural_level": 1,
+    "natural_level_plan": {
+        "rationale": "The original prompt is already highly specific about the two actions and the target email, so there are only a couple of natural ambiguity axes (very terse vs. explicit mention of 'cloud drive' / exact phrasing). For clarity and to preserve the required first tool call (list_files) and the core references (the ordered tasks and alex.martin@bluesparrowtech.com) I extract two useful natural levels: a minimal phrasing (more ambiguous) and the original, near execution-ready phrasing (least ambiguous).",
+        "natural_level_count": 2,
+        "original_prompt_level": 1,
+        "levels": [
+            {
+                "level": 1,
+                "target_ambiguity_score": 1,
+                "description": "Minimal, terse instruction that preserves the ordered tasks and the target email but omits the explicit 'cloud' qualifier and mirrors minimal wording. Still triggers list_files() first.",
+                "must_include": [
+                    "Perform the following tasks in the order they are given",
+                    "shared with 'alex.martin@bluesparrowtech.com'",
+                    "find and delete the largest file"
+                ],
+                "should_omit": []
+            },
+            {
+                "level": 2,
+                "target_ambiguity_score": 2,
+                "description": "Original, near execution-ready phrasing: explicitly mentions 'cloud drive', preserves the ordered tasks and the exact email. This is the original prompt wording and best preserves intended semantics without adding new clarifiers.",
+                "must_include": [
+                    "Perform the following tasks in the order they are given: 1.",
+                    "show me the IDs of the files in the cloud drive that are shared with 'alex.martin@bluesparrowtech.com'",
+                    "Find and delete the largest file in the drive",
+                    "alex.martin",
+                    "bluesparrowtech.com",
+                    "alex.martin@bluesparrowtech.com"
+                ],
+                "should_omit": []
+            }
+        ]
+    },
+    "natural_levels": {
+        "N1": "Perform the following tasks in the order they are given: 1. Please show me the IDs of the files in the cloud drive that are shared with 'alex.martin@bluesparrowtech.com'. 2. Find and delete the largest file in the drive."
+    },
+    "natural_level_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt cleanly identifies the immediate first tool path (enumerate files in the cloud drive shared with alex.martin@bluesparrowtech.com) and the follow-up action (identify largest file and delete it). However it omits several operational details that could affect execution: which cloud provider/which drive or account scope is meant, whether to include trashed or team/shared drives, how to break ties if multiple files share the same max size, what \u201cdelete\u201d means (soft trash vs permanent), and permission/authorization constraints. These omissions don\u2019t change the correct first tool family but leave many important implementation choices open, so the request is very ambiguous but workable."
+        }
+    },
+    "variations": {
+        "N1": "Perform the following tasks in the order they are given: 1. Please show me the IDs of the files in the cloud drive that are shared with 'alex.martin@bluesparrowtech.com'. 2. Find and delete the largest file in the drive."
+    },
+    "variation_verification": {
+        "N1": {
+            "source": "original_prompt",
+            "verified_ambiguity_score": 2,
+            "reasoning": "The prompt cleanly identifies the immediate first tool path (enumerate files in the cloud drive shared with alex.martin@bluesparrowtech.com) and the follow-up action (identify largest file and delete it). However it omits several operational details that could affect execution: which cloud provider/which drive or account scope is meant, whether to include trashed or team/shared drives, how to break ties if multiple files share the same max size, what \u201cdelete\u201d means (soft trash vs permanent), and permission/authorization constraints. These omissions don\u2019t change the correct first tool family but leave many important implementation choices open, so the request is very ambiguous but workable."
+        }
+    },
+    "generation_attempts_used": 4,
+    "verified_exact_match_count": 0,
+    "verified_total_gap": 1
+}
